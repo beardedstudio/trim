@@ -1,5 +1,6 @@
 require 'rails/generators'
 require 'rails/generators/active_record'
+<<<<<<< HEAD
 
 module Trim
   # This generator adds a migration for the User model
@@ -93,7 +94,7 @@ User.create!  :email => 'admin@example.com',
         end
       end
 
-      say "Trim install complete.", SUCCESS_COLOR if tasks.empty?
+      say "Trim install complete.", SUCCESS_COLOR if tasks.empt
     end
   end
 end
