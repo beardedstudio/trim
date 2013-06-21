@@ -96,5 +96,15 @@ User.create!  :email => 'admin@example.com',
 
       say "Trim install complete.", SUCCESS_COLOR if tasks.blank?
     end
+
+    def create_friendly_id_history_table
+      sleep(2)
+      generate 'friendly_id'
+    end
+
+    def create_navs
+      sleep(2)
+      migration_template "create_navs.rb", "db/migrate/create_navs.rb"
+    end
   end
 end
