@@ -20,6 +20,10 @@ module Trim
       generate "rails_admin:install user admin"
     end
 
+    def install_paper_trail
+      generate 'paper_trail:install'
+    end
+
     def add_user_columns_migration(*args)
       # ensure migration timestamps are different
       sleep(2)
@@ -64,6 +68,47 @@ User.create!  :email => 'admin@example.com',
 
     def strip_rails_admin_config_comments
       gsub_file 'config/initializers/rails_admin.rb', /^\s*#.*\n/, ''
+    end
+
+    def add_rails_admin_action_config
+      rails_admin_config = <<-config
+  config.authorize_with :cancan, Ability
+  config.audit_with :paper_trail, User
+  config.compact_show_view = false
+  
+  # Exclude specific models (keep the others):
+  config.excluded_models = [Ability, Trim::Nav, Version]
+
+  # Configure Actions
+  config.actions do
+
+    # root actions
+    dashboard
+    settings
+
+    # collection actions 
+    index
+    new
+    export
+    history_index
+    bulk_delete
+    nested_sort do
+      visible do
+        ['Trim::NavItem'].include? bindings[:abstract_model].model.to_s
+      end
+    end
+
+    # member actions
+    show
+    edit
+    delete
+    history_show
+    show_in_app
+    
+  end
+      config
+
+      insert_into_file 'config/initializers/rails_admin.rb', rails_admin_config, :before => 'end'
     end
 
   end

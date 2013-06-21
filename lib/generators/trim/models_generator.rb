@@ -16,8 +16,9 @@ module Trim
       generate 'cancan:ability'
 
       code = <<-code
-        user ||= User.new
-        can :manage, :all if user.persisted?        
+      
+    user ||= User.new
+    can :manage, :all if user.persisted?        
       code
 
       insert_into_file 'app/models/ability.rb', code, :after => 'def initialize(user)'
@@ -34,5 +35,6 @@ module Trim
       puts 'Installing Trim Navs'
       migration_template "create_navs.rb", "db/migrate/create_navs.rb"
     end
+
   end
 end

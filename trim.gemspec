@@ -21,4 +21,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'awesome_nested_set'
   s.add_dependency 'rubytree'
   s.add_dependency 'friendly_id'
+  s.add_dependency 'paper_trail'
 end
