@@ -1,0 +1,7 @@
+en:
+  admin:
+    actions:
+      nested_sort:
+        menu: Hierarchy
+        title: "Hierarchy for %{model_label_plural}"
+        breadcrumb: Hierarchy
