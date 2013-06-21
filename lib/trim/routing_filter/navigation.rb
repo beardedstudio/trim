@@ -104,7 +104,7 @@ module RoutingFilter
         return params.merge(args)
       end
       
-      unless record.is_a?(NavItem)
+      unless record.is_a?(Trim::NavItem)
         # This forces the calling code to use the default route instead of ours
         return nil if !defined?(record.nav_items) || record.nav_items.blank?
 
