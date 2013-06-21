@@ -94,7 +94,7 @@ User.create!  :email => 'admin@example.com',
         end
       end
 
-      say "Trim install complete.", SUCCESS_COLOR if tasks.empt
+      say "Trim install complete.", SUCCESS_COLOR if tasks.blank?
     end
   end
 end
