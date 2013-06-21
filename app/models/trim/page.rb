@@ -66,6 +66,6 @@ module Trim
 
       extend RailsAdminDefaultI18n
       apply_default_i18n
-
+    end
   end
 end

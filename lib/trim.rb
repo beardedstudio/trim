@@ -7,7 +7,7 @@ require "devise"
 require "rails_admin"
 require "cancan"
 require "paper_trail"
-require "routing_filter"
+require "routing-filter"
 
 module Trim
   require 'trim/railtie' if defined?(Rails)
@@ -32,3 +32,4 @@ module Trim
 end
 
 require 'trim/engine'
+require 'trim/routing_filter/navigation.rb'
