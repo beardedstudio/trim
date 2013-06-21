@@ -36,5 +36,19 @@ module Trim
       migration_template "create_navs.rb", "db/migrate/create_navs.rb"
     end
 
+    def add_navigation_filter_to_routes
+      route("filter :navigation")
+    end
+
+    def create_pages
+      sleep(2)
+      puts 'Installing Trim Pages'
+      migration_template "create_pages.rb", "db/migrate/create_pages.rb"
+    end
+
+    def add_route_for_pages
+      route("resources :pages, :only => :show")
+    end
+
   end
 end
