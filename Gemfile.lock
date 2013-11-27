@@ -4,6 +4,7 @@ PATH
     trim (0.0.0)
       cancan
       devise
+      haml-rails
       rails_admin
 
 GEM
@@ -59,6 +60,11 @@ GEM
       railties (>= 3.2, < 5.0)
     haml (4.0.4)
       tilt
+    haml-rails (0.4)
+      actionpack (>= 3.1, < 4.1)
+      activesupport (>= 3.1, < 4.1)
+      haml (>= 3.1, < 4.1)
+      railties (>= 3.1, < 4.1)
     hike (1.2.3)
     i18n (0.6.5)
     jquery-rails (3.0.4)

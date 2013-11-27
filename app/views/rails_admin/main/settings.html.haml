@@ -1,0 +1,44 @@
+-# Fields in this form must also be configured on Setting.setting_fields.
+
+= semantic_form_for @setting, :url => settings_path, :html => { :class => 'form-horizontal' } do |form|
+
+  = ui_tabs do |widget|
+
+    - widget.tab('tab_contact', 'Contact Information') do
+
+      = form.inputs :name => 'Social Media' do
+         
+        = form.input :facebook_url
+        = form.input :twitter_name
+        = form.input :linkedin_url
+
+    - widget.tab('tab_emails', 'Emails') do
+
+      = form.inputs :name => 'Notifications', :class => 'notifications' do
+
+        - Setting.notify_attributes.each do |key, value|
+          = form.input key, :hint => value, :input_html => { :size => 50 }
+
+
+      - Setting.email_configuration.each do |name, params| 
+
+        - placeholders = "Placeholders: #{Setting.email_placeholder_string(name)}"
+
+        = form.inputs :name => name.to_s.humanize do
+          = form.input "#{name}_subject".to_sym, :label => 'Subject', :input_html => { :size => 50 }
+          = form.input "#{name}_body".to_sym, :as => :text, :label => 'Body', :input_html => { :cols => 50, :rows => 10 }, :hint => placeholders
+
+    - widget.tab('tab_press_releases', 'Press Releases') do
+
+      = form.inputs :name => 'Boilerplate for Press Releases', :class => 'boilerplate' do
+
+        %p
+          This text will appear in the footer of press releases that have the "show boilerplate" checkbox marked
+
+        =form.input :boilerplate_heading, :label => 'Boilerplate Heading'
+        =form.input :boilerplate_copy, :as => :text, :label => 'Boilerplate Copy', :input_html => { :cols => 50, :rows => 10 }
+ 
+  = form.actions do
+    = form.action :submit, :button_html => {:value => 'Update Settings'}
+
+  = yield :jquery_ui_helpers

@@ -1,0 +1,7 @@
+en:
+  admin:
+    actions:
+      reorder:
+        menu: "Reorder"
+        title: "Re-order %{model_label_plural}"
+        breadcrumb: "Reorder"

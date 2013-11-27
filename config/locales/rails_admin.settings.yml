@@ -1,0 +1,7 @@
+en:
+  admin:
+    actions:
+      settings:
+        menu: Settings
+        title: Settings
+        breadcrumb: Settings

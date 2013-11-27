@@ -12,11 +12,16 @@ Gem::Specification.new do |s|
   s.description = "A lightweight rails CMS by Bearded."
   s.authors     = ["Brett Bender", "Mark Frey", "Patrick Fulton", "Dominic Dagradi"]
   s.files       = `git ls-files`.split("\n")
-
   s.require_paths = ['lib']
 
   s.add_dependency 'devise'
   s.add_dependency 'cancan'
   s.add_dependency 'rails_admin'
   s.add_dependency 'haml-rails'
+  s.add_dependency 'awesome_nested_set'
+  s.add_dependency 'rubytree'
+  s.add_dependency 'friendly_id'
+#  s.add_dependency 'paper_trail'
+  s.add_dependency 'liquid'
+  s.add_dependency 'routing-filter', '~> 0.4.0.pre'
 end
