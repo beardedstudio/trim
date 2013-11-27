@@ -30,7 +30,7 @@ class CreateNavs < ActiveRecord::Migration
 
     create_table "trim_navs", :force => true do |t|
       t.string   "title",       :default => "",    :null => false
-      t.string   "slug",        :default => "",    :null => false
+      t.string   "slug"
       t.integer  "nav_item_id"
       t.integer  "depth_start", :default => 0,     :null => false
       t.integer  "depth_end"
