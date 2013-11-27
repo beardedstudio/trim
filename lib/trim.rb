@@ -6,8 +6,9 @@ require "active_support/dependencies"
 require "devise"
 require "rails_admin"
 require "cancan"
-require "paper_trail"
+#require "paper_trail"
 require "routing-filter"
+require 'friendly_id'
 
 module Trim
   require 'trim/railtie' if defined?(Rails)

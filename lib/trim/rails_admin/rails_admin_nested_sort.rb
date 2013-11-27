@@ -1,15 +1,15 @@
 require 'rails_admin/config/actions'
 require 'rails_admin/config/actions/base'
- 
+
 module RailsAdmin
   module Config
     module Actions
       class NestedSort < RailsAdmin::Config::Actions::Base
         RailsAdmin::Config::Actions.register(self)
 
-        # There are several options that you can set here. 
+        # There are several options that you can set here.
         # Check https://github.com/sferik/rails_admin/blob/master/lib/rails_admin/config/actions/base.rb for more info.
- 
+
         register_instance_option :link_icon do
           'icon-move'
         end
@@ -36,7 +36,7 @@ module RailsAdmin
               last_items = []
               changes = {}
               root = @root.content
-              
+
               params[:item].each do |param|
                 item = Trim::NavItem.find param[0]
                 # don't change the root!
@@ -53,7 +53,7 @@ module RailsAdmin
                 parent = root if parent.nil?
                 depth = parent.ancestors.length
                 item.parent = parent
-                
+
                 # we put the pages in order by setting each page to follow its previous sibling
                 if !last_items[depth].nil? && last_items[depth].parent == parent
                   item.move_to_right_of(last_items[depth])
@@ -68,7 +68,7 @@ module RailsAdmin
                 # store last page at this depth for next iteration
                 last_items[depth] = item
               end
-              
+
               render :json => changes
             end
           end

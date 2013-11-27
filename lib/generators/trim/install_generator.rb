@@ -6,8 +6,8 @@ module Trim
   class InstallGenerator < Rails::Generators::Base
 
     def install
-      generate 'trim:admin'
       generate 'trim:models'
+      generate 'trim:admin'
     end
   end
 end

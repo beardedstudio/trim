@@ -17,7 +17,7 @@ module Trim
     end
 
     def install_cancan(*args)
-      puts 'Installing Cancan'
+      say 'Installing Cancan', MESSAGE_COLOR
       generate 'cancan:ability'
 
       code = <<-code
@@ -80,8 +80,10 @@ module Trim
           say "There was an error finalizing the install. Task Failed: '#{task}'", ERROR_COLOR
         end
       end
+    end
 
-      say "Trim install complete.", SUCCESS_COLOR if tasks.blank?
+    def build_default_nav
+      Nav.rebuild_navs!
     end
   end
 end
