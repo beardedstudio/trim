@@ -1,6 +1,5 @@
 require 'rails/generators'
 require 'rails/generators/active_record'
-<<<<<<< HEAD
 
 module Trim
   # This generator adds a migration for the User model
