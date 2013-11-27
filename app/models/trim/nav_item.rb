@@ -13,10 +13,6 @@ module Trim
     belongs_to :linked, :polymorphic => true, :inverse_of => :nav_items
     has_many :navs
 
-    attr_accessible :master_item, :parent_id, :title, :linked_id, 
-                    :linked_type, :slug, :custom_slug, :is_resource, 
-                    :route, :use_linked_in_route, :custom_url, :open_in_new_window
-
     attr_accessor :tree, :in_tree
 
     serialize :route_params
@@ -35,16 +31,16 @@ module Trim
 
     validates :title, :presence => true
     validate :custom_url_must_be_anchor_or_external
-    
+
     def linked_or_custom
       return self.custom_slug unless self.custom_slug.blank?
-      
+
       if !self.linked.nil? && !self.linked.slug.blank?
         slug = self.linked.slug
       else
         slug = self.title
       end
-      
+
       slug
     end
 
@@ -104,7 +100,7 @@ module Trim
       unless (!custom_url.blank? || !custom_url_was.blank?)
         if !linked.nil? && linked.respond_to?(:redirects) && path_changed? && !path_was.blank? && linked.redirects.where(:path => path_was).empty?
           redirect = linked.redirects.build(:path => path_was)
-          
+
           # Also, remove redirect to current path, if one exists.
           dup = Redirect.find_by_path path
           unless dup.nil?

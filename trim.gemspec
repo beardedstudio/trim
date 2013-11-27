@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'friendly_id'
   s.add_dependency 'paper_trail'
   s.add_dependency 'liquid'
-  s.add_dependency 'routing-filter'
+  s.add_dependency 'routing-filter', '~> 0.4.0.pre'
 end

@@ -17,8 +17,6 @@ module Trim
     # Allow excerpting of body/teaser
     has_excerpt
 
-    attr_accessible :title, :body, :excerpt, :teaser, :slug, :custom_slug
-
     validates :title, :presence => true
     validates :teaser, :length => { :maximum => 150, :message => "Your teaser is too long (the maximum is 150 characters)." }, :allow_blank => true
 
@@ -34,10 +32,10 @@ module Trim
       navigation_label 'Content'
       weight -9
 
-      configure :body do 
+      configure :body do
         ckeditor true
 
-        pretty_value do 
+        pretty_value do
           value.html_safe unless value.nil?
         end
       end

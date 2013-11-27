@@ -17,9 +17,6 @@ module Trim
 
     belongs_to :nav_item
 
-    attr_accessible :depth_end, :depth_start, :nav_item_id, :slug, :title, 
-      :item_start, :item_end, :nav_item, :use_as_root
-
     attr_accessor :tree, :active_item, :breadcrumbs
 
     after_initialize :initialize_variables
@@ -76,7 +73,7 @@ module Trim
       # Scatter yer crumbs.
       crumbs
     end
-    
+
     def detect_active_item(path)
       active = []
       # rubytree. This traverses depth-first, left-to-right.
