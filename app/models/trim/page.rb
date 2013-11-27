@@ -12,7 +12,7 @@ module Trim
     renders_liquid
 
     # Keep a history
-    has_paper_trail
+    #has_paper_trail
 
     # Allow excerpting of body/teaser
     has_excerpt
@@ -33,8 +33,6 @@ module Trim
       weight -9
 
       configure :body do
-        ckeditor true
-
         pretty_value do
           value.html_safe unless value.nil?
         end
@@ -50,7 +48,7 @@ module Trim
 
       edit do
         field :title
-        field :body
+        field :body, :ck_editor
 
         group :admin do
           label "Administration"

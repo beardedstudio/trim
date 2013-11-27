@@ -1,5 +1,3 @@
-require 'friendly_id'
-
 module Trim
   class Nav < ActiveRecord::Base
 
@@ -13,7 +11,7 @@ module Trim
     cattr_reader :NAVS
 
     extend FriendlyId
-    friendly_id :title, :use => :slugged
+    friendly_id :title, :use => [:slugged, :finders]
 
     belongs_to :nav_item
 
