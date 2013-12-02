@@ -10,6 +10,7 @@ require "routing-filter"
 require 'friendly_id'
 require 'paperclip'
 require 'aws-sdk'
+require 'ckeditor'
 
 module Trim
   require 'trim/railtie' if defined?(Rails)

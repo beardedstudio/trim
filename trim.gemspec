@@ -25,5 +25,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'routing-filter', '~> 0.4.0.pre'
   s.add_dependency 'paperclip'
   s.add_dependency 'aws-sdk'
+  s.add_dependency 'ckeditor'
 
 end
