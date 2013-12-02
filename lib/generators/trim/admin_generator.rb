@@ -104,7 +104,7 @@ User.create!  :email => 'admin@example.com',
     bulk_delete
     nested_sort do
       visible do
-        ['Trim::NavItem'].include? bindings[:abstract_model].model.to_s
+        bindings[:abstract_model].model.to_s == 'Trim::NavItem'
       end
     end
 

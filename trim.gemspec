@@ -23,4 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'friendly_id', '~> 5.0.1'
   s.add_dependency 'liquid', '~> 2.6.0'
   s.add_dependency 'routing-filter', '~> 0.4.0.pre'
+  s.add_dependency 'paperclip'
+  s.add_dependency 'aws-sdk'
+
 end
