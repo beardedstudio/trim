@@ -68,28 +68,28 @@ module Trim
       sleep(2)
       migration_template "create_lead_images.rb", "db/migrate/create_lead_images.rb"
 
-      say "Added pages migration to db/migrate", MESSAGE_COLOR
+      say "Added lead images migration to db/migrate", MESSAGE_COLOR
     end
 
     def create_images
       sleep(2)
       migration_template "create_images.rb", "db/migrate/create_images.rb"
 
-      say "Added pages migration to db/migrate", MESSAGE_COLOR
+      say "Added images migration to db/migrate", MESSAGE_COLOR
     end
 
     def create_downloads
       sleep(2)
       migration_template "create_downloads.rb", "db/migrate/create_downloads.rb"
 
-      say "Added pages migration to db/migrate", MESSAGE_COLOR
+      say "Added downloads migration to db/migrate", MESSAGE_COLOR
     end
 
     def create_related_items
       sleep(2)
       migration_template "create_related_items.rb", "db/migrate/create_related_items.rb"
 
-      say "Added pages migration to db/migrate", MESSAGE_COLOR
+      say "Added related items migration to db/migrate", MESSAGE_COLOR
     end
 
     def create_settings
