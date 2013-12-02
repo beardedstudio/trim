@@ -32,10 +32,6 @@ module Trim
     def to_liquid
       self.image.url
     end
-
-    def style_for_inline
-      vertical ? :vertical : :inline
-    end
     
     rails_admin do
       visible false
@@ -44,7 +40,7 @@ module Trim
         field :image do
           thumb_method :thumb
         end  
-        fields :image, :caption, :alt_text, :vertical, :sort
+        fields :image, :caption, :alt_text, :sort
       end
     end
 

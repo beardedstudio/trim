@@ -13,8 +13,6 @@ class CreateImages < ActiveRecord::Migration
       t.integer  "image_file_size",                       :null => false
       t.string   "image_content_type"
       t.datetime "image_updated_at"
-      
-      t.boolean  "vertical",           :default => false, :null => false
 
       t.timestamps
     end
