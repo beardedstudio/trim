@@ -1,6 +1,5 @@
 - data_attributes = { :nestedmany => true }
-- unless field.orderable.blank?
-  - data_attributes.merge! :sortable => field.orderable 
+- data_attributes.merge!(:sortable => field.orderable) unless field.orderable.blank?
 
 .controls{:data => data_attributes}
   .btn-group
