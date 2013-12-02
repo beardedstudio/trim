@@ -67,6 +67,19 @@ module Trim
       say "Added pages routes to config/routes.rb", MESSAGE_COLOR
     end
 
+    def create_s3_config
+      sleep(2)
+      copy_file "config/s3.yml", "config/s3.yml"
+    end
+
+    def create_lead_images
+      sleep(2)
+      puts 'Installing Trim Lead Images'
+      migration_template "create_lead_images.rb", "db/migrate/create_lead_images.rb"
+
+      say "Added pages migration to db/migrate", MESSAGE_COLOR
+    end
+
     def execute_rake_tasks
       tasks = { :migrate => 'rake db:migrate',
                 :seed => 'rake db:seed' }

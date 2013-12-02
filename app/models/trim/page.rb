@@ -1,3 +1,6 @@
+require 'paperclip'
+require 'aws-sdk'
+
 module Trim
   class Page < ActiveRecord::Base
 
@@ -7,6 +10,7 @@ module Trim
 
     # Enable pages to be in nav
     has_nav_items
+    has_lead_items
 
     # Use liquid to render the body field
     renders_liquid
@@ -48,6 +52,7 @@ module Trim
 
       edit do
         field :title
+        field :lead_image
         field :body, :ck_editor
 
         group :admin do

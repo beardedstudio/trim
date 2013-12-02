@@ -1,0 +1,14 @@
+development:
+  bucket: development
+  access_key_id: 
+  secret_access_key: 
+
+staging:
+  bucket: development
+  access_key_id: 
+  secret_access_key: 
+
+performance:
+  bucket: development
+  access_key_id: 
+  secret_access_key:
