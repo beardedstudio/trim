@@ -23,8 +23,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'friendly_id', '~> 5.0.1'
   s.add_dependency 'liquid', '~> 2.6.0'
   s.add_dependency 'routing-filter', '~> 0.4.0.pre'
-  s.add_dependency 'paperclip'
-  s.add_dependency 'aws-sdk'
-  s.add_dependency 'ckeditor'
-
+  s.add_dependency 'ckeditor', '~> 4.0.6'
+  s.add_dependency 'paperclip', '~> 3.5.2'
+  s.add_dependency 'aws-sdk', '~> 1.29.0'
+  s.add_dependency 'formtastic', '~> 2.2.1'
+  s.add_dependency 'jquery_ui_rails_helpers', '0.0.4'
 end

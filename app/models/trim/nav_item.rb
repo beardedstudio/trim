@@ -218,8 +218,6 @@ module Trim
         field :custom_url
         field :open_in_new_window
       end
-
     end
-
   end
 end

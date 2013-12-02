@@ -1,0 +1,46 @@
+module Trim
+  class Setting < ActiveRecord::Base
+
+    def self.setting_fields
+      [ :twitter_name,
+        :facebook_url,
+        :street_address,
+        :city,
+        :state,
+        :zip_code,
+        :phone_number,
+        :contact_email,
+        :meta_description,
+        :meta_keywords] + self.notify_attributes.map{ |k, _v| k } + self.email_attributes
+    end
+
+    def self.notify_attributes
+      { :admin_contact_message_email => 'Message sent when the user fills in the contact-us form'}.map do |k, v|
+        ["notify_for_#{k}".to_sym, v]
+      end
+    end
+
+    def self.email_configuration
+      { :user_contact_message_confirmation_email => [:name, :email, :subject, :message] }
+    end
+
+    def self.email_attributes
+      keys = self.email_configuration.keys
+      keys.map { |k| ["#{k}_subject".to_sym, "#{k}_body".to_sym] }.flatten!
+    end
+
+    def self.email_placeholder_string(key)
+      email_configuration[key].map{ |placeholder| "{{ #{placeholder} }}" }.join(' ')
+    end
+
+    store :settings, :accessors => Setting.setting_fields
+
+    def self.factory
+      Setting.first || Setting.create
+    end
+
+    rails_admin do
+      visible false
+    end
+  end
+end

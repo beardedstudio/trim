@@ -1,6 +1,6 @@
 require 'rails_admin/config/actions'
 require 'rails_admin/config/actions/base'
- 
+
 module RailsAdmin
   module Config
     module Actions
@@ -21,11 +21,12 @@ module RailsAdmin
 
         register_instance_option :controller do
           proc do
-            @setting = Setting.factory
-            if request.get?
+            @setting = Trim::Setting.factory
 
-            else
+            unless request.get?
+
               @setting.update_attributes params[:setting]
+
               if @setting.save
                 flash[:success] = "Settings have been saved."
               else
@@ -35,7 +36,6 @@ module RailsAdmin
             end
           end
         end
-
       end
     end
   end

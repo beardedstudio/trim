@@ -11,6 +11,8 @@ require 'friendly_id'
 require 'paperclip'
 require 'aws-sdk'
 require 'ckeditor'
+require 'formtastic'
+require 'jquery_ui_rails_helpers'
 
 module Trim
   require 'trim/railtie' if defined?(Rails)
