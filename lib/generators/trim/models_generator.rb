@@ -33,7 +33,6 @@ module Trim
 
     def create_friendly_id_history_table
       sleep(2)
-      puts 'Installing Friendly Id'
       generate 'friendly_id'
 
       say "Installed friendly_id", MESSAGE_COLOR
@@ -41,7 +40,6 @@ module Trim
 
     def create_navs
       sleep(2)
-      puts 'Installing Trim Navs'
       migration_template "create_navs.rb", "db/migrate/create_navs.rb"
 
       say "Added navigation migration to db/migrate.rb", MESSAGE_COLOR
@@ -55,7 +53,6 @@ module Trim
 
     def create_pages
       sleep(2)
-      puts 'Installing Trim Pages'
       migration_template "create_pages.rb", "db/migrate/create_pages.rb"
 
       say "Added pages migration to db/migrate", MESSAGE_COLOR
@@ -69,7 +66,6 @@ module Trim
 
     def create_lead_images
       sleep(2)
-      puts 'Installing Trim Lead Images'
       migration_template "create_lead_images.rb", "db/migrate/create_lead_images.rb"
 
       say "Added pages migration to db/migrate", MESSAGE_COLOR
@@ -77,7 +73,6 @@ module Trim
 
     def create_images
       sleep(2)
-      puts 'Installing Trim Images'
       migration_template "create_images.rb", "db/migrate/create_images.rb"
 
       say "Added pages migration to db/migrate", MESSAGE_COLOR
@@ -85,7 +80,6 @@ module Trim
 
     def create_downloads
       sleep(2)
-      puts 'Installing Trim Downloads'
       migration_template "create_downloads.rb", "db/migrate/create_downloads.rb"
 
       say "Added pages migration to db/migrate", MESSAGE_COLOR
@@ -93,10 +87,15 @@ module Trim
 
     def create_related_items
       sleep(2)
-      puts 'Installing Trim Related Items'
       migration_template "create_related_items.rb", "db/migrate/create_related_items.rb"
 
       say "Added pages migration to db/migrate", MESSAGE_COLOR
+    end
+
+    def create_settings
+      sleep(2)
+      migration_template 'create_settings.rb', 'db/migrate/create_settings.rb'
+      say 'Adding settings migration to db/migrate'
     end
 
     def execute_rake_tasks

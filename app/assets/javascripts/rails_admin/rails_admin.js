@@ -20,12 +20,9 @@
 //=  require 'rails_admin/ra.widgets'
 //=  require 'rails_admin/ui'
 //=  require 'rails_admin/custom/ui'
-
-# The above is copied from RailsAdmin.
-# This section includes our own extensions.
+// Custom additions to rails_admin below
 //=  require 'rails_admin/ra.nested_many_sortable'
 //=  require 'rails_admin/ra.nested_forms_insert'
 //=  require 'rails_admin/ra.model_nested_sortable'
 //=  require 'rails_admin/ra.textarea_charcount'
 //=  require 'jquery.ui.tabs'
-

@@ -11,7 +11,7 @@ module RailsAdmin
         # Check https://github.com/sferik/rails_admin/blob/master/lib/rails_admin/config/actions/base.rb for more info.
 
         register_instance_option :link_icon do
-          'icon-move'
+          'icon-arrows'
         end
 
         register_instance_option :http_methods do
