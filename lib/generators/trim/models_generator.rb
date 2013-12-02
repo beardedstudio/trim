@@ -67,11 +67,6 @@ module Trim
       say "Added pages routes to config/routes.rb", MESSAGE_COLOR
     end
 
-    def create_s3_config
-      sleep(2)
-      copy_file "config/s3.yml", "config/s3.yml"
-    end
-
     def create_lead_images
       sleep(2)
       puts 'Installing Trim Lead Images'
