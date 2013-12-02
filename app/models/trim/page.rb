@@ -10,9 +10,12 @@ module Trim
 
     # Enable pages to be in nav
     has_nav_items
+
+    # Enable Media and Relationships
     has_lead_items
     has_images
     has_downloads
+    has_related_items
 
     # Use liquid to render the body field
     renders_liquid
@@ -44,6 +47,14 @@ module Trim
         end
       end
 
+      configure :excerpt do 
+        read_only true
+
+        pretty_value do 
+          value.html_safe unless value.nil?
+        end
+      end
+
       configure :slug do
         read_only true
       end
@@ -57,12 +68,21 @@ module Trim
         field :lead_image
         field :body, :ck_editor
 
+        group :excerpt do
+          label "Related / List View"
+          active false
+
+          field :excerpt
+          field :teaser
+        end
+
         group :media do
           label "Media and Related Items"
           active false
 
           field :images
           field :downloads
+          field :related_items
         end
 
         group :admin do

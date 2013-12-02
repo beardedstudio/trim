@@ -91,6 +91,14 @@ module Trim
       say "Added pages migration to db/migrate", MESSAGE_COLOR
     end
 
+    def create_related_items
+      sleep(2)
+      puts 'Installing Trim Related Items'
+      migration_template "create_related_items.rb", "db/migrate/create_related_items.rb"
+
+      say "Added pages migration to db/migrate", MESSAGE_COLOR
+    end
+
     def execute_rake_tasks
       tasks = { :migrate => 'rake db:migrate',
                 :seed => 'rake db:seed' }
