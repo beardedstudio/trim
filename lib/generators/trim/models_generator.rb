@@ -83,6 +83,14 @@ module Trim
       say "Added pages migration to db/migrate", MESSAGE_COLOR
     end
 
+    def create_downloads
+      sleep(2)
+      puts 'Installing Trim Downloads'
+      migration_template "create_downloads.rb", "db/migrate/create_downloads.rb"
+
+      say "Added pages migration to db/migrate", MESSAGE_COLOR
+    end
+
     def execute_rake_tasks
       tasks = { :migrate => 'rake db:migrate',
                 :seed => 'rake db:seed' }

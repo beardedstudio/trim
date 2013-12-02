@@ -29,6 +29,7 @@ module Trim
   require 'trim/models/renders_liquid.rb'
   require 'trim/models/has_lead_items.rb'
   require 'trim/models/has_images.rb'
+  require 'trim/models/has_downloads.rb'
 
   def self.setup
     yield self

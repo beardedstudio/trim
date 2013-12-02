@@ -12,6 +12,7 @@ module Trim
     has_nav_items
     has_lead_items
     has_images
+    has_downloads
 
     # Use liquid to render the body field
     renders_liquid
@@ -61,6 +62,7 @@ module Trim
           active false
 
           field :images
+          field :downloads
         end
 
         group :admin do
