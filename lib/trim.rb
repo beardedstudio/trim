@@ -28,6 +28,7 @@ module Trim
   require 'trim/models/rails_admin_default_i18n.rb'
   require 'trim/models/renders_liquid.rb'
   require 'trim/models/has_lead_items.rb'
+  require 'trim/models/has_images.rb'
 
   def self.setup
     yield self

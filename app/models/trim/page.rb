@@ -11,6 +11,7 @@ module Trim
     # Enable pages to be in nav
     has_nav_items
     has_lead_items
+    has_images
 
     # Use liquid to render the body field
     renders_liquid
@@ -54,6 +55,13 @@ module Trim
         field :title
         field :lead_image
         field :body, :ck_editor
+
+        group :media do
+          label "Media and Related Items"
+          active false
+
+          field :images
+        end
 
         group :admin do
           label "Administration"
