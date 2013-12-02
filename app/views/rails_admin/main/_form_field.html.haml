@@ -1,7 +1,0 @@
--# We're mixing in the formatted value, because otherwise it never gets called.
--# Why? Not really sure...
-- formatted = field.formatted_value
-- attributes = field.html_attributes
-- attributes.reverse_merge!({ :value => formatted }) unless formatted.blank?
-- attributes.reverse_merge!((hdv = field.html_default_value).nil? ? {} : { :value => hdv, :checked => hdv })
-= form.send field.view_helper, field.method_name, attributes
