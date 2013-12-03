@@ -37,14 +37,10 @@ module RoutingFilter
       # This provides us with a way to disable our navigation filter.
       use_navigation = !(params.delete(:navigation_filter) === false)
 
-      raise (self.methods - Object.methods).sort.join("\n")
-
       if use_navigation
         # Alter arguments to url_for.
         record = get_record_from_params params
         navigation_path = get_outgoing_path_for record, params
-
-        Rails.logger.info "navigation_path: #{ navigation_path.inspect }"
 
         if navigation_path.is_a?(Hash)
           params.replace navigation_path
@@ -60,7 +56,6 @@ module RoutingFilter
           # Modify path after url_for.
           url = result.is_a?(Array) ? result.first : result
 
-          Rails.logger.info "URL: #{url.inspect}"
           if navigation_path.is_a?(String)
             url.replace navigation_path
           elsif !params.blank? && %w(index show).include?(params[:action])
