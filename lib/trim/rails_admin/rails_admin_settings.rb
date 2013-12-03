@@ -12,7 +12,7 @@ module RailsAdmin
         end
 
         register_instance_option :http_methods do
-          [:get, :put]
+          [:get, :patch]
         end
 
         register_instance_option :root? do
