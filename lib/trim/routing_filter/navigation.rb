@@ -1,16 +1,14 @@
-require 'rails'
-require 'routing-filter'
-
 module RoutingFilter
   class Navigation < Filter
     include ActionDispatch::Routing::UrlFor
     include ActionDispatch::Routing::Redirection
     include Trim::Engine.routes.url_helpers
+    include Application.routes.url_helpers
 
     def around_recognize(path, env, &block)
       # We're not going to do this twice for the same request.
       yield if defined? env['ORIGINAL_PATH_INFO']
-      
+
       # We need a copy of the original path because the alteration is done in place.
       env['ORIGINAL_PATH_INFO'] = path.clone
 
@@ -39,10 +37,14 @@ module RoutingFilter
       # This provides us with a way to disable our navigation filter.
       use_navigation = !(params.delete(:navigation_filter) === false)
 
+      raise (self.methods - Object.methods).sort.join("\n")
+
       if use_navigation
         # Alter arguments to url_for.
         record = get_record_from_params params
         navigation_path = get_outgoing_path_for record, params
+
+        Rails.logger.info "navigation_path: #{ navigation_path.inspect }"
 
         if navigation_path.is_a?(Hash)
           params.replace navigation_path
@@ -58,10 +60,11 @@ module RoutingFilter
           # Modify path after url_for.
           url = result.is_a?(Array) ? result.first : result
 
+          Rails.logger.info "URL: #{url.inspect}"
           if navigation_path.is_a?(String)
             url.replace navigation_path
           elsif !params.blank? && %w(index show).include?(params[:action])
-            # This replacement prevents routes from picking up params from the 
+            # This replacement prevents routes from picking up params from the
             # current request. We're whitelisting index and show at the moment.
             url.replace url_for(params.merge(:only_path => true, :navigation_filter => false))
           end
@@ -103,7 +106,7 @@ module RoutingFilter
         args = (params[:action] == 'new') ? record.parent_navigation_arguments : record.navigation_arguments
         return params.merge(args)
       end
-      
+
       unless record.is_a?(Trim::NavItem)
         # This forces the calling code to use the default route instead of ours
         return nil if !defined?(record.nav_items) || record.nav_items.blank?

@@ -87,6 +87,7 @@ module Trim
       # Seems redundant, but that's how it works
       items.each_with_level(items) do |item, level|
         node = Tree::TreeNode.new(item.slug, item)
+
         if level > 0
           levels[level-1] << node
         end

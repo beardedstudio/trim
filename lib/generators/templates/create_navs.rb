@@ -13,7 +13,7 @@ class CreateNavs < ActiveRecord::Migration
       t.integer  "rgt"
       t.integer  "linked_id"
       t.string   "linked_type"
-      t.string   "slug",                :default => "",    :null => false
+      t.string   "slug"
       t.string   "custom_slug",         :default => "",    :null => false
       t.boolean  "use_linked_in_route", :default => false, :null => false
       t.datetime "created_at",                             :null => false

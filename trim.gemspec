@@ -26,7 +26,10 @@ Gem::Specification.new do |s|
   s.add_dependency 'ckeditor', '~> 4.0.6'
   s.add_dependency 'paperclip', '~> 3.5.2'
   s.add_dependency 'aws-sdk', '~> 1.29.0'
+  s.add_dependency 'uglifier', '~> 2.3.2'
   s.add_dependency 'formtastic', '~> 2.2.1'
   s.add_dependency 'jquery_ui_rails_helpers', '0.0.4'
-  s.add_dependency 'inherited_resources'
+  s.add_dependency 'inherited_resources', '~> 1.4.1'
+  s.add_dependency 'breakpoint', '~> 2.0.7'
+  s.add_dependency 'bootstrap-sass', '~> 2.3.2.2'
 end

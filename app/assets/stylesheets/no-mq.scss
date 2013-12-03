@@ -1,0 +1,18 @@
+// FOR BROWSERS THAT DO NOT SUPPORT MEDIA QUERIES.
+// No Wrapping Selector, Separate Stylesheet method
+// https://github.com/Team-Sass/breakpoint/wiki/No-Query-Fallbacks
+
+$breakpoint-no-queries: true;
+$breakpoint-no-query-fallbacks: true;
+
+@import 'screen';
+
+// set a fixed width for browsers that don't support media queries.
+.no-mq {
+  .container {
+    width: 1300px;
+  }
+  .home .container {
+    width: 1280px;
+  }
+}

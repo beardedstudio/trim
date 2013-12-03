@@ -49,7 +49,7 @@ module Trim
       def navigation_link(item, title=nil)
         return item if item.is_a? String
 
-        if item.is_a?(NavItem) && item.custom?
+        if item.is_a?(Trim::NavItem) && item.custom?
           return link_to item.title, item.custom_url, item.open_in_new_window? ? {:target => '_blank'} : {}
         end
 

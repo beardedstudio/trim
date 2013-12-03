@@ -1,0 +1,27 @@
+.layer-bottom
+  %footer.site-footer
+    .container.footer-inner
+      %section.social-media
+        %ul
+          %li
+            = link_to @setting.facebook_url do
+              %span.icon-facebook
+          %li
+            = link_to "http://twitter.com/#{@setting.twitter_name}" do
+              %span.icon-twitter
+
+      %section.contact-information
+        %article#organization-info.vcard{:itemscope => "", :itemtype => "http://schema.org/Organization"}
+          %h2.fn.org{:itemprop => "name"} Trim
+          .adr{:itemprop => "address", :itemscope => "", :itemtype => "http://schema.org/PostalAddress"}
+            %span.street-address= @setting.street_address
+            %span.locality{:itemprop => "addressLocality"}= "#{@setting.city},"
+            %span.region{:itemprop => "addressRegion"}= @setting.state
+            %span.postal-code{:itemprop => "postalCode"}=@setting.zip_code
+          %span.tel{:itemprop => "telephone"}= @setting.phone_number
+          %a.email{:href => "mailto:#{@setting.contact_email}", :itemprop => "email"}
+            %span.icon-email
+            = link_to "Email Us", "mailto:#{@setting.contact_email}"
+
+      %section.legal{:role => "contentinfo"}
+        %p.copyright Copyright #{Date.today.year.to_s} Bearded. All rights reserved.
