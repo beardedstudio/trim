@@ -25,7 +25,9 @@ module RailsAdmin
 
             unless request.get?
 
-              @setting.update_attributes params[:setting]
+              setting_params = params.require(:setting).permit Trim::Setting.setting_fields
+
+              @setting.update_attributes setting_params
 
               if @setting.save
                 flash[:success] = "Settings have been saved."
