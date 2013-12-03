@@ -2,7 +2,7 @@ module Trim
   module HasNavItems
 
     def has_nav_items
-      has_many :nav_items, :as => :linked, :inverse_of => :linked, :dependent => :destroy, :class_name => 'Trim::NavItem'
+      has_many :nav_items, :as => :linked, :class_name => 'Trim::NavItem', :inverse_of => :linked, :dependent => :destroy
       after_save :update_nav_items
       accepts_nested_attributes_for :nav_items, :allow_destroy => true
 

@@ -2,7 +2,7 @@ module Trim
   module HasDownloads
     
     def has_downloads
-      has_many :downloads, :as => :downloadable, :dependent => :destroy, :order => :sort, :class_name => 'Trim::Download'
+      has_many :downloads, -> { order('trim_downloads.sort ASC') }, :as => :downloadable, :class_name => 'Trim::Download', :dependent => :destroy
       accepts_nested_attributes_for :downloads, :allow_destroy => true
     end
 
