@@ -5,8 +5,8 @@ module Trim
   class Page < ActiveRecord::Base
 
     # Enable friendly_id
-    extend FriendlyId
-    friendly_id :title_or_custom, :use => [:history, :slugged]
+    # extend FriendlyId
+    # friendly_id :title_or_custom, :use => [:history, :slugged]
 
     # Enable pages to be in nav
     has_nav_items

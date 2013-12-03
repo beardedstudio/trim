@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::Base
+class TrimController < ApplicationController
   protect_from_forgery
 
   before_filter :initialize_editables
@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
   end
 
   def add_to_editables
-    @editables << resource
+    # @editables << resource
   end
 
   def after_sign_in_path_for(resource)
@@ -49,12 +49,12 @@ class ApplicationController < ActionController::Base
   end
 
   def current_ability
-    @current_ability ||= Ability.new(current_user, request.session_options[:id])
+    @current_ability ||= Ability.new(current_user)
   end
 
   def initialize_variables
     # since rails_admin inherits from ApplictionController,
-    # we either need to check for this or move our filters 
+    # we either need to check for this or move our filters
     # to an intermediate controller
     unless self.respond_to?(:rails_admin_controller?) && rails_admin_controller?
       @navs = {}

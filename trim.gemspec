@@ -28,4 +28,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'aws-sdk', '~> 1.29.0'
   s.add_dependency 'formtastic', '~> 2.2.1'
   s.add_dependency 'jquery_ui_rails_helpers', '0.0.4'
+  s.add_dependency 'inherited_resources'
 end
