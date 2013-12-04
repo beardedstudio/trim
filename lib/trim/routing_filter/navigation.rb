@@ -3,7 +3,6 @@ module RoutingFilter
     include ActionDispatch::Routing::UrlFor
     include ActionDispatch::Routing::Redirection
     include Trim::Engine.routes.url_helpers
-    include Application.routes.url_helpers
 
     def around_recognize(path, env, &block)
       # We're not going to do this twice for the same request.
