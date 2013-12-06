@@ -30,7 +30,7 @@ module Trim
     #   generate 'paper_trail:install'
     # end
 
-    def add_user_columns_migration(*args)
+    def add_user_columns_migration
       # ensure migration timestamps are different
       sleep(2)
 
@@ -39,7 +39,12 @@ module Trim
       gsub_file 'app/models/user.rb', /:registerable\,/, ''
     end
 
-    def add_admin_user_to_seeds(*args)
+    def add_user_attr_accessible
+      say 'adding name to user\'s attr_accessible list'
+      insert_into_file 'app/models/user.rb', ':name, ', :after => 'attr_accessible '
+    end
+
+    def add_admin_user_to_seeds
       code = <<-code
 User.create!  :email => 'admin@example.com',
               :name => 'Administrator',
@@ -50,7 +55,7 @@ User.create!  :email => 'admin@example.com',
       append_to_file 'db/seeds.rb', code
     end
 
-    def ensure_filtering_devise_password_parameters(*args)
+    def ensure_filtering_devise_password_parameters
       say 'Securing filtered parameters for devise', MESSAGE_COLOR
       application 'config.filter_parameters << :password_confirmation'
     end
