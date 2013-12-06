@@ -17,6 +17,8 @@ module Trim
 
     attr_accessor :tree, :active_item, :breadcrumbs
 
+    attr_accessible :title, :use_as_root
+
     after_initialize :initialize_variables
 
     scope :default_navs # Default is all, currently.
