@@ -11,7 +11,7 @@ module Trim
     cattr_reader :NAVS
 
     extend FriendlyId
-    friendly_id :title, :use => [:slugged, :finders]
+    friendly_id :title, :use => :slugged
 
     belongs_to :nav_item
 
