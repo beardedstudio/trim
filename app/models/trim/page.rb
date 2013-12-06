@@ -47,10 +47,10 @@ module Trim
         end
       end
 
-      configure :excerpt do 
+      configure :excerpt do
         read_only true
 
-        pretty_value do 
+        pretty_value do
           value.html_safe unless value.nil?
         end
       end
@@ -66,7 +66,9 @@ module Trim
       edit do
         field :title
         field :lead_image
-        field :body, :ck_editor
+        field :body do
+          ckeditor true
+        end
 
         group :excerpt do
           label "Related / List View"
