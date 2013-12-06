@@ -126,6 +126,10 @@ User.create!  :email => 'admin@example.com',
       insert_into_file 'config/initializers/rails_admin.rb', rails_admin_config, :before => 'end'
     end
 
+    def add_root_route
+      route 'root to: \'home#index\''
+    end
+
     def execute_rake_tasks
       tasks = { :migrate => 'rake db:migrate',
                 :seed => 'rake db:seed' }

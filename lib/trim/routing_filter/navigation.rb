@@ -1,16 +1,15 @@
-require 'rails'
-require 'routing-filter'
-
 module RoutingFilter
   class Navigation < Filter
     include ActionDispatch::Routing::UrlFor
     include ActionDispatch::Routing::Redirection
-    include Trim::Engine.routes.url_helpers
 
     def around_recognize(path, env, &block)
-      # We're not going to do this twice for the same request.
+      # We're not going to do this twice for the same request also
+      # do not look for nav items if this is a request for an asset.
       yield if defined? env['ORIGINAL_PATH_INFO']
-      
+
+      yield if path =~ /^\/assets/ and return
+
       # We need a copy of the original path because the alteration is done in place.
       env['ORIGINAL_PATH_INFO'] = path.clone
 
@@ -61,7 +60,7 @@ module RoutingFilter
           if navigation_path.is_a?(String)
             url.replace navigation_path
           elsif !params.blank? && %w(index show).include?(params[:action])
-            # This replacement prevents routes from picking up params from the 
+            # This replacement prevents routes from picking up params from the
             # current request. We're whitelisting index and show at the moment.
             url.replace url_for(params.merge(:only_path => true, :navigation_filter => false))
           end
@@ -103,7 +102,7 @@ module RoutingFilter
         args = (params[:action] == 'new') ? record.parent_navigation_arguments : record.navigation_arguments
         return params.merge(args)
       end
-      
+
       unless record.is_a?(Trim::NavItem)
         # This forces the calling code to use the default route instead of ours
         return nil if !defined?(record.nav_items) || record.nav_items.blank?

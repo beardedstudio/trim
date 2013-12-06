@@ -6,6 +6,7 @@ module Trim
       has_many :relating_items, :class_name => 'Trim::RelatedItem', :as => :related_to, :inverse_of => :related_to
 
       accepts_nested_attributes_for :related_items, :allow_destroy => true
+      attr_accessible :related_items_attributes
     end
 
   end

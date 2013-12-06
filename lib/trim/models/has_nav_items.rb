@@ -6,6 +6,8 @@ module Trim
       after_save :update_nav_items
       accepts_nested_attributes_for :nav_items, :allow_destroy => true
 
+      attr_accessible :nav_items_attributes
+
       send :include, InstanceMethods
     end
 

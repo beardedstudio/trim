@@ -26,6 +26,8 @@ module Trim
     # Allow excerpting of body/teaser
     has_excerpt
 
+    attr_accessible :title, :body, :intro, :excerpt, :teaser, :slug, :custom_slug, :is_private
+
     validates :title, :presence => true
     validates :teaser, :length => { :maximum => 150, :message => "Your teaser is too long (the maximum is 150 characters)." }, :allow_blank => true
 

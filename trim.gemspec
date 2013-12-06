@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'awesome_nested_set', '~>2.1.6'
   s.add_dependency 'aws-sdk', '~> 1.29.1'
+  s.add_dependency 'breakpoint', '~> 2.0.7'
   s.add_dependency 'cancan', '~> 1.6.10'
   s.add_dependency 'ckeditor', '~> 4.0.6'
   s.add_dependency 'devise', '~> 3.2.2'
@@ -29,4 +30,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails_admin', '~> 0.4.9'
   s.add_dependency 'routing-filter', '~> 0.3.1'
   s.add_dependency 'rubytree', '~> 0.8.3'
+  s.add_dependency 'compass-rails', '~> 1.1.2'
 end

@@ -1,0 +1,87 @@
+// typographic mixins and extends
+
+@mixin copy-face {
+  font-family: "ratio", "helvetica neue", helvetica, sans-serif;
+  font-weight: normal;
+}
+
+@mixin title-face {
+  font-family: "ratio-display", "helvetica neue", helvetica, sans-serif;
+  font-weight: 400;
+}
+
+@mixin title-face-bold {
+  font-family: "ratio-display", "helvetica neue", helvetica, sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+@mixin alternate-face {
+  font-family: "printf", "helvetica neue", helvetica, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+@mixin alternate-face-shadow {
+  @include text-shadow(0 0 10px rgba(224,217,194,0.8));
+}
+
+@mixin link {
+  color: $link-color;
+  text-decoration: none;
+
+  &:hover, &:focus {
+    color: $link-color-hover;
+    text-decoration: none;
+  }
+}
+
+@mixin heading-link {
+  color: $heading-color;
+  text-decoration: none;
+
+  &:hover, &:focus {
+    color: darken($heading-color, 15%);
+    text-decoration: underline;
+  }
+}
+
+@mixin heading {
+  @include title-face;
+  margin-bottom: 0.35em;
+  line-height: 1.2;
+  color: $heading-color;
+  a {
+    @include heading-link;
+  }
+}
+
+@mixin heading-1 {
+  @include heading;
+  font-size: 3em;
+}
+
+@mixin heading-2 {
+  @include heading;
+  font-size: 2.25em;
+}
+
+@mixin heading-3 {
+  @include heading;
+  font-size: 1.4em;
+}
+
+@mixin heading-4 {
+  @include heading;
+  font-size: 1.2em;
+}
+
+@mixin heading-5 {
+  @include heading;
+  font-size: 1em;
+}
+
+@mixin heading-6 {
+  @include heading;
+  font-size: 0.875em;
+}

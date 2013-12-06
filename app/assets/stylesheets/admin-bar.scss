@@ -1,0 +1,105 @@
+@import "bootstrap/variables";
+@import "rails_admin/base/variables";
+@import "bootstrap/mixins";
+
+@import "compass";
+@import "breakpoint";
+
+@import "lib/colors";
+@import "lib/grid";
+@import "lib/media-queries";
+@import "lib/general-mixins";
+
+///// Admin Bar
+
+// Nested to prevent styling conflicts.
+#admin_bar {
+  font-size: $baseFontSize;
+
+  .container-fluid {
+    padding-right: $gridGutterWidth;
+    padding-left: $gridGutterWidth;
+  }
+
+  @import "bootstrap/labels-badges";
+  @import "bootstrap/navs";
+  @import "bootstrap/navbar";
+}
+
+#admin_bar .navbar .nav > li > a {
+  text-shadow: none;
+  color: #aaa;
+
+  &:hover {
+    color: #eee;
+  }
+}
+
+// Room for the admin bar.
+body.with-admin-bar {
+  padding-top: $navbarHeight;
+}
+
+#admin_bar {
+  .navbar.navbar-fixed-top {
+    .navbar-inner {
+      background-color: #2c2c2c;
+      @include background-image(linear-gradient(#333, #222));
+      .container-fluid {
+        .admin {
+          display: none;
+
+          @include breakpoint($breakpoint-medium-width) {
+            display: block;
+            float: left;
+          }
+
+          li {
+            @include divider-right;
+            border-color: #444;
+
+            a:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+        .user {
+          float: left;
+
+          @include breakpoint($breakpoint-medium-width) {
+            float: right;
+          }
+
+          li {
+            @include divider-right;
+            border-color: #444;
+
+            @include breakpoint($breakpoint-medium-width) {
+              @include divider-none;
+              @include divider-left;
+              border-color: #444;
+            }
+
+            &:first-child {
+              @include breakpoint($breakpoint-medium-width) {
+                @include divider-none;
+              }
+            }
+
+            a:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+        .version {
+          display: none;
+          @include breakpoint($breakpoint-small-width) {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
+
+//// END ADMIN BAR

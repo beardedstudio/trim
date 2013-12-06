@@ -15,6 +15,9 @@ module Trim
 
     attr_accessor :tree, :in_tree
 
+    attr_accessible :parent_id, :title, :linked_id, :linked_type,
+                    :slug, :custom_slug, :is_resource, :route, :custom_url, :open_in_new_window
+
     serialize :route_params
 
     before_save :generate_path
@@ -87,6 +90,7 @@ module Trim
       # Seems redundant, but that's how it works
       items.each_with_level(items) do |item, level|
         node = Tree::TreeNode.new(item.slug, item)
+
         if level > 0
           levels[level-1] << node
         end

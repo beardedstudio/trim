@@ -1,7 +1,12 @@
 class TrimController < ApplicationController
+  layout 'trim'
+
+  helper Trim::ApplicationHelper
+
   protect_from_forgery
 
   before_filter :initialize_editables
+  before_filter :initialize_variables
 
   before_filter :reload_rails_admin, :if => :rails_admin_path?
 
@@ -41,7 +46,7 @@ class TrimController < ApplicationController
   end
 
   def add_to_editables
-    # @editables << resource
+    @editables << resource
   end
 
   def after_sign_in_path_for(resource)
@@ -64,12 +69,11 @@ class TrimController < ApplicationController
         @navs[nav.slug.to_sym] = nav
       end
 
-      # @setting ||= Setting.factory
+      @setting ||= Trim::Setting.factory
 
-      # @editables ||= []
+      @editables ||= []
 
-      path = request.env['ORIGINAL_PATH_INFO']
-      self.initialize_breadcrumbs path
+      initialize_breadcrumbs request.env['ORIGINAL_PATH_INFO']
     end
   end
 

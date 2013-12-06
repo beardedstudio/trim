@@ -1,0 +1,18 @@
+$text-color: #b7ac95; //darker brown
+$heading-color: #e0d9c2; //light cream
+$text-color-subtle: #7b7566;
+
+$highlight-color: #ab2400; //red
+$highlight-color-darken: #6f0000;
+
+$link-color: $heading-color;
+$link-color-hover: $text-color;
+
+$border-color: #47402f;
+
+$background-color: #000;
+$background-color-subtle: #201f1e;
+
+// rem mixin dependency:
+$base-font-multiplier: 1;
+

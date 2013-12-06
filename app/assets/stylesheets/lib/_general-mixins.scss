@@ -1,0 +1,125 @@
+@mixin divider-bottom {
+  padding-bottom: 1em;
+  border-bottom: 1px solid $border-color;
+  margin-bottom: 1em;
+}
+
+@mixin divider-top {
+  padding-top: 1em;
+  border-top: 1px solid $border-color;
+  margin-top: 1em;
+}
+
+@mixin divider-right {
+  padding-right: 1em;
+  border-right: 1px solid $border-color;
+  margin-right: 1em;
+}
+
+@mixin divider-left {
+  padding-left: 1em;
+  border-left: 1px solid $border-color;
+  margin-left: 1em;
+}
+
+@mixin divider-none {
+  padding: 0;
+  border: 0 none;
+  margin: 0;
+}
+
+@mixin icon-shadow {
+  @include text-shadow(0 0 3px rgba(224,217,194,0.7));
+}
+
+@mixin bleed-link {
+  color:$text-color;
+  @include single-transition(color, 1s, ease-in-out);
+  &:hover {
+    color: $highlight-color;
+  }
+}
+
+@mixin glow-link {
+  @include text-shadow(0 0 3px rgba(171,36,0,0.9));
+  @include single-transition(text-shadow, 0.3s, ease-in-out);
+  color:$highlight-color;
+  &:hover {
+    @include text-shadow(0 5px 12px rgba(245,23,0,0.4), 0 3px 5px rgba(245,23,0,0.6));
+  }
+}
+
+@mixin button {
+  @include title-face;
+  @include border-radius(2px);
+  text-transform:uppercase;
+  font-weight:700;
+  font-size: 1em;
+  padding: 0.5em 1.5em;
+  text-decoration: none;
+  text-align: center;
+  color: $background-color;
+  background-color: $heading-color;
+  margin-bottom: 0.5em;
+  @include single-transition(background-color, 0.5s, ease-in-out);
+
+  @include inline-block;
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    background-color: darken($link-color-hover, 10%);
+    color: $background-color;
+    outline: none;
+  }
+}
+
+@mixin button-form {
+  @include button;
+  border: 0 none;
+  &:hover,
+  &:focus {
+    cursor: pointer;
+  }
+}
+
+@mixin button-highlight {
+  @include button;
+  @include glow-link;
+  border: 0 none;
+  background-color: $background-color;
+  font-size: 0.875em;
+  padding: 0.35em 0.75em;
+  &:hover,
+  &:focus {
+    @include text-shadow(0 -5px 6px rgba(245,23,0,0.5), 0 5px 12px rgba(245,23,0,0.6), 0 3px 5px rgba(245,23,0,0.8));
+    background-color: $background-color;
+  }
+}
+
+@mixin button-blood {
+  @include button;
+  @include single-transition(all, 1.5s, ease-in-out);
+  @include inline-block;
+  background: {
+    image: image-url("blood-background.svg");
+    repeat: repeat-x;
+    position: -2px -70px;
+  }
+  &:hover, &:focus {
+    background-color: $highlight-color;
+    background: {
+      position: -2px 0;
+    }
+  }
+}
+
+@mixin hide {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
