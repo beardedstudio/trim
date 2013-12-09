@@ -1,1 +1,22 @@
-show.html.haml
+- content_for :title do 
+  = @page.title
+
+%section#main-content
+
+  %header#page-header
+    .container
+      %h1.page-title= @page.title
+
+  .container
+    %section#primary
+      %section.main-content
+        = render :partial => 'shared/lead_item', :object => @page
+
+        - # Main Body
+        - template = Liquid::Template.parse @page.body
+
+        = template.render(:renderable_context => @page).html_safe
+        
+      - # Related Items
+      - unless @page.related_items.blank?
+        = render :partial => 'shared/related_items', :locals => { :related_items => @page.related_items }

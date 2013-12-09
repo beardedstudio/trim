@@ -5,26 +5,21 @@ module Trim
   class Page < ActiveRecord::Base
 
     # Enable friendly_id
-    # extend FriendlyId
-    # friendly_id :title_or_custom, :use => [:history, :slugged]
+    extend FriendlyId
+    friendly_id :title_or_custom, :use => [:slugged]
 
     # Enable pages to be in nav
-    has_nav_items
+    extend HasNavItems
 
     # Enable Media and Relationships
-    has_lead_items
-    has_images
-    has_downloads
-    has_related_items
-
-    # Use liquid to render the body field
-    renders_liquid
-
-    # Keep a history
-    #has_paper_trail
+    extend HasLeadItems
+    extend HasImages
+    extend HasDownloads
+    extend HasRelatedItems
 
     # Allow excerpting of body/teaser
-    has_excerpt
+    extend HasExcerpt
+    has_excerpt :field => :body, :length => 150
 
     attr_accessible :title, :body, :intro, :excerpt, :teaser, :slug, :custom_slug, :is_private
 

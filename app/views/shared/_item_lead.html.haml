@@ -1,0 +1,8 @@
+- if item.respond_to?(:lead_image) && !item.lead_image.blank?
+  - image = item.lead_image
+- elsif item.respond_to?(:images) && item.images.any?
+  / Fallback to first insertable image
+  - image = item.images.first
+- unless image.blank?
+  = link_to item do
+    = image_tag image.image.url(:thumb), :alt => image.alt_text

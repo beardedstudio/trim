@@ -1,0 +1,15 @@
+- item_classes = local_assigns.has_key?(:item_classes) ? local_assigns[:item_classes] : []
+- item_classes << 'page'
+
+%article{ :class => item_classes }
+  - cache item do 
+    = render :partial => 'shared/item_lead', :locals => { :item => item }
+
+    %header
+      %h1
+        = link_to item.title, polymorphic_path(item)
+      - unless item.excerpt.blank?
+        .excerpt
+          %p
+            = item.excerpt.html_safe
+            = link_to "Read More", polymorphic_path(item), :class => 'read-more'

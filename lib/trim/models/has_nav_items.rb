@@ -1,14 +1,16 @@
 module Trim
   module HasNavItems
 
-    def has_nav_items
-      has_many :nav_items, :as => :linked, :class_name => 'Trim::NavItem', :inverse_of => :linked, :dependent => :destroy
-      after_save :update_nav_items
-      accepts_nested_attributes_for :nav_items, :allow_destroy => true
+    def self.extended(base)
+      base.class_eval do
+        has_many :nav_items, :as => :linked, :class_name => 'Trim::NavItem', :inverse_of => :linked, :dependent => :destroy
+        after_save :update_nav_items
+        accepts_nested_attributes_for :nav_items, :allow_destroy => true
 
-      attr_accessible :nav_items_attributes
-
-      send :include, InstanceMethods
+        attr_accessible :nav_items_attributes
+        
+        send :include, InstanceMethods
+      end
     end
 
     module InstanceMethods
@@ -21,5 +23,3 @@ module Trim
 
   end
 end
-
-ActiveRecord::Base.extend Trim::HasNavItems

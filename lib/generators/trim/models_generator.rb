@@ -63,5 +63,10 @@ module Trim
       migration_template 'create_settings.rb', 'db/migrate/create_settings.rb'
       say 'Adding settings migration to db/migrate'
     end
+
+    def remove_index_html
+      remove_file "public/index.html"
+      remove_file "app/assets/images/rails.png"
+    end
   end
 end
