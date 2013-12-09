@@ -1,0 +1,13 @@
+%section.related-content
+  - related_items.each_with_index do |relation, i| 
+    - unless relation.related_to.blank?
+      - item = relation.related_to
+      - path = polymorphic_path item
+
+      - related_item_classes = ['related-item']
+      - related_item_classes << "related-#{item.class.name.demodulize.parameterize}"
+      - related_item_classes << first_or_last_classes_by_index(i, related_items.count)
+      - related_item_classes << even_or_odd_classes_by_index(i)
+      - related_item_classes << "child-#{(i + 1)}"
+
+      = render :partial => "#{item.class.name.demodulize.tableize}/item", :locals => { :item => item, :item_classes => related_item_classes, :with_excerpt => true }

@@ -1,0 +1,5 @@
+%figure.inline-image
+  = image_tag inserted.image.url(:thumb), :alt => inserted.alt_text
+
+  - unless inserted.caption.blank?
+    %figcaption= inserted.caption

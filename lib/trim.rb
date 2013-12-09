@@ -35,6 +35,10 @@ module Trim
   require 'trim/models/has_downloads.rb'
   require 'trim/models/has_related_items.rb'
 
+  # Renderers
+  require 'trim/liquid/tags/image.rb'
+  require 'trim/liquid/tags/download.rb'
+
   def self.setup
     yield self
   end

@@ -1,1 +1,19 @@
-Homepage
+- content_for :title do 
+  = @page.title
+
+%section#main-content
+
+  %header#page-header
+    .container
+      %h1.page-title
+        Welcome to Trim
+
+  .container
+    %section#primary
+      %section.main-content
+        - # Main Body
+        You can customize all the things.
+        
+      - # Related Items
+      - unless @page.related_items.blank?
+        = render :partial => 'shared/related_items', :locals => { :related_items => @page.related_items }

@@ -116,5 +116,10 @@ module Trim
     def build_default_nav
       Nav.rebuild_navs!
     end
+
+    def remove_index_html
+      remove_file "public/index.html"
+      remove_file "app/assets/images/rails.png"
+    end
   end
 end
