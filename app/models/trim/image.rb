@@ -18,6 +18,8 @@ module Trim
         :thumb => '-strip -interlace Plane -quality 85',
       }
 
+    attr_accessible :caption, :alt_text, :sort, :image, :imageable
+
     validates_attachment_presence :image
     validates_numericality_of :sort
 

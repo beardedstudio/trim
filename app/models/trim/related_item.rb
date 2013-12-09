@@ -7,6 +7,9 @@ module Trim
     delegate :title, :to => :related_to, :allow_nil => true
     delegate :excerpt, :to => :related_to, :allow_nil => true
 
+    attr_accessible :related_to_id, :related_from_id, :related_to_type, 
+                    :related_from_type, :sort
+
     validates :related_to, :presence => true
 
     default_scope order('sort ASC')

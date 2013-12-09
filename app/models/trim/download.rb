@@ -1,5 +1,6 @@
 module Trim
   class Download < ActiveRecord::Base
+    attr_accessible :title, :sort, :download, :downloadable
 
     belongs_to :downloadable, :polymorphic => true
 

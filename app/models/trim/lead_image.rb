@@ -19,6 +19,8 @@ module Trim
         :thumb => '-strip -interlace Plane -quality 85',
       }
 
+    attr_accessible :alt_text, :image, :imageable
+
     validates_attachment_presence :image
 
     before_save Proc.new{ self.imageable.touch }
