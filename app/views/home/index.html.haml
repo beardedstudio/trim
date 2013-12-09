@@ -1,5 +1,5 @@
 - content_for :title do 
-  = @page.title
+  Welcome to Trim
 
 %section#main-content
 
@@ -13,7 +13,4 @@
       %section.main-content
         - # Main Body
         You can customize all the things.
-        
-      - # Related Items
-      - unless @page.related_items.blank?
-        = render :partial => 'shared/related_items', :locals => { :related_items => @page.related_items }
+
