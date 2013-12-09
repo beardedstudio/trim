@@ -12,10 +12,10 @@
 
             - @editables.each do |editable|
               - next unless can? :edit, editable
-              - type = editable.class.name.underscore.parameterize
+              - type = editable.class.name.demodulize
               - title_method = editable.respond_to?(:title_method) ? editable.title_method : :title
               - title = content_tag 'span', "Edit #{type.humanize}: #{editable.send(title_method)}"
-              %li= link_to title, rails_admin.edit_path(type, editable.id)
+              %li= link_to title, rails_admin.edit_path(editable.class.name.split("::").map(&:underscore).join("~"), editable.id)
 
         .nav-collapse.user.pull-right
           %ul.nav
