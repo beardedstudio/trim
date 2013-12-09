@@ -40,5 +40,5 @@ module Trim
   end
 end
 
+require 'generators/trim/trim_generator'
 require 'trim/engine'
-require 'trim/routing_filter/navigation.rb'

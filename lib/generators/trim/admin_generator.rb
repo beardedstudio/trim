@@ -1,13 +1,8 @@
-require 'rails/generators'
 require 'rails/generators/active_record'
 
 module Trim
   # This generator adds a migration for the User model
-  class AdminGenerator < Rails::Generators::Base
-
-    MESSAGE_COLOR = :yellow
-    ERROR_COLOR = :red
-    SUCCESS_COLOR = :green
+  class AdminGenerator < TrimGenerator
 
     include Rails::Generators::Migration
 
@@ -46,10 +41,13 @@ module Trim
 
     def add_admin_user_to_seeds
       code = <<-code
-User.create!  :email => 'admin@example.com',
+user = User.find_by_email 'admin@example.com'
+
+User.create!( :email => 'admin@example.com',
               :name => 'Administrator',
               :password => 'password',
-              :password_confirmation => 'password'
+              :password_confirmation => 'password') if user.nil?
+
       code
 
       append_to_file 'db/seeds.rb', code
@@ -128,23 +126,6 @@ User.create!  :email => 'admin@example.com',
 
     def add_root_route
       route 'root to: \'home#index\''
-    end
-
-    def execute_rake_tasks
-      tasks = { :migrate => 'rake db:migrate',
-                :seed => 'rake db:seed' }
-
-      tasks.each do |name, task|
-
-        say "Running #{task}", MESSAGE_COLOR
-        if system tasks[name]
-          tasks.delete name
-        else
-          say "There was an error finalizing the install. Task Failed: '#{task}'", ERROR_COLOR
-        end
-      end
-
-      say "Trim install complete.", SUCCESS_COLOR if tasks.blank?
     end
   end
 end
