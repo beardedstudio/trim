@@ -7,14 +7,17 @@ class Image < Liquid::Tag
 
   def render(context)
     item = context.environments.first[:renderable_context]
-    if item && item.respond_to?(:images)
+
+    if item && item.respond_to? :images
+
       image = item.images[@index]
+
       if image
-        controller = ActionController::Base.new()
-        return controller.render_to_string(:partial => 'images/inserted', :object => image)
+        controller = ActionController::Base.new
+        return controller.render_to_string :partial => 'images/inserted', :object => image
       end
     end
   end
 end
 
-Liquid::Template.register_tag('image', Image)
+Liquid::Template.register_tag 'image', Image
