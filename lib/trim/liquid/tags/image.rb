@@ -8,7 +8,7 @@ class Image < Liquid::Tag
   def render(context)
     item = context.environments.first[:renderable_context]
 
-    if item && item.respond_to? :images
+    if item && item.respond_to?(:images)
 
       image = item.images[@index]
 

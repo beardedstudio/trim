@@ -1,6 +1,3 @@
-require 'paperclip'
-require 'aws-sdk'
-
 module Trim
   class Page < ActiveRecord::Base
 
@@ -16,6 +13,7 @@ module Trim
     extend HasImages
     extend HasDownloads
     extend HasRelatedItems
+    extend HasVideos
 
     # Allow excerpting of body/teaser
     extend HasExcerpt
@@ -81,6 +79,7 @@ module Trim
 
           field :images
           field :downloads
+          field :videos
           field :related_items
         end
 

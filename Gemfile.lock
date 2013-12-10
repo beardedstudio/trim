@@ -20,6 +20,7 @@ PATH
       rails (~> 3.2.16)
       rails_admin (~> 0.4.9)
       routing-filter (~> 0.3.1)
+      ruby-oembed (~> 0.8.9)
       rubytree (~> 0.8.3)
       sass-rails (~> 3.2.6)
 
@@ -218,6 +219,7 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    ruby-oembed (0.8.9)
     rubytree (0.8.3)
       json (>= 1.7.5)
       structured_warnings (>= 0.1.3)

@@ -11,4 +11,6 @@
 // about supported directives.
 //
 //= require_self
+//= require jquery.fitvids
+//= require videos
 //
