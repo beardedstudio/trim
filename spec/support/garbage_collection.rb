@@ -1,4 +1,4 @@
-RSpec.configure do |config| 
+RSpec.configure do |config|
 
   config.before(:all) do
     DeferredGarbageCollection.start

@@ -7,7 +7,7 @@ module Trim
 
     def self.extended(base)
       base.class_eval do
-        send :include, InstanceMethods 
+        send :include, InstanceMethods
       end
 
       def has_excerpt(options = {})
@@ -29,14 +29,15 @@ module Trim
 
         # Teaser overrides truncated body.
         # It is presumed that teaser is character limited to the exerpt length.
-        if self.respond_to?(:teaser) && !self.teaser.blank?
-          excerpt = self.teaser
+        excerpt = if self.respond_to?(:teaser) && !self.teaser.blank?
+          self.teaser
         else
-          excerpt = self.send self.class.excerpt_options[:field]
-          
-          excerpt = helper.strip_tags(excerpt)
-          excerpt = helper.truncate excerpt, :length => self.class.excerpt_options[:length], :separator => ' ', :omission => '&#8230;'
-        end      
+          full = self.send self.class.excerpt_options[:field]
+
+          full = helper.strip_tags(full)
+
+          helper.truncate full, :length => self.class.excerpt_options[:length], :separator => ' ', :omission => '&#8230;'
+        end
 
         self.excerpt = excerpt.strip.html_safe
       end

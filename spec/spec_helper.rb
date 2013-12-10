@@ -13,6 +13,7 @@ require 'support/garbage_collection'
 require 'support/paperclip'
 require 'support/devise'
 require 'paperclip/matchers'
+require 'dummy/config/environment'
 
 Rails.backtrace_cleaner.remove_silencers!
 
@@ -23,14 +24,17 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false
   config.order = "random"
+
+  config.include Rails.application.routes.url_helpers, :type => :routing
+
   unless ENV['ALL']
     config.filter_run_excluding :js => true
   end
 
-  # config.before :suite do 
+  # config.before :suite do
   #   load Rails.root.join('db/seeds.rb')
   # end
-  
+
   def testing_image_path
     "../support/test-image.jpg"
   end

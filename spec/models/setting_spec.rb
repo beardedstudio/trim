@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Trim::Setting' do
 
   it 'should save settings information from a hash' do

@@ -35,6 +35,8 @@ module Trim
 
     store :settings, :accessors => Setting.setting_fields
 
+    attr_accessible *setting_fields
+
     def self.factory
       Setting.first || Setting.create
     end

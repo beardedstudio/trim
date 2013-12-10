@@ -1,5 +1,28 @@
 require 'machinist/active_record'
 
+Trim::Image.blueprint do
+  caption { "This is a great image!" }
+  alt_text { "A picture of a cartoon spaceship" }
+  image { get_testing_image }
+end
+
+Trim::Nav.blueprint do
+  title { "Nav #{sn}" }
+end
+
+Trim::NavItem.blueprint do
+  title { "Nav Item #{sn}" }
+end
+
+Trim::Page.blueprint do
+  title { "Page #{sn}" }
+  body { 'Lorem ipsum dolor' }
+end
+
+Trim::Page.blueprint :private do
+  is_private { true }
+end
+
 Trim::Setting.blueprint do
   twitter_name { 'beardedstudio' }
   facebook_url { 'https://www.facebook.com/beardedstudio' }
@@ -12,15 +35,20 @@ Trim::Setting.blueprint do
   meta_description { 'A Pittsburgh, PA-based Web Design and Development Studio' }
   meta_keywords { 'Beard, Internet, Web, Doge, Website' }
 
-  Setting.email_configuration.each do |name, params|
-    send("#{name}_body") { Setting.email_placeholder_string name }
-    send("#{name}_subject") { Setting.email_placeholder_string name }
+  Trim::Setting.email_configuration.each do |name, params|
+    send("#{name}_body") { Trim::Setting.email_placeholder_string name }
+    send("#{name}_subject") { Trim::Setting.email_placeholder_string name }
   end
 end
 
-Trim::Page.blueprint do
-  title { "Page #{sn}" }
-  body { 'Lorem ipsum dolor' }
+Trim::RelatedItem.blueprint do
+  related_to { Trim::Page.make! }
+end
+
+User.blueprint do
+  email { "person#{sn}@example.com" }
+  password { 'password' }
+  password_confirmation { 'password' }
 end
 
 def get_testing_image
