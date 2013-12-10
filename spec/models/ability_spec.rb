@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'cancan/matchers'
 
 def set_up_ability(options = {})

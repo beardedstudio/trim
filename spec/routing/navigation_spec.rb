@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Navigation do
   describe "routing" do
 
