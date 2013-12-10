@@ -1,0 +1,463 @@
+# RailsAdmin config file. Generated on December 10, 2013 09:45
+# See github.com/sferik/rails_admin for more informations
+
+RailsAdmin.config do |config|
+
+
+  ################  Global configuration  ################
+
+  # Set the admin name here (optional second array element will appear in red). For example:
+  config.main_app_name = ['Dummy', 'Admin']
+  # or for a more dynamic name:
+  # config.main_app_name = Proc.new { |controller| [Rails.application.engine_name.titleize, controller.params['action'].titleize] }
+
+  # RailsAdmin may need a way to know who the current user is]
+  config.current_user_method { current_user } # auto-generated
+
+  # If you want to track changes on your models:
+  # config.audit_with :history, 'User'
+
+  # Or with a PaperTrail: (you need to install it first)
+  # config.audit_with :paper_trail, 'User'
+
+  # Display empty fields in show views:
+  # config.compact_show_view = false
+
+  # Number of default rows per-page:
+  # config.default_items_per_page = 20
+
+  # Exclude specific models (keep the others):
+  # config.excluded_models = ['Trim::Download', 'Trim::Image', 'Trim::LeadImage', 'Trim::Nav', 'Trim::NavItem', 'Trim::Page', 'Trim::RelatedItem', 'Trim::Setting']
+
+  # Include specific models (exclude the others):
+  # config.included_models = ['Trim::Download', 'Trim::Image', 'Trim::LeadImage', 'Trim::Nav', 'Trim::NavItem', 'Trim::Page', 'Trim::RelatedItem', 'Trim::Setting']
+
+  # Label methods for model instances:
+  # config.label_methods << :description # Default is [:name, :title]
+
+
+  ################  Model configuration  ################
+
+  # Each model configuration can alternatively:
+  #   - stay here in a `config.model 'ModelName' do ... end` block
+  #   - go in the model definition file in a `rails_admin do ... end` block
+
+  # This is your choice to make:
+  #   - This initializer is loaded once at startup (modifications will show up when restarting the application) but all RailsAdmin configuration would stay in one place.
+  #   - Models are reloaded at each request in development mode (when modified), which may smooth your RailsAdmin development workflow.
+
+
+  # Now you probably need to tour the wiki a bit: https://github.com/sferik/rails_admin/wiki
+  # Anyway, here is how RailsAdmin saw your application's models when you ran the initializer:
+
+
+
+  ###  Trim::Download  ###
+
+  # config.model 'Trim::Download' do
+
+  #   # You can copy this to a 'rails_admin do ... end' block inside your trim/download.rb model definition
+
+  #   # Found associations:
+
+  #     configure :downloadable, :polymorphic_association 
+
+  #   # Found columns:
+
+  #     configure :id, :integer 
+  #     configure :downloadable_id, :integer         # Hidden 
+  #     configure :downloadable_type, :string         # Hidden 
+  #     configure :caption, :text 
+  #     configure :title, :string 
+  #     configure :sort, :integer 
+  #     configure :download_file_name, :string         # Hidden 
+  #     configure :download_content_type, :string         # Hidden 
+  #     configure :download_file_size, :integer         # Hidden 
+  #     configure :download_updated_at, :datetime         # Hidden 
+  #     configure :download, :paperclip 
+  #     configure :created_at, :datetime 
+  #     configure :updated_at, :datetime 
+
+  #   # Cross-section configuration:
+
+  #     # object_label_method :name     # Name of the method called for pretty printing an *instance* of ModelName
+  #     # label 'My model'              # Name of ModelName (smartly defaults to ActiveRecord's I18n API)
+  #     # label_plural 'My models'      # Same, plural
+  #     # weight 0                      # Navigation priority. Bigger is higher.
+  #     # parent OtherModel             # Set parent model for navigation. MyModel will be nested below. OtherModel will be on first position of the dropdown
+  #     # navigation_label              # Sets dropdown entry's name in navigation. Only for parents!
+
+  #   # Section specific configuration:
+
+  #     list do
+  #       # filters [:id, :name]  # Array of field names which filters should be shown by default in the table header
+  #       # items_per_page 100    # Override default_items_per_page
+  #       # sort_by :id           # Sort column (default is primary key)
+  #       # sort_reverse true     # Sort direction (default is true for primary key, last created first)
+  #     end
+  #     show do; end
+  #     edit do; end
+  #     export do; end
+  #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
+  #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
+  #     # using `field` instead of `configure` will exclude all other fields and force the ordering
+  # end
+
+
+  ###  Trim::Image  ###
+
+  # config.model 'Trim::Image' do
+
+  #   # You can copy this to a 'rails_admin do ... end' block inside your trim/image.rb model definition
+
+  #   # Found associations:
+
+  #     configure :imageable, :polymorphic_association 
+
+  #   # Found columns:
+
+  #     configure :id, :integer 
+  #     configure :imageable_id, :integer         # Hidden 
+  #     configure :imageable_type, :string         # Hidden 
+  #     configure :caption, :text 
+  #     configure :alt_text, :string 
+  #     configure :sort, :integer 
+  #     configure :image_file_name, :string         # Hidden 
+  #     configure :image_content_type, :string         # Hidden 
+  #     configure :image_file_size, :integer         # Hidden 
+  #     configure :image_updated_at, :datetime         # Hidden 
+  #     configure :image, :paperclip 
+  #     configure :created_at, :datetime 
+  #     configure :updated_at, :datetime 
+
+  #   # Cross-section configuration:
+
+  #     # object_label_method :name     # Name of the method called for pretty printing an *instance* of ModelName
+  #     # label 'My model'              # Name of ModelName (smartly defaults to ActiveRecord's I18n API)
+  #     # label_plural 'My models'      # Same, plural
+  #     # weight 0                      # Navigation priority. Bigger is higher.
+  #     # parent OtherModel             # Set parent model for navigation. MyModel will be nested below. OtherModel will be on first position of the dropdown
+  #     # navigation_label              # Sets dropdown entry's name in navigation. Only for parents!
+
+  #   # Section specific configuration:
+
+  #     list do
+  #       # filters [:id, :name]  # Array of field names which filters should be shown by default in the table header
+  #       # items_per_page 100    # Override default_items_per_page
+  #       # sort_by :id           # Sort column (default is primary key)
+  #       # sort_reverse true     # Sort direction (default is true for primary key, last created first)
+  #     end
+  #     show do; end
+  #     edit do; end
+  #     export do; end
+  #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
+  #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
+  #     # using `field` instead of `configure` will exclude all other fields and force the ordering
+  # end
+
+
+  ###  Trim::LeadImage  ###
+
+  # config.model 'Trim::LeadImage' do
+
+  #   # You can copy this to a 'rails_admin do ... end' block inside your trim/lead_image.rb model definition
+
+  #   # Found associations:
+
+  #     configure :imageable, :polymorphic_association 
+
+  #   # Found columns:
+
+  #     configure :id, :integer 
+  #     configure :imageable_id, :integer         # Hidden 
+  #     configure :imageable_type, :string         # Hidden 
+  #     configure :alt_text, :string 
+  #     configure :image_file_name, :string         # Hidden 
+  #     configure :image_content_type, :string         # Hidden 
+  #     configure :image_file_size, :integer         # Hidden 
+  #     configure :image_updated_at, :datetime         # Hidden 
+  #     configure :image, :paperclip 
+  #     configure :created_at, :datetime 
+  #     configure :updated_at, :datetime 
+
+  #   # Cross-section configuration:
+
+  #     # object_label_method :name     # Name of the method called for pretty printing an *instance* of ModelName
+  #     # label 'My model'              # Name of ModelName (smartly defaults to ActiveRecord's I18n API)
+  #     # label_plural 'My models'      # Same, plural
+  #     # weight 0                      # Navigation priority. Bigger is higher.
+  #     # parent OtherModel             # Set parent model for navigation. MyModel will be nested below. OtherModel will be on first position of the dropdown
+  #     # navigation_label              # Sets dropdown entry's name in navigation. Only for parents!
+
+  #   # Section specific configuration:
+
+  #     list do
+  #       # filters [:id, :name]  # Array of field names which filters should be shown by default in the table header
+  #       # items_per_page 100    # Override default_items_per_page
+  #       # sort_by :id           # Sort column (default is primary key)
+  #       # sort_reverse true     # Sort direction (default is true for primary key, last created first)
+  #     end
+  #     show do; end
+  #     edit do; end
+  #     export do; end
+  #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
+  #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
+  #     # using `field` instead of `configure` will exclude all other fields and force the ordering
+  # end
+
+
+  ###  Trim::Nav  ###
+
+  # config.model 'Trim::Nav' do
+
+  #   # You can copy this to a 'rails_admin do ... end' block inside your trim/nav.rb model definition
+
+  #   # Found associations:
+
+  #     configure :nav_item, :belongs_to_association 
+
+  #   # Found columns:
+
+  #     configure :id, :integer 
+  #     configure :title, :string 
+  #     configure :slug, :string 
+  #     configure :nav_item_id, :integer         # Hidden 
+  #     configure :depth_start, :integer 
+  #     configure :depth_end, :integer 
+  #     configure :item_start, :integer 
+  #     configure :item_end, :integer 
+  #     configure :use_as_root, :boolean 
+  #     configure :created_at, :datetime 
+  #     configure :updated_at, :datetime 
+
+  #   # Cross-section configuration:
+
+  #     # object_label_method :name     # Name of the method called for pretty printing an *instance* of ModelName
+  #     # label 'My model'              # Name of ModelName (smartly defaults to ActiveRecord's I18n API)
+  #     # label_plural 'My models'      # Same, plural
+  #     # weight 0                      # Navigation priority. Bigger is higher.
+  #     # parent OtherModel             # Set parent model for navigation. MyModel will be nested below. OtherModel will be on first position of the dropdown
+  #     # navigation_label              # Sets dropdown entry's name in navigation. Only for parents!
+
+  #   # Section specific configuration:
+
+  #     list do
+  #       # filters [:id, :name]  # Array of field names which filters should be shown by default in the table header
+  #       # items_per_page 100    # Override default_items_per_page
+  #       # sort_by :id           # Sort column (default is primary key)
+  #       # sort_reverse true     # Sort direction (default is true for primary key, last created first)
+  #     end
+  #     show do; end
+  #     edit do; end
+  #     export do; end
+  #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
+  #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
+  #     # using `field` instead of `configure` will exclude all other fields and force the ordering
+  # end
+
+
+  ###  Trim::NavItem  ###
+
+  # config.model 'Trim::NavItem' do
+
+  #   # You can copy this to a 'rails_admin do ... end' block inside your trim/nav_item.rb model definition
+
+  #   # Found associations:
+
+  #     configure :parent, :belongs_to_association 
+  #     configure :linked, :polymorphic_association 
+  #     configure :children, :has_many_association 
+  #     configure :navs, :has_many_association 
+
+  #   # Found columns:
+
+  #     configure :id, :integer 
+  #     configure :title, :string 
+  #     configure :description, :text 
+  #     configure :master_item, :integer 
+  #     configure :path, :string 
+  #     configure :route, :enum 
+  #     configure :route_params, :serialized 
+  #     configure :parent_id, :integer         # Hidden 
+  #     configure :lft, :integer 
+  #     configure :rgt, :integer 
+  #     configure :linked_id, :integer         # Hidden 
+  #     configure :linked_type, :string         # Hidden 
+  #     configure :slug, :string 
+  #     configure :custom_slug, :string 
+  #     configure :use_linked_in_route, :boolean 
+  #     configure :created_at, :datetime 
+  #     configure :updated_at, :datetime 
+  #     configure :custom_url, :string 
+  #     configure :open_in_new_window, :boolean 
+
+  #   # Cross-section configuration:
+
+  #     # object_label_method :name     # Name of the method called for pretty printing an *instance* of ModelName
+  #     # label 'My model'              # Name of ModelName (smartly defaults to ActiveRecord's I18n API)
+  #     # label_plural 'My models'      # Same, plural
+  #     # weight 0                      # Navigation priority. Bigger is higher.
+  #     # parent OtherModel             # Set parent model for navigation. MyModel will be nested below. OtherModel will be on first position of the dropdown
+  #     # navigation_label              # Sets dropdown entry's name in navigation. Only for parents!
+
+  #   # Section specific configuration:
+
+  #     list do
+  #       # filters [:id, :name]  # Array of field names which filters should be shown by default in the table header
+  #       # items_per_page 100    # Override default_items_per_page
+  #       # sort_by :id           # Sort column (default is primary key)
+  #       # sort_reverse true     # Sort direction (default is true for primary key, last created first)
+  #     end
+  #     show do; end
+  #     edit do; end
+  #     export do; end
+  #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
+  #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
+  #     # using `field` instead of `configure` will exclude all other fields and force the ordering
+  # end
+
+
+  ###  Trim::Page  ###
+
+  # config.model 'Trim::Page' do
+
+  #   # You can copy this to a 'rails_admin do ... end' block inside your trim/page.rb model definition
+
+  #   # Found associations:
+
+  #     configure :nav_items, :has_many_association 
+  #     configure :lead_image, :has_one_association 
+  #     configure :images, :has_many_association 
+  #     configure :downloads, :has_many_association 
+  #     configure :related_items, :has_many_association 
+  #     configure :relating_items, :has_many_association 
+
+  #   # Found columns:
+
+  #     configure :id, :integer 
+  #     configure :title, :string 
+  #     configure :body, :text 
+  #     configure :teaser, :text 
+  #     configure :excerpt, :text 
+  #     configure :slug, :string 
+  #     configure :custom_slug, :string 
+  #     configure :is_private, :boolean 
+  #     configure :created_at, :datetime 
+  #     configure :updated_at, :datetime 
+
+  #   # Cross-section configuration:
+
+  #     # object_label_method :name     # Name of the method called for pretty printing an *instance* of ModelName
+  #     # label 'My model'              # Name of ModelName (smartly defaults to ActiveRecord's I18n API)
+  #     # label_plural 'My models'      # Same, plural
+  #     # weight 0                      # Navigation priority. Bigger is higher.
+  #     # parent OtherModel             # Set parent model for navigation. MyModel will be nested below. OtherModel will be on first position of the dropdown
+  #     # navigation_label              # Sets dropdown entry's name in navigation. Only for parents!
+
+  #   # Section specific configuration:
+
+  #     list do
+  #       # filters [:id, :name]  # Array of field names which filters should be shown by default in the table header
+  #       # items_per_page 100    # Override default_items_per_page
+  #       # sort_by :id           # Sort column (default is primary key)
+  #       # sort_reverse true     # Sort direction (default is true for primary key, last created first)
+  #     end
+  #     show do; end
+  #     edit do; end
+  #     export do; end
+  #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
+  #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
+  #     # using `field` instead of `configure` will exclude all other fields and force the ordering
+  # end
+
+
+  ###  Trim::RelatedItem  ###
+
+  # config.model 'Trim::RelatedItem' do
+
+  #   # You can copy this to a 'rails_admin do ... end' block inside your trim/related_item.rb model definition
+
+  #   # Found associations:
+
+  #     configure :related_from, :polymorphic_association 
+  #     configure :related_to, :polymorphic_association 
+
+  #   # Found columns:
+
+  #     configure :id, :integer 
+  #     configure :related_from_id, :integer         # Hidden 
+  #     configure :related_from_type, :string         # Hidden 
+  #     configure :related_to_id, :integer         # Hidden 
+  #     configure :related_to_type, :string         # Hidden 
+  #     configure :sort, :integer 
+  #     configure :created_at, :datetime 
+  #     configure :updated_at, :datetime 
+
+  #   # Cross-section configuration:
+
+  #     # object_label_method :name     # Name of the method called for pretty printing an *instance* of ModelName
+  #     # label 'My model'              # Name of ModelName (smartly defaults to ActiveRecord's I18n API)
+  #     # label_plural 'My models'      # Same, plural
+  #     # weight 0                      # Navigation priority. Bigger is higher.
+  #     # parent OtherModel             # Set parent model for navigation. MyModel will be nested below. OtherModel will be on first position of the dropdown
+  #     # navigation_label              # Sets dropdown entry's name in navigation. Only for parents!
+
+  #   # Section specific configuration:
+
+  #     list do
+  #       # filters [:id, :name]  # Array of field names which filters should be shown by default in the table header
+  #       # items_per_page 100    # Override default_items_per_page
+  #       # sort_by :id           # Sort column (default is primary key)
+  #       # sort_reverse true     # Sort direction (default is true for primary key, last created first)
+  #     end
+  #     show do; end
+  #     edit do; end
+  #     export do; end
+  #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
+  #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
+  #     # using `field` instead of `configure` will exclude all other fields and force the ordering
+  # end
+
+
+  ###  Trim::Setting  ###
+
+  # config.model 'Trim::Setting' do
+
+  #   # You can copy this to a 'rails_admin do ... end' block inside your trim/setting.rb model definition
+
+  #   # Found associations:
+
+
+
+  #   # Found columns:
+
+  #     configure :id, :integer 
+  #     configure :settings, :serialized 
+  #     configure :updated_at, :datetime 
+
+  #   # Cross-section configuration:
+
+  #     # object_label_method :name     # Name of the method called for pretty printing an *instance* of ModelName
+  #     # label 'My model'              # Name of ModelName (smartly defaults to ActiveRecord's I18n API)
+  #     # label_plural 'My models'      # Same, plural
+  #     # weight 0                      # Navigation priority. Bigger is higher.
+  #     # parent OtherModel             # Set parent model for navigation. MyModel will be nested below. OtherModel will be on first position of the dropdown
+  #     # navigation_label              # Sets dropdown entry's name in navigation. Only for parents!
+
+  #   # Section specific configuration:
+
+  #     list do
+  #       # filters [:id, :name]  # Array of field names which filters should be shown by default in the table header
+  #       # items_per_page 100    # Override default_items_per_page
+  #       # sort_by :id           # Sort column (default is primary key)
+  #       # sort_reverse true     # Sort direction (default is true for primary key, last created first)
+  #     end
+  #     show do; end
+  #     edit do; end
+  #     export do; end
+  #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)
+  #     # you can override a cross-section field configuration in any section with the same syntax `configure :field_name do ... end`
+  #     # using `field` instead of `configure` will exclude all other fields and force the ordering
+  # end
+
+end
