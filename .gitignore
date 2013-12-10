@@ -1,4 +1,4 @@
 *.gem
 spec/dummy/log/*
-spec/dummy/db/*.sqlite3
+*.sqlite3
 spec/dummy/tmp/*
