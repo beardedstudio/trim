@@ -32,12 +32,14 @@ module Trim
   require 'trim/models/has_lead_items.rb'
   require 'trim/models/has_images.rb'
   require 'trim/models/has_downloads.rb'
+  require 'trim/models/has_videos.rb'
   require 'trim/models/has_related_items.rb'
   require 'trim/models/rails_admin_default_i18n.rb'
 
   # Renderers
   require 'trim/liquid/tags/image.rb'
   require 'trim/liquid/tags/download.rb'
+  require 'trim/liquid/tags/video.rb'
 
   def self.setup
     yield self

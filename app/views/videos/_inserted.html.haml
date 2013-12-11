@@ -1,0 +1,8 @@
+- unless inserted.blank?
+  - if inserted.embeddable_type.blank?
+    %span.inserted-embeddable
+  - elsif inserted.oembed && inserted.oembed.html
+    %figure{ :class => "inserted-#{inserted.class.name.demodulize.downcase}" }
+      = inserted.oembed.html.html_safe
+      - unless inserted.caption.blank?
+        %figcaption= inserted.caption
