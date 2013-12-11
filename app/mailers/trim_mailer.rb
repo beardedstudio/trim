@@ -2,8 +2,6 @@ class TrimMailer < ActionMailer::Base
   # append_view_path("#{Rails.root}/app/views/mailers")
   default from: "Bearded <info@bearded.com>"
 
-  # helper :preformat
-
   def user_defined_mail to, key, params={}
     setting = Setting.factory
     # Use a provided record to populate params from our Setting configuration.
