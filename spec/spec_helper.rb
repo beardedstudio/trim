@@ -31,9 +31,9 @@ RSpec.configure do |config|
     config.filter_run_excluding :js => true
   end
 
-  # config.before :suite do
-  #   load Rails.root.join('db/seeds.rb')
-  # end
+  config.before :suite do
+    load Rails.root.join('db/seeds.rb')
+  end
 
   def testing_image_path
     "../support/test-image.jpg"
