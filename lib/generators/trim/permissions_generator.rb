@@ -27,5 +27,14 @@ module Trim
       insert_into_file 'app/models/ability.rb', rule, :after => "else\n"
       say "Added Cancan rule for anonymous users.", MESSAGE_COLOR
     end
+    
+    def add_contact_messages_to_ability_file
+      if defined?(TrimContactMessages)
+        rule = "      can :create, Trim::ContactMessage\n"
+        insert_into_file 'app/models/ability.rb', rule, :after => "can :show, Trim::Page, :is_private => false\n"
+        say "Added Cancan rule for contact messages.", MESSAGE_COLOR
+      end
+    end
+
   end
 end
