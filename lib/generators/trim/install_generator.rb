@@ -9,6 +9,12 @@ module Trim
       generate 'trim:navigation'
     end
 
+    def install_contact_messages
+      if defined?(TrimContactMessages)
+        generate 'trim:install_contact_messages'
+      end
+    end
+
     def migrate
       say 'Running rake db:migrate', MESSAGE_COLOR
 
