@@ -11,17 +11,14 @@ module Trim
         :phone_number,
         :contact_email,
         :meta_description,
-        :meta_keywords] + self.notify_attributes.map{ |k, _v| k } + self.email_attributes
+        :meta_keywords] + self.email_attributes
     end
 
     def self.notify_attributes
-      { :admin_contact_message_email => 'Message sent when the user fills in the contact-us form'}.map do |k, v|
-        ["notify_for_#{k}".to_sym, v]
-      end
     end
 
     def self.email_configuration
-      { :user_contact_message_confirmation_email => [:name, :email, :subject, :message] }
+      { :user_contact_message_confirmation_email => [:name, :email, :subject, :message, :phone] }
     end
 
     def self.email_attributes

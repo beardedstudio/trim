@@ -37,7 +37,7 @@ Trim::Setting.blueprint do
 
   Trim::Setting.email_configuration.each do |name, params|
     send("#{name}_body") { Trim::Setting.email_placeholder_string name }
-    send("#{name}_subject") { Trim::Setting.email_placeholder_string name }
+    send("#{name}_subject") { name }
   end
 end
 
