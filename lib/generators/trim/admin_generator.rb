@@ -39,7 +39,7 @@ module Trim
       insert_into_file 'app/models/user.rb', ':name, ', :after => 'attr_accessible '
     end
 
-    def add_admin_user_to_seeds
+    def add_seeds
       code = <<-code
 user = User.find_by_email 'admin@example.com'
 
@@ -48,6 +48,7 @@ User.create!( :email => 'admin@example.com',
               :password => 'password',
               :password_confirmation => 'password') if user.nil?
 
+Nav.rebuild_navs!
       code
 
       # make a seeds file if it doesn't exist.
