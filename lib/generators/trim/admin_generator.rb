@@ -50,6 +50,9 @@ User.create!( :email => 'admin@example.com',
 
       code
 
+      # make a seeds file if it doesn't exist.
+      # test installs of rails don't include this.
+      create_file 'db/seeds.rb' unless File.exists? 'db/seeds.rb'
       append_to_file 'db/seeds.rb', code
     end
 
