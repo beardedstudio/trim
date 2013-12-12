@@ -18,12 +18,12 @@ module Trim
     end
 
     def self.email_configuration
-      { :user_contact_message_confirmation_email => [:name, :email, :subject, :message, :phone] }
+      Trim.setting_email_keys
     end
 
     def self.email_attributes
       keys = self.email_configuration.keys
-      keys.map { |k| ["#{k}_subject".to_sym, "#{k}_body".to_sym] }.flatten!
+      keys.map { |k| ["#{k}_subject".to_sym, "#{k}_body".to_sym] }.flatten! || []
     end
 
     def self.email_placeholder_string(key)
