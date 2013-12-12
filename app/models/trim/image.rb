@@ -11,12 +11,8 @@ module Trim
         :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']},
       :s3_headers => { 'Cache-Control' => 'max-age=315576000', 'Expires' => 1.years.from_now.httpdate },
       :path => '/images/:id/:style/:filename',
-      :styles => { 
-        :thumb => "300x200>", 
-      },
-      :convert_options => {
-        :thumb => '-strip -interlace Plane -quality 85',
-      }
+      :styles => Trim.image_styles,
+      :convert_options => Trim.image_convert_options
 
     attr_accessible :caption, :alt_text, :sort, :image, :imageable
 

@@ -41,6 +41,31 @@ module Trim
   require 'trim/liquid/tags/download.rb'
   require 'trim/liquid/tags/video.rb'
 
+  # Configuration
+
+  # Image styles for paperclip resizing
+  mattr_accessor :image_styles
+  @@image_styles = {
+    :thumb => "300x200>",
+    :lead  => "1000x200#"
+  }
+
+  mattr_accessor :image_default_convert_option
+  @@image_default_convert_option = '-strip -interlace Plane -quality 85'
+
+  mattr_accessor :image_convert_options
+  @@image_convert_options = {}
+
+  def self.image_convert_options
+    @@image_styles.each do |k, _|
+      @@image_convert_options[k] = @@image_default_convert_option unless @@image_convert_options.key?(k)
+    end
+    @@image_convert_options
+  end
+
+  mattr_accessor :setting_email_keys
+  @@setting_email_keys = {}
+
   def self.setup
     yield self
   end
