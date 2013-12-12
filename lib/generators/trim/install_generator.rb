@@ -1,8 +1,9 @@
 require 'rails/generators/active_record'
 
 module Trim
-  # This generator adds a migration for the User model
   class InstallGenerator < TrimGenerator
+
+    source_root File.expand_path("../../templates", __FILE__)
 
     def install_trim_models
       generate 'trim:models'
@@ -47,7 +48,11 @@ module Trim
 
     def add_permissions
       generate 'trim:permissions'
+    end
 
+    def add_config_file
+      say 'Copying config file', MESSAGE_COLOR
+      template "config/initializers/trim.rb", "config/initializers/trim.rb"
       say "Trim install complete.", SUCCESS_COLOR
     end
   end
