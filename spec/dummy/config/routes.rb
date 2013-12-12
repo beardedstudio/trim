@@ -1,6 +1,4 @@
 Dummy::Application.routes.draw do
-  root to: 'home#index'
-  
   devise_for :users
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
@@ -8,6 +6,8 @@ Dummy::Application.routes.draw do
   resources :nav_items, :only => :show
 
   resources :pages, :only => :show
+
+  root to: 'home#index'
 
   filter :navigation
 

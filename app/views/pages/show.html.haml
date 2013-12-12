@@ -14,8 +14,7 @@
 
         - # Main Body
         - template = Liquid::Template.parse @page.body
-
-        = template.render(:renderable_context => @page).html_safe
+        = template.render(:renderable_context => @page, :controller => controller).html_safe
         
       - # Related Items
       - unless @page.related_items.blank?

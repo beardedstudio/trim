@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131210144507) do
+ActiveRecord::Schema.define(:version => 20131211193103) do
 
   create_table "friendly_id_slugs", :force => true do |t|
     t.string   "slug",                         :null => false
@@ -156,6 +156,19 @@ ActiveRecord::Schema.define(:version => 20131210144507) do
     t.text     "settings"
     t.datetime "updated_at", :null => false
   end
+
+  create_table "trim_videos", :force => true do |t|
+    t.string   "video_url",                      :null => false
+    t.text     "caption"
+    t.integer  "sort",            :default => 0, :null => false
+    t.integer  "embeddable_id",                  :null => false
+    t.string   "embeddable_type",                :null => false
+    t.integer  "provider",        :default => 0, :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  add_index "trim_videos", ["embeddable_id", "embeddable_type"], :name => "index_trim_videos_on_embeddable_id_and_embeddable_type"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

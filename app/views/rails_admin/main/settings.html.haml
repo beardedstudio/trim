@@ -29,11 +29,6 @@
 
     - tab.create 'tab_emails', 'Emails' do
 
-      = form.inputs :name => 'Notifications', :class => 'notifications' do
-
-        - Trim::Setting.notify_attributes.each do |key, value|
-          = form.input key, :hint => value, :input_html => { :size => 50 }
-
       - Trim::Setting.email_configuration.each do |name, params|
 
         - placeholders = "Placeholders: #{Trim::Setting.email_placeholder_string(name)}"
