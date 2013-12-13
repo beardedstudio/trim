@@ -36,12 +36,12 @@ Gem::Specification.new do |s|
   s.add_dependency 'liquid', '~> 2.6.0'
   s.add_dependency 'ruby-oembed', '~> 0.8.9'
 
-  s.add_development_dependency  'rspec-rails'
-  s.add_development_dependency  'capybara'
-  s.add_development_dependency  'machinist'
-  s.add_development_dependency  'database_cleaner'
-  s.add_development_dependency  'colored'
-  s.add_development_dependency  'sqlite3'
+  s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'capybara'
+  s.add_development_dependency 'machinist'
+  s.add_development_dependency 'database_cleaner'
+  s.add_development_dependency 'colored'
+  s.add_development_dependency 'sqlite3'
 
   s.test_files = Dir["spec/**/*"]
 
