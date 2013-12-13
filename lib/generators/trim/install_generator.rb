@@ -5,6 +5,11 @@ module Trim
 
     source_root File.expand_path("../../templates", __FILE__)
 
+    def add_config_file
+      say 'Copying config file', MESSAGE_COLOR
+      template "config/initializers/trim.rb", "config/initializers/trim.rb"
+    end
+
     def install_trim_models
       generate 'trim:models'
       generate 'trim:navigation'
@@ -48,11 +53,6 @@ module Trim
 
     def add_permissions
       generate 'trim:permissions'
-    end
-
-    def add_config_file
-      say 'Copying config file', MESSAGE_COLOR
-      template "config/initializers/trim.rb", "config/initializers/trim.rb"
       say "Trim install complete.", SUCCESS_COLOR
     end
   end
