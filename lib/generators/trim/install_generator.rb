@@ -11,7 +11,7 @@ module Trim
     end
 
     def install_contact_messages
-      if defined?(TrimContactMessages)
+      if defined?(Trim::ContactMessages)
         generate 'trim:contact_messages'
       end
     end
