@@ -12,7 +12,7 @@ module RailsAdmin
         end
 
         register_instance_option :http_methods do
-          [:get, :patch]
+          [:get, :put]
         end
 
         register_instance_option :root? do
@@ -25,11 +25,7 @@ module RailsAdmin
 
             unless request.get?
 
-              setting_params = params.require(:setting).permit Trim::Setting.setting_fields
-
-              @setting.update_attributes setting_params
-
-              if @setting.save
+              if @setting.update_attributes params[:setting]
                 flash[:success] = "Settings have been saved."
               else
                 flash[:error] = "Settings have not been saved."
