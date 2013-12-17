@@ -174,11 +174,8 @@ module Trim
 
     # This is picked up magically by RailsAdmin.
     def route_enum
-      [
-        ['None', ''],
-      ]
+      Trim.navigable_routes.to_a
     end
-
 
     #
     #  RailsAdmin Configuration

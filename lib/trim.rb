@@ -66,6 +66,9 @@ module Trim
   mattr_accessor :setting_email_keys
   @@setting_email_keys = {}
 
+  mattr_accessor :navigable_routes
+  @@navigable_routes = { }
+
   def self.setup
     yield self
   end
