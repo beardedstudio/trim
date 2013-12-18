@@ -43,6 +43,7 @@ Trim.setup do |config|
   # config.setting_email_keys[:email_type_one] = { :token_1, :token_2 }
   # config.setting_email_keys[:email_type_two] = { :token_a, :token_b, :token_c }
 
+
   ####
   #
   #  Navigable routes
@@ -59,4 +60,16 @@ Trim.setup do |config|
 
   ## This will instruct Trim that nav items using the "Profiles List" route should
   ## call profiles_path (or profiles_url) to generate their url.
+
+
+  ####
+  #
+  #  Additional Settings
+  #
+  ####
+
+  ## The Trim::Settings model contains some common settings, 
+  ## but most apps will want to define additional settings here.
+
+  # config.additional_settings = [ :setting_1, :setting_2 ]
 end

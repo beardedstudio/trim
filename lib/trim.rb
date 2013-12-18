@@ -69,6 +69,10 @@ module Trim
   mattr_accessor :navigable_routes
   @@navigable_routes = { }
 
+  mattr_accessor :additional_settings
+  @@additional_settings = { }
+
+
   def self.setup
     yield self
   end

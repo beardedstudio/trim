@@ -11,7 +11,7 @@ module Trim
         :phone_number,
         :contact_email,
         :meta_description,
-        :meta_keywords] + self.email_attributes
+        :meta_keywords] + Trim.additional_settings + self.email_attributes
     end
 
     def self.notify_attributes
