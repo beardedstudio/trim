@@ -12,6 +12,11 @@ module Trim
       Time.now.utc.strftime("%Y%m%d%H%M%S")
     end
 
+    def copy_rails_admin_config
+      say "copying Rails Admin config"
+      template "config/initializers/rails_admin.rb", "config/initializers/rails_admin.rb"
+    end
+
     def install_rails_admin
       if ENV['SKIP_RAILS_ADMIN_INITIALIZER'].nil?
         ENV['SKIP_RAILS_ADMIN_INITIALIZER'] = 'true'
@@ -81,51 +86,6 @@ Trim::Nav.rebuild_navs!
       insert_into_file 'app/models/user.rb', rails_admin_config, :before => 'end'
 
       say "Added rails_admin user config", MESSAGE_COLOR
-    end
-
-    def strip_rails_admin_config_comments
-      gsub_file 'config/initializers/rails_admin.rb', /^\s*#.*\n/, ''
-    end
-
-    def add_rails_admin_action_config
-      rails_admin_config = <<-config
-  config.authorize_with :cancan, Ability
-  #config.audit_with :paper_trail, User
-  config.compact_show_view = false
-
-  # Exclude specific models (keep the others):
-  config.excluded_models = [Ability, Trim::Nav]
-
-  # Configure Actions
-  config.actions do
-
-    # root actions
-    dashboard
-    settings
-
-    # collection actions
-    index
-    new
-    export
-    history_index
-    bulk_delete
-    nested_sort do
-      visible do
-        bindings[:abstract_model].model.to_s == 'Trim::NavItem'
-      end
-    end
-
-    # member actions
-    show
-    edit
-    delete
-    history_show
-    show_in_app
-
-  end
-      config
-
-      insert_into_file 'config/initializers/rails_admin.rb', rails_admin_config, :before => 'end'
     end
 
     def add_root_route
