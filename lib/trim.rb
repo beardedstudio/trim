@@ -64,13 +64,13 @@ module Trim
   end
 
   mattr_accessor :setting_email_keys
-  @@setting_email_keys = {}
+  @@setting_email_keys = { }
 
   mattr_accessor :navigable_routes
   @@navigable_routes = { }
 
   mattr_accessor :additional_settings
-  @@additional_settings = { }
+  @@additional_settings = [ ]
 
 
   def self.setup
