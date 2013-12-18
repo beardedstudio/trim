@@ -68,31 +68,10 @@
 
     = render :partial => 'shared/admin_bar' if user_signed_in?
 
-    .layer-top
-      %header.site-header{:role => "banner"}
-        %h1.site-name
-          = link_to 'Trim', root_path
 
-        %nav.primary-navigation{:role => "navigation"}
-          - cache @section do
-            = navigation :global, :depth_start => 1, :depth_end => 1
-
-        %a#menu-trigger.menu{:href => "javascript:void(0);"}
-          %span.icon-hand
-          %span
-            Menu
-
-        = link_to root_path do
-          = image_tag 'logo.png', :class => 'main-logo'
-
-      - if flash.any?
-        .messages-container
-          .container.messages
-            = notice_and_alert_messages if flash.any?
-
-      = yield
-
-    = render :partial => "shared/footer"
+    = render :partial => "shared/site_header"
+    = yield
+    = render :partial => "shared/site_footer"
 
     = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
 
