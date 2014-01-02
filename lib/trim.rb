@@ -18,6 +18,8 @@ require 'liquid'
 module Trim
   require 'trim/railtie' if defined?(Rails)
 
+  require 'trim/version'
+
   # Rails Admin custom actions
   require 'trim/rails_admin/rails_admin_multi_enum.rb'
   require 'trim/rails_admin/rails_admin_nested_sort.rb'
