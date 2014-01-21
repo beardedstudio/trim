@@ -28,7 +28,7 @@ class CreateNavs < ActiveRecord::Migration
       t.string  :title,             :null => false
       t.string  :slug,              :null => false
       t.integer :nav_item_id,  :null => false
-      t.integer :priority,          :default => 1,  :null => false
+      t.integer :priority,          :default => 0,  :null => false
 
       t.timestamps
     end

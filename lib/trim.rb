@@ -37,20 +37,22 @@ module Trim
   require 'trim/models/has_videos.rb'
   require 'trim/models/has_related_items.rb'
   require 'trim/models/rails_admin_default_i18n.rb'
+  require 'trim/models/renderer.rb'
 
   # Renderers
   require 'trim/liquid/tags/image.rb'
   require 'trim/liquid/tags/download.rb'
   require 'trim/liquid/tags/video.rb'
 
+  # Routing Filter
+  require 'trim/routing_filter/navigation.rb'
+
   # Configuration
 
   # Image styles for paperclip resizing
   mattr_accessor :image_styles
-  @@image_styles = {
-    :thumb => "300x200>",
-    :lead  => "1000x200#"
-  }
+  @@image_styles = { :thumb => "300x200>",
+                     :lead  => "1000x200#" }
 
   mattr_accessor :image_default_convert_option
   @@image_default_convert_option = '-strip -interlace Plane -quality 85'
@@ -62,18 +64,21 @@ module Trim
     @@image_styles.each do |k, _|
       @@image_convert_options[k] = @@image_default_convert_option unless @@image_convert_options.key?(k)
     end
+
     @@image_convert_options
   end
 
   mattr_accessor :setting_email_keys
   @@setting_email_keys = { }
 
+  mattr_accessor :navs
+  @@navs = [ ]
+
   mattr_accessor :navigable_routes
   @@navigable_routes = { }
 
   mattr_accessor :additional_settings
   @@additional_settings = [ ]
-
 
   def self.setup
     yield self

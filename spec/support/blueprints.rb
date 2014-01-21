@@ -8,6 +8,9 @@ end
 
 Trim::Nav.blueprint do
   title { "Nav #{sn}" }
+  slug { "nav-#{sn}" }
+  priority { 0 }
+  nav_item { Trim::NavItem.make :linked => Trim::Page.make }
 end
 
 Trim::NavItem.blueprint do

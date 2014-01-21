@@ -1,175 +1,146 @@
 require 'friendly_id'
-require 'awesome_nested_set'
-require 'rubytree'
+require 'ancestry'
 
 module Trim
   class NavItem < ActiveRecord::Base
 
+    NAV_ITEM_TYPES = { :linked => 0,
+                       :route => 1,
+                       :external => 2,
+                       :fragment => 3 }
+
     extend FriendlyId
     friendly_id :linked_or_custom, :use => [:slugged]
 
-    acts_as_nested_set
+    has_ancestry :cache_depth => true
 
     belongs_to :linked, :polymorphic => true, :inverse_of => :nav_items
-    has_many :navs
 
-    attr_accessor :tree, :in_tree
+    belongs_to :nav, :class_name => 'Trim::Nav', :inverse_of => :nav_items
+    has_one :root_of, :class_name => 'Trim::Nav', :inverse_of => :nav_item
 
-    attr_accessible :parent_id, :title, :linked_id, :linked_type,
-                    :slug, :custom_slug, :is_resource, :route, :custom_url, :open_in_new_window
+    attr_accessible :title, :slug, :custom_slug, :nav_path, :nav_item_type,
+                    :linked_id, :linked_type, :nav, :nav_id, :parent_id,
+                    :route, :custom_url, :open_in_new_window, :ancestry, :ancestry_depth
 
-    serialize :route_params
-
-    before_save :generate_path
-    #before_update :add_redirect_if_path_changed
-
-    scope :path_left_match, lambda { |path|
-      path_parts = path.split('/')
-      # Try to match any of the paths in the current hierarchy.
-      candidates = path_parts.each_with_index.map do |p, i|
-        path_parts.slice(0, i+1).join('/')
-      end
-      where(:path => candidates, :is_resource => true).first
-    }
+    before_save :generate_nav_path
+    before_save :set_nav
 
     validates :title, :presence => true
-    validate :custom_url_must_be_anchor_or_external
 
+    validate :custom_url_must_be_anchor, :if => Proc.new{ |s| s.nav_item_type == NAV_ITEM_TYPES[:fragment] }
+    validate :custom_url_must_be_external, :if => Proc.new{ |s| s.nav_item_type == NAV_ITEM_TYPES[:external] }
+
+    # friendly id slugging method
     def linked_or_custom
-      return self.custom_slug unless self.custom_slug.blank?
+      return custom_slug unless custom_slug.blank?
 
-      if !self.linked.nil? && !self.linked.slug.blank?
-        slug = self.linked.slug
+      if !linked.nil? && !linked.slug.blank?
+        linked.slug
       else
-        slug = self.title
+        title
       end
-
-      slug
     end
 
-    # Intended to return true if the path is active for this item
-    def is_active?(path = '/')
-      return false if path.nil?
-      return true if path.match(/^\/#{Regexp.escape(self.path)}$/)
-      unless self.route.blank?
-        route_path = Rails.application.routes.url_helpers.send("#{self.route}_path")
-        return true if path.match(/^#{Regexp.escape(route_path)}$/)
-      end
-      false
-    end
-
-    def generate_path
-      if !self.custom_url.blank?
-        self.path = self.custom_url
-      elsif !self.parent.blank?
-        parent_path = self.parent.path
-        self.path = [parent_path, self.slug].delete_if(&:blank?).join('/')
+    # Generate navigation path based on parentage
+    # This presumes that all root nodes point to home.
+    def generate_nav_path
+      self.nav_path = if [NAV_ITEM_TYPES[:external], NAV_ITEM_TYPES[:fragment]].include?( nav_item_type )
+        custom_url
+      elsif !parent.blank?
+        [parent.nav_path, slug].reject(&:blank?).join('/')
       else
-        # This presumes that all root nodes point to home.
-        # TODO: refactor if that's not true.
-        self.path = ''
+        ''
       end
     end
 
-    # Returns the root TreeNode.
-    def tree
-      @tree || @tree = (self.root && self.root.build_tree) ? self.root.build_tree : nil
-    end
+    # Set the navigation for this item
+    # based on parentage or default
+    # if it's not already present
+    def set_nav
+      if nav.blank? && Trim::Nav.count > 0
 
-    def in_tree tree
-      tree.each do |node|
-        return node if node.content == self
-      end
-    end
-
-    # Builds a tree from the nested set.
-    def build_tree
-      items = self.self_and_descendants
-      levels = []
-
-      # Seems redundant, but that's how it works
-      items.each_with_level(items) do |item, level|
-        node = Tree::TreeNode.new(item.slug, item)
-
-        if level > 0
-          levels[level-1] << node
-        end
-        levels[level] = node
-      end
-
-      levels.first
-    end
-
-    def add_redirect_if_path_changed
-      unless (!custom_url.blank? || !custom_url_was.blank?)
-        if !linked.nil? && linked.respond_to?(:redirects) && path_changed? && !path_was.blank? && linked.redirects.where(:path => path_was).empty?
-          redirect = linked.redirects.build(:path => path_was)
-
-          # Also, remove redirect to current path, if one exists.
-          dup = Redirect.find_by_path path
-          unless dup.nil?
-            dup.destroy
-          end
-
-          redirect.save
-        end
-      end
-    end
-
-    def resource_matches(path)
-      return nil unless self.is_resource
-      matcher = self.resource_match.blank? ? '(.*)' : self.resource_match
-      matches = path.match /^#{self.path}\/#{matcher}$/
-      matches.andand[1].andand.split('/')
-    end
-
-    def url_options(options = {})
-      routeset = Rails.application.routes
-
-      # By default, everything goes to pages#show
-      named_route = self.route.blank? ? 'page' : self.route
-
-      # Merge in defaults from a named route.
-      unless named_route.blank?
-        if !routeset.named_routes[named_route].nil? && routeset.named_routes[named_route].defaults
-          route_defaults = routeset.named_routes[named_route].defaults
+        self.nav = if !root_of.nil?
+          root_of
+        elsif parent.nil?
+          Trim::Nav.get_default
         else
-          route_defaults = {}
+          root.nav
         end
-        options.merge! route_defaults
       end
-
-      # Merge in id from a linked object.
-      if !self.linked.blank? && (self.route.blank? || self.use_linked_in_route)
-        options.merge! :id => self.linked
-      end
-
-      # Merge in manual params.
-      options.merge! self.route_params unless self.route_params.blank?
-
-      # Don't nest the controller in Devise. Jeez.
-      # https://github.com/plataformatec/devise/issues/471
-      unless options[:controller].blank?
-        options[:controller] = '/'<<options[:controller]
-      end
-
-      options
+      true
     end
 
-    def custom?
-      !custom_url.blank?
+    def custom_url_is_anchor?
+      custom_url =~ /^#[A-Za-z0-9\-_%]+$/
     end
 
-    def custom_external?
+    def custom_url_must_be_anchor
+      if !custom_url.blank? && !custom_url_is_anchor?
+        errors.add :custom_url, "must be an anchor (starts with '#')"
+      end
+    end
+
+    def custom_url_is_external?
       custom_url =~ URI::regexp(['http','https'])
     end
 
-    def custom_url_must_be_anchor_or_external
-      if !custom_url.blank?
-        if !(custom_url =~ /^#[A-Za-z0-9\-_%]+$/ || custom_url =~ URI::regexp(['http','https']))
-          errors.add(:custom_url, "must be a fully-formed external url or an anchor within the current page")
-        end
+    def custom_url_must_be_external
+      if !custom_url.blank? && !custom_url_is_external?
+        errors.add :custom_url, "must be a fully-formed external link"
       end
+    end
+
+    def self.find_active_by(path_or_nav_item)
+      if path_or_nav_item.is_a?(Trim::NavItem)
+        path_or_nav_item.find_active_by_nav_item
+      else
+        find_active_by_path path_or_nav_item
+      end
+    end
+
+    def self.find_active_by_path(request_path)
+
+      path_matches = Trim::NavItem.where :nav_path => request_path
+
+      if path_matches.blank?
+        path_matches = Trim::NavItem.where :nav_path => request_path.sub(/^\//, '')
+      end
+
+      path_matches.blank? ? nil : path_matches.first.find_active_by_nav_item
+    end
+
+    def find_active_by_nav_item
+      # check to see if there is a more 'prominent' item for the requested object
+      # return the 'canonical' item out of the set
+      Trim::NavItem.find_canonical self.find_nav_items_with_same_destination
+    end
+
+    # get the collection of all nav items
+    # that reference the same resource or route as the provided nav item
+    def find_nav_items_with_same_destination
+      items = [self]
+
+      if !route.blank?
+        items += Trim::NavItem.where :route => route
+      elsif !linked.blank?
+        items += Trim::NavItem.where :linked_type => linked_type, :linked_id => linked_id
+      end
+
+      items.uniq
+    end
+
+    # Given a collection of nav items (presumably all of which reference the same resource)
+    # Return the 'canonical' item -- the one that should be used to generate path and breadcrumb
+    def self.find_canonical(collection)
+
+      # sort based on nav's priority, or if there are two of the same, pick the shortest path to home.
+      if !collection.blank?
+        collection = collection.sort{ |a, b| [a.nav.priority, a.ancestry_depth, a.created_at] <=> [b.nav.priority, b.ancestry_depth, b.created_at] }
+      end
+
+      # there should always be someting in here
+      collection.first
     end
 
     # This is picked up magically by RailsAdmin.
@@ -177,24 +148,56 @@ module Trim
       Trim.navigable_routes.to_a
     end
 
+    def parent_enum
+      # get each nav (as a link to it's root node)
+      enum = []
+      Trim::Nav.all.each do |n|
+        enum << [ n.nav_item.title + ' (' + n.title + ')', n.nav_item_id ]
+        enum += build_subtree_enum n.nav_item, '- '
+      end
+
+      enum
+    end
+
+    def build_subtree_enum(nav_item, leading = '')
+      enum = []
+
+      nav_item.children.each do |n|
+        enum << [ leading + n.title, n.id ]
+        enum += build_subtree_enum n, '-' + leading
+      end
+
+      enum
+    end
+
+    def nav_item_type_enum
+      NAV_ITEM_TYPES.to_a
+    end
+
     #
     #  RailsAdmin Configuration
     #
-
     rails_admin do
 
       navigation_label 'Navigation and Menus'
       label "Navigation Item"
       weight -8
 
+      configure :slug do
+        read_only true
+      end
+
       nested do
         field :title
-        field :parent
+        field :parent_id, :enum do
+          enum_method do
+            :parent_enum
+          end
+        end
       end
 
       list do
         field :title
-        field :parent
         field :linked
         field :route
         field :custom_url
@@ -202,18 +205,24 @@ module Trim
 
       show do
         field :title
+        field :slug
         field :custom_slug
-        field :parent
+        field :ancestry
         field :linked
         field :route
-        field :use_linked_in_route
         field :custom_url
         field :open_in_new_window
       end
 
       edit do
         field :title
-        field :parent
+        field :slug
+        field :custom_slug
+        field :parent_id, :enum do
+          enum_method do
+            :parent_enum
+          end
+        end
         field :linked
         field :route
         field :custom_url

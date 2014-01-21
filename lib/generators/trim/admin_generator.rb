@@ -52,8 +52,6 @@ User.create!( :email => 'admin@example.com',
               :name => 'Administrator',
               :password => 'password',
               :password_confirmation => 'password') if user.nil?
-
-Trim::Nav.rebuild_navs!
       code
 
       # make a seeds file if it doesn't exist.
@@ -86,10 +84,6 @@ Trim::Nav.rebuild_navs!
       insert_into_file 'app/models/user.rb', rails_admin_config, :before => 'end'
 
       say "Added rails_admin user config", MESSAGE_COLOR
-    end
-
-    def add_root_route
-      route 'root to: \'home#index\''
     end
   end
 end

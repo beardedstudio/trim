@@ -29,14 +29,6 @@ module Trim
       end
     end
 
-    def build_default_nav
-      Nav.rebuild_navs!
-    end
-
-    def install_routes
-      generate 'trim:routes'
-    end
-
     def install_admin_gems
       generate 'trim:admin'
     end
