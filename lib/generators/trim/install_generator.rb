@@ -52,7 +52,7 @@ module Trim
     end
 
     def copy_application_layout
-      say 'Copying default application layout'
+      say 'Copying default application layout' MESSAGE_COLOR
       copy_file 'app/views/layouts/trim.html.haml'
     end
 
