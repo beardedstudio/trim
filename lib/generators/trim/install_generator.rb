@@ -51,6 +51,11 @@ module Trim
       end
     end
 
+    def copy_application_layout
+      say 'Copying default application layout'
+      copy_file 'app/views/layouts/trim.html.haml'
+    end
+
     def add_permissions
       generate 'trim:permissions'
       say "Trim install complete.", SUCCESS_COLOR
