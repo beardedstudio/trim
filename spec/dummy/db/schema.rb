@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131211193103) do
+ActiveRecord::Schema.define(:version => 20140128154322) do
 
   create_table "friendly_id_slugs", :force => true do |t|
     t.string   "slug",                         :null => false
@@ -84,46 +84,40 @@ ActiveRecord::Schema.define(:version => 20131211193103) do
   add_index "trim_lead_images", ["imageable_id", "imageable_type"], :name => "index_trim_lead_images_on_imageable_id_and_imageable_type"
 
   create_table "trim_nav_items", :force => true do |t|
-    t.string   "title",               :default => "",    :null => false
-    t.text     "description",         :default => "",    :null => false
-    t.integer  "master_item"
-    t.string   "path",                :default => "",    :null => false
-    t.string   "route",               :default => "",    :null => false
-    t.string   "route_params",        :default => "",    :null => false
-    t.integer  "parent_id"
-    t.integer  "lft"
-    t.integer  "rgt"
+    t.string   "title",                                 :null => false
+    t.string   "slug"
+    t.string   "custom_slug"
+    t.string   "nav_path",                              :null => false
+    t.integer  "nav_item_type",      :default => 0,     :null => false
     t.integer  "linked_id"
     t.string   "linked_type"
-    t.string   "slug"
-    t.string   "custom_slug",         :default => "",    :null => false
-    t.boolean  "use_linked_in_route", :default => false, :null => false
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.string   "route"
     t.string   "custom_url"
-    t.boolean  "open_in_new_window",  :default => false
+    t.boolean  "open_in_new_window", :default => false
+    t.string   "ancestry"
+    t.integer  "ancestry_depth",     :default => 0
+    t.integer  "sort"
+    t.integer  "nav_id"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
-  add_index "trim_nav_items", ["lft"], :name => "index_nav_items_on_lft"
-  add_index "trim_nav_items", ["linked_id", "linked_type"], :name => "index_nav_items_on_linked_id_and_linked_type"
-  add_index "trim_nav_items", ["parent_id"], :name => "index_nav_items_on_parent_id"
-  add_index "trim_nav_items", ["rgt"], :name => "index_nav_items_on_rgt"
-  add_index "trim_nav_items", ["slug"], :name => "index_nav_items_on_slug"
+  add_index "trim_nav_items", ["ancestry"], :name => "index_trim_nav_items_on_ancestry"
+  add_index "trim_nav_items", ["linked_id", "linked_type"], :name => "index_trim_nav_items_on_linked_id_and_linked_type"
+  add_index "trim_nav_items", ["slug"], :name => "index_trim_nav_items_on_slug"
 
   create_table "trim_navs", :force => true do |t|
-    t.string   "title",       :default => "",    :null => false
-    t.string   "slug"
-    t.integer  "nav_item_id"
-    t.integer  "depth_start", :default => 0,     :null => false
-    t.integer  "depth_end"
-    t.integer  "item_start"
-    t.integer  "item_end"
-    t.boolean  "use_as_root", :default => false, :null => false
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.string   "title",                      :null => false
+    t.string   "slug",                       :null => false
+    t.integer  "nav_item_id",                :null => false
+    t.integer  "priority",    :default => 0, :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
-  add_index "trim_navs", ["slug"], :name => "index_navs_on_slug", :unique => true
+  add_index "trim_navs", ["nav_item_id"], :name => "index_trim_navs_on_nav_item_id"
+  add_index "trim_navs", ["priority"], :name => "index_trim_navs_on_priority"
+  add_index "trim_navs", ["slug"], :name => "index_trim_navs_on_slug"
 
   create_table "trim_pages", :force => true do |t|
     t.string   "title",       :default => "",    :null => false

@@ -1,9 +1,10 @@
 class Navigation < RoutingFilter::Filter
   include ActionDispatch::Routing::UrlFor
   include ActionDispatch::Routing::Redirection
-  include Rails.application.routes.url_helpers
 
   def around_recognize(path, env, &block)
+    self.class_eval{ include Rails.application.routes.url_helpers }
+
     # We're not going to do this twice for the same request also
     # do not look for nav items if this is a request for an asset.
     yield if defined? env['ORIGINAL_PATH_INFO']
@@ -17,24 +18,17 @@ class Navigation < RoutingFilter::Filter
     local_path = path.sub(/^\//, '')
 
     unless local_path.blank?
-      item = found = Trim::NavItem.find_by_path(local_path)
+      item = Trim::NavItem.find_active_by( local_path )
+
       unless item.blank? || item.linked.blank? || !item.route.blank?
         set_rails_path_for_record item.linked, path
       end
-
-      # redirect = found = Redirect.find_by_path(local_path)
-      # unless redirect.nil? || !found
-      #   set_rails_path_for_record redirect, path
-      # end
-    end
-
-    yield.tap do |params|
-      # You can additionally modify the params here before they get passed
-      # to the controller.
     end
   end
 
   def around_generate(params, &block)
+    self.class_eval{ include Rails.application.routes.url_helpers }
+
     # This provides us with a way to disable our navigation filter.
     use_navigation = !(params.delete(:navigation_filter) === false)
 
@@ -103,15 +97,16 @@ class Navigation < RoutingFilter::Filter
       return params.merge(args)
     end
 
-    unless record.is_a?(Trim::NavItem)
-      # This forces the calling code to use the default route instead of ours
+    if record.is_a?(Trim::NavItem)
+      record = Trim::NavItem.find_active_by( record )
+    else
+      # Returning nil forces the calling code to use the default route instead of ours
       return nil if !defined?(record.nav_items) || record.nav_items.blank?
 
-      # Use the nav item instead.
-      record = record.nav_items.first
+      # Use the canonical nav item instead.
+      record = Trim::NavItem.find_canonical( record.nav_items )
     end
 
-    # NavItems with routes should use their options with url_for.
-    record.route.blank? ? "/#{record.path}" : record.url_options
+     "/#{record.nav_path}"
   end
 end

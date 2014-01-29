@@ -33,6 +33,7 @@ RSpec.configure do |config|
 
   config.before :suite do
     load Rails.root.join('db/seeds.rb')
+    Trim::Nav.configure
   end
 
   def testing_image_path

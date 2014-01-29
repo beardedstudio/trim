@@ -13,14 +13,11 @@ describe Navigation do
     end
 
     it 'routes pages from their path if they have an attached nav item' do
-      Trim::Nav.rebuild_navs!
+      home_nav_item = Trim::NavItem.where(:ancestry => nil).first
 
-      home_nav_item = Trim::NavItem.where(:parent_id => nil).first
-
-      @page.nav_items << Trim::NavItem.make!(:title => "about", :parent => home_nav_item)
-
+      @page.nav_items << Trim::NavItem.make!(:title => "about", :parent_id => home_nav_item.id)
+  
       url = polymorphic_path(@page)
-
       get(url).should route_to("pages#show", :id => 'about')
       url.should == '/about'
     end

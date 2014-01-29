@@ -7,7 +7,6 @@ class TrimController < ApplicationController
 
   before_filter :initialize_editables
   before_filter :initialize_variables
-
   before_filter :reload_rails_admin, :if => :rails_admin_path?
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -63,37 +62,24 @@ class TrimController < ApplicationController
     # to an intermediate controller
     unless self.respond_to?(:rails_admin_controller?) && rails_admin_controller?
       @navs = {}
-
-      Trim::Nav.default_navs.each do |nav|
-        nav.tree if nav.use_as_root
+      Trim::Nav.all.each do |nav|
         @navs[nav.slug.to_sym] = nav
       end
 
+      set_active_nav_item
+      
       @setting ||= Trim::Setting.factory
 
       @editables ||= []
-
-      initialize_breadcrumbs request.env['ORIGINAL_PATH_INFO']
     end
   end
 
-  def initialize_breadcrumbs(path)
-    @breadcrumbs = !@navs[:global].nil? && @navs[:global].breadcrumbs(path) ? @navs[:global].breadcrumbs(path) : []
-    @section = @breadcrumbs[1] unless @breadcrumbs.size < 1
-  end
-
-  def set_active_menu_item_by_route_name(path, route_name)
-    # This sets a specific item as the active item for the nav for this controller.
-    # It's not an ideal design, but it proved difficult to do something more automatic.
-    set_active_menu_item path, Trim::NavItem.find_by_route(route_name)
-  end
-
-  def set_active_menu_item_by_slug(path, slug)
-    set_active_menu_item path, Trim::NavItem.find_by_slug(slug)
-  end
-
-  def set_active_menu_item(path, item)
-    @navs[:global].set_active_item item, path unless item.blank?
+  def set_active_nav_item( nav_item = nil )
+    @active_nav_item = nav_item.nil? ? Trim::NavItem.find_active_by(request.env['ORIGINAL_PATH_INFO']) : nav_item
+    unless @active_nav_item.nil?
+      @active_nav = @active_nav_item.nav
+      @breadcrumbs = @active_nav_item.path
+    end
   end
 
   # Redirect to the "real" content URL when available.
@@ -104,11 +90,11 @@ class TrimController < ApplicationController
   # down for everyone, but this is a backstop so people don't end up at the
   # wrong URL.
   def conditional_redirect_to_navigation_path(item)
-    path = polymorphic_path(item)
+    item_path = polymorphic_path(item)
     # We have to compare against the unaltered PATH_INFO.
     original_path = request.env['ORIGINAL_PATH_INFO']
-    if path != original_path && original_path != root_path
-      redirect_to(path)
+    if item_path != original_path && original_path != root_path
+      redirect_to(item_path)
       return true
     end
     false

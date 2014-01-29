@@ -29,14 +29,6 @@ module Trim
       end
     end
 
-    def build_default_nav
-      Nav.rebuild_navs!
-    end
-
-    def install_routes
-      generate 'trim:routes'
-    end
-
     def install_admin_gems
       generate 'trim:admin'
     end
@@ -49,6 +41,11 @@ module Trim
       unless system 'rake db:seed'
         say "There was an error finalizing the install. 'rake db:seed' failed", ERROR_COLOR
       end
+    end
+
+    def copy_application_layout
+      say 'Copying default application layout' MESSAGE_COLOR
+      copy_file 'app/views/layouts/trim.html.haml'
     end
 
     def add_permissions

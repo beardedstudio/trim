@@ -1,0 +1,8 @@
+- if breadcrumbs.size > 1
+  %nav.breadcrumbs
+    %ol.crumb-list
+      - breadcrumbs.each_with_index do |crumb, i|
+        - classes = i == 0 ? ['root'] : []
+        - classes << 'active' if crumb == @active_nav_item
+
+        %li{:class => classes}= crumb.title

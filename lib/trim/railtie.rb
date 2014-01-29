@@ -1,6 +1,5 @@
 require 'trim'
 require 'rails'
-require 'trim/helpers/navigation_helper'
 
 module Trim
   class Railtie < Rails::Railtie
@@ -10,8 +9,11 @@ module Trim
       load "tasks/trim.rake"
     end
 
-    initializer "trim.helpers.navigation_helper" do
-      ActionView::Base.send :include, Helpers::NavigationHelper
+    config.after_initialize do
+
+      if ActiveRecord::Base.connection.table_exists? 'trim_navs'
+        Trim::Nav.configure
+      end
     end
   end
 end

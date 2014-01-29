@@ -17,12 +17,5 @@ module Trim
       say "Added navigation migration to db/migrate.rb", MESSAGE_COLOR
     end
 
-    def install_routing_filter
-      directory 'routing_filter', 'lib/routing_filter'
-
-      require_code = '    config.autoload_paths +=%W(#{config.root}/lib/routing_filter)'
-
-      insert_into_file 'config/application.rb', require_code, :after => "extras)\n"
-    end
   end
 end
