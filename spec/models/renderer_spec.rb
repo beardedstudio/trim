@@ -3,7 +3,7 @@ describe Trim::Renderer do
   include Rails.application.routes.url_helpers
 
   def default_view_args
-    { :show_home => nil, :show_current => nil }
+    { :show_home => true, :show_current => true }
   end
 
   before :each do

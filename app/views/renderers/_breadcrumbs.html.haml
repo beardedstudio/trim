@@ -5,8 +5,9 @@
         - classes = i == 0 ? ['root'] : []
         - classes << 'active' if crumb == @active_nav_item
 
-        %li{ :class => classes }
-          - if crumb == @active_nav_item && options[:show_current]
-            %span.active= crumb.title
-          - elsif crumb != @active_nav_item
-            = link_to crumb.title, polymorphic_path(crumb)
+        - unless (i == 0 && options[:show_home] == false) || (crumb == @active_nav_item && options[:show_current] == false)
+          %li{ :class => classes }
+            - if crumb == @active_nav_item
+              %span.active= crumb.title
+            - elsif crumb != @active_nav_item
+              = link_to crumb.title, polymorphic_path(crumb)
