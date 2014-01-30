@@ -22,7 +22,8 @@ module Trim
     end
 
     def tree(options = {})
-      @options[:root_node] = options[:root_node] || @active_nav_item.root
+      @options[:root_node] = options.key?(:root_node) ? options[:root_node] : @active_nav_item.root
+      @options[:depth] = options.key?(:depth) ? options[:depth] : 999
 
       list_for(@options[:root_node])
     end
@@ -50,8 +51,6 @@ module Trim
     end
 
     def list_for(item)
-      @options[:depth] = options[:depth] || 999
-      
       if @depth < @options[:depth]
         @view.content_tag :ol, :class => classes_for_list(item) do
           item.children.map do |child|

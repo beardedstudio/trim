@@ -34,7 +34,7 @@ describe Trim::Renderer do
   describe '#tree' do
     it 'should pass the root node of the given tree to list_for' do
       @renderer.should_receive(:list_for).with(@item.root)
-      @renderer.tree(@item)
+      @renderer.tree(:root_node => @item)
     end
   end
 
@@ -70,7 +70,7 @@ describe Trim::Renderer do
       it 'should render a sub list for items with children' do
         new_item = Trim::NavItem.make!(:parent_id => @item.id, :linked => Trim::Page.make)
 
-        @renderer.options[:end_depth] = 10
+        @renderer.options[:depth] = 10
         @renderer.stub(:anchor_for).and_return('')
 
         @renderer.list_item_for(@item).include?('<ol').should be_true
@@ -88,6 +88,9 @@ describe Trim::Renderer do
   end
 
   describe '#list_for(item)' do
+    before :each do
+      @renderer.options = {:depth => 999}
+    end
     it 'should return an active OL for the current item' do
       @view.stub(:polymorphic_path).and_return('path')
 
