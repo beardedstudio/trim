@@ -14,16 +14,15 @@ module Trim
     end
 
     def breadcrumbs(options = {})
-      @options[:show_home] ||= options[:show_home]
-      @options[:show_current] ||= options[:show_current]
+      breadcrumbs = options.key?(:breadcrumbs) ? options[:breadcrumbs] : @active_nav_item.path
+      @options[:show_home] = options.key?(:show_home) ? options[:show_home] : true
+      @options[:show_current] = options.key?(:show_current) ? options[:show_current] : true
 
-      @view.render :partial => 'renderers/breadcrumbs', :locals => { :options => @options, :breadcrumbs => @active_nav_item.path }
+      @view.render :partial => 'renderers/breadcrumbs', :locals => { :options => @options, :breadcrumbs => breadcrumbs }
     end
 
-
     def tree(options = {})
-      @options[:start_depth] = options[:start_depth] || 1
-      @options[:end_depth] = options[:end_depth] || 999
+      @options[:depth] = options[:depth] || 999
       @options[:root_node] = options[:root_node] || @active_nav_item.root
 
       list_for(@options[:root_node])
@@ -42,8 +41,7 @@ module Trim
     def list_item_for(item)
       @view.content_tag :li, :class => classes_for_item(item) do
         markup = anchor_for item
-
-        if item.has_children? && @depth < @options[:end_depth]
+        if item.has_children?
           @depth += 1
           markup << list_for(item)
           @depth -= 1
@@ -53,10 +51,12 @@ module Trim
     end
 
     def list_for(item)
-      @view.content_tag :ol, :class => classes_for_list(item) do
-        item.children.map do |child|
-          list_item_for child
-        end.join.html_safe
+      if @depth < @options[:depth]
+        @view.content_tag :ol, :class => classes_for_list(item) do
+          item.children.map do |child|
+            list_item_for child
+          end.join.html_safe
+        end
       end
     end
 

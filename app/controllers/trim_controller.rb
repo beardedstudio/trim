@@ -76,10 +76,14 @@ class TrimController < ApplicationController
 
   def set_active_nav_item( nav_item = nil )
     @active_nav_item = nav_item.nil? ? Trim::NavItem.find_active_by(request.env['ORIGINAL_PATH_INFO']) : nav_item
-    unless @active_nav_item.nil?
+    if @active_nav_item.nil?
+      @active_nav = Trim::Nav.get_default
+      @active_nav_item = @active_nav.nav_item
+    else
       @active_nav = @active_nav_item.nav
-      @breadcrumbs = @active_nav_item.path
     end
+
+    @breadcrumbs = @active_nav_item.path
   end
 
   # Redirect to the "real" content URL when available.

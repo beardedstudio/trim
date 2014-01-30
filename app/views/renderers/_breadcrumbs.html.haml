@@ -1,8 +1,12 @@
-- if breadcrumbs.size > 1
+- if breadcrumbs && breadcrumbs.size > 1
   %nav.breadcrumbs
     %ol.crumb-list
       - breadcrumbs.each_with_index do |crumb, i|
         - classes = i == 0 ? ['root'] : []
         - classes << 'active' if crumb == @active_nav_item
 
-        %li{:class => classes}= crumb.title
+        %li{ :class => classes }
+          - if crumb == @active_nav_item && options[:show_current]
+            %span.active= crumb.title
+          - elsif crumb != @active_nav_item
+            = link_to crumb.title, polymorphic_path(crumb)
