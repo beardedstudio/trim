@@ -72,8 +72,7 @@ class Navigation < RoutingFilter::Filter
     # Passing the :navigation_filter parameter disables our custom generate below.
     # We have to modify the string in place, or it doesn't affect subsequent wrappers.
 
-    canonical = item.find_canonical_by_nav_item
-    path.replace polymorphic_path(canonical.linked, :navigation_filter => false)
+    path.replace polymorphic_path(item.linked, :navigation_filter => false)
   end
 
   def set_rails_path_for_route_nav_item(item, path)
@@ -98,16 +97,7 @@ class Navigation < RoutingFilter::Filter
   end
 
   def get_outgoing_path_for(record, params)
-    # Try to get a path from other models.
-    if record.respond_to? :navigation_arguments
-      # When our action is 'new' we shouldn't be passing in an id.
-      args = (params[:action] == 'new') ? record.parent_navigation_arguments : record.navigation_arguments
-      return params.merge(args)
-    end
-
-    if record.is_a?(Trim::NavItem)
-      record = Trim::NavItem.find_active_by( record )
-    else
+    unless record.is_a?(Trim::NavItem)
       # Returning nil forces the calling code to use the default route instead of ours
       return nil if !defined?(record.nav_items) || record.nav_items.blank?
 
