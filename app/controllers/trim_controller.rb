@@ -1,5 +1,5 @@
 class TrimController < ApplicationController
-  layout 'trim'
+  layout 'application'
 
   helper Trim::ApplicationHelper
 

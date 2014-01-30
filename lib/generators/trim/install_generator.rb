@@ -44,8 +44,10 @@ module Trim
     end
 
     def copy_application_layout
+      say 'Removing rails default application layout'
+      remove_file 'app/views/layouts/application.html.erb'
       say 'Copying default application layout' MESSAGE_COLOR
-      copy_file 'app/views/layouts/trim.html.haml'
+      copy_file 'app/views/layouts/application.html.haml'
     end
 
     def add_permissions
