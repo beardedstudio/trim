@@ -107,6 +107,13 @@ class Navigation < RoutingFilter::Filter
       record = Trim::NavItem.find_canonical( record.nav_items )
     end
 
-     "/#{record.nav_path}"
+    case record.nav_item_type
+    when Trim::NavItem::NAV_ITEM_TYPES[:linked]
+      "/#{record.nav_path}"
+    when Trim::NavItem::NAV_ITEM_TYPES[:route]
+      "/#{record.route}"
+    else
+      record.custom_url
+    end
   end
 end
