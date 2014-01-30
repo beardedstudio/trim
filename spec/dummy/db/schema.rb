@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140128154322) do
+ActiveRecord::Schema.define(:version => 20140130162218) do
 
   create_table "friendly_id_slugs", :force => true do |t|
     t.string   "slug",                         :null => false
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(:version => 20140128154322) do
     t.string   "title",                      :null => false
     t.string   "slug",                       :null => false
     t.integer  "nav_item_id",                :null => false
-    t.integer  "priority",    :default => 0, :null => false
+    t.integer  "priority",    :default => 1, :null => false
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
   end
