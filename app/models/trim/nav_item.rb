@@ -31,6 +31,8 @@ module Trim
     validate :custom_url_must_be_anchor, :if => Proc.new{ |s| s.nav_item_type == NAV_ITEM_TYPES[:fragment] }
     validate :custom_url_must_be_external, :if => Proc.new{ |s| s.nav_item_type == NAV_ITEM_TYPES[:external] }
 
+    default_scope order 'sort ASC'
+
     # friendly id slugging method
     def linked_or_custom
       return custom_slug unless custom_slug.blank?
@@ -59,7 +61,6 @@ module Trim
     # if it's not already present
     def set_nav
       if nav.blank? && Trim::Nav.count > 0
-
         self.nav = if !root_of.nil?
           root_of
         elsif parent.nil?
@@ -189,6 +190,17 @@ module Trim
       NAV_ITEM_TYPES.to_a
     end
 
+    def destination_text
+      case nav_item_type
+      when NAV_ITEM_TYPES[:linked]
+        linked.title
+      when NAV_ITEM_TYPES[:route]
+        Trim.navigable_routes.invert[route]
+      else
+        custom_url
+      end
+    end
+
     #
     #  RailsAdmin Configuration
     #
@@ -213,9 +225,17 @@ module Trim
 
       list do
         field :title
-        field :linked
-        field :route
-        field :custom_url
+        field :destination_text do
+          virtual?
+          pretty_value do
+            navitem = bindings[:object]
+            link = "#{navitem.nav_path}"
+            if [NAV_ITEM_TYPES[:linked], NAV_ITEM_TYPES[:route]].include? navitem.nav_item_type
+              link = "/#{link}"
+            end
+            %{<a href="#{link}">#{value}</a>}.html_safe
+          end
+        end
       end
 
       show do
@@ -238,6 +258,7 @@ module Trim
             :parent_enum
           end
         end
+        field :nav_item_type, :enum
         field :linked
         field :route
         field :custom_url
