@@ -20,8 +20,9 @@ class Navigation < RoutingFilter::Filter
     unless local_path.blank?
       item = Trim::NavItem.find_active_by( local_path )
 
-      unless item.blank? || item.linked.blank? || !item.route.blank?
-        set_rails_path_for_record item.linked, path
+      unless item.blank?
+        set_rails_path_for_linked_nav_item(item, path) if item.is_linked? && !item.linked.blank?
+        set_rails_path_for_route_nav_item(item, path) if item.is_route? && !item.route.blank?
       end
     end
   end
@@ -66,10 +67,17 @@ class Navigation < RoutingFilter::Filter
 
   protected
 
-  def set_rails_path_for_record(record, path)
+
+  def set_rails_path_for_linked_nav_item(item, path)
     # Passing the :navigation_filter parameter disables our custom generate below.
     # We have to modify the string in place, or it doesn't affect subsequent wrappers.
-    path.replace polymorphic_path(record, :navigation_filter => false)
+
+    canonical = item.find_canonical_by_nav_item
+    path.replace polymorphic_path(canonical.linked, :navigation_filter => false)
+  end
+
+  def set_rails_path_for_route_nav_item(item, path)
+    path.replace "/#{item.route}"
   end
 
   def get_record_from_params(params)
@@ -107,11 +115,8 @@ class Navigation < RoutingFilter::Filter
       record = Trim::NavItem.find_canonical( record.nav_items )
     end
 
-    case record.nav_item_type
-    when Trim::NavItem::NAV_ITEM_TYPES[:linked]
+    if record.is_linked? || record.is_route?
       "/#{record.nav_path}"
-    when Trim::NavItem::NAV_ITEM_TYPES[:route]
-      "/#{record.route}"
     else
       record.custom_url
     end

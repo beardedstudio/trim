@@ -5,6 +5,7 @@ class TrimController < ApplicationController
 
   protect_from_forgery
 
+  before_filter :redirect_to_canonical, :prepend => true
   before_filter :initialize_editables
   before_filter :initialize_variables
   before_filter :reload_rails_admin, :if => :rails_admin_path?
@@ -102,6 +103,17 @@ class TrimController < ApplicationController
       return true
     end
     false
+  end
+
+  def redirect_to_canonical
+    path = env['ORIGINAL_PATH_INFO'].sub(/^\//, '')
+    nav_item = Trim::NavItem.find_active_by( path )
+    if nav_item
+      canonical = nav_item.find_canonical_by_nav_item
+      if nav_item.id != canonical.id || path != canonical.nav_path
+        redirect_to "/#{canonical.nav_path}"
+      end
+    end
   end
 
 end

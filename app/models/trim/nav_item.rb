@@ -71,6 +71,22 @@ module Trim
       true
     end
 
+    def is_linked?
+      nav_item_type == NAV_ITEM_TYPES[:linked]
+    end
+
+    def is_route?
+      nav_item_type == NAV_ITEM_TYPES[:route]
+    end
+
+    def is_external?
+      nav_item_type == NAV_ITEM_TYPES[:external]
+    end
+
+    def is_fragment?
+      nav_item_type == NAV_ITEM_TYPES[:fragment]
+    end
+
     def custom_url_is_anchor?
       custom_url =~ /^#[A-Za-z0-9\-_%]+$/
     end
@@ -93,24 +109,23 @@ module Trim
 
     def self.find_active_by(path_or_nav_item)
       if path_or_nav_item.is_a?(Trim::NavItem)
-        path_or_nav_item.find_active_by_nav_item
+        path_or_nav_item.find_canonical_by_nav_item
       else
         find_active_by_path path_or_nav_item
       end
     end
 
     def self.find_active_by_path(request_path)
-
-      path_matches = Trim::NavItem.where :nav_path => request_path
+      path_matches = Trim::NavItem.where(:nav_path => request_path) + Trim::NavItem.where(:route => request_path)
 
       if path_matches.blank?
-        path_matches = Trim::NavItem.where :nav_path => request_path.sub(/^\//, '')
+        path_matches = Trim::NavItem.where(:nav_path => request_path.sub(/^\//, '')) + Trim::NavItem.where(:route => request_path.sub(/^\//, ''))
       end
 
-      path_matches.blank? ? nil : path_matches.first.find_active_by_nav_item
+      path_matches.blank? ? nil : Trim::NavItem.find_canonical(path_matches)
     end
 
-    def find_active_by_nav_item
+    def find_canonical_by_nav_item
       # check to see if there is a more 'prominent' item for the requested object
       # return the 'canonical' item out of the set
       Trim::NavItem.find_canonical self.find_nav_items_with_same_destination
