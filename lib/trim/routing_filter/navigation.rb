@@ -20,8 +20,9 @@ class Navigation < RoutingFilter::Filter
     unless local_path.blank?
       item = Trim::NavItem.find_active_by( local_path )
 
-      unless item.blank? || item.linked.blank? || !item.route.blank?
-        set_rails_path_for_record item.linked, path
+      unless item.blank?
+        set_rails_path_for_linked_nav_item(item, path) if item.is_linked? && !item.linked.blank?
+        set_rails_path_for_route_nav_item(item, path) if item.is_route? && !item.route.blank?
       end
     end
   end
@@ -66,10 +67,16 @@ class Navigation < RoutingFilter::Filter
 
   protected
 
-  def set_rails_path_for_record(record, path)
+
+  def set_rails_path_for_linked_nav_item(item, path)
     # Passing the :navigation_filter parameter disables our custom generate below.
     # We have to modify the string in place, or it doesn't affect subsequent wrappers.
-    path.replace polymorphic_path(record, :navigation_filter => false)
+
+    path.replace polymorphic_path(item.linked, :navigation_filter => false)
+  end
+
+  def set_rails_path_for_route_nav_item(item, path)
+    path.replace "/#{item.route}"
   end
 
   def get_record_from_params(params)
@@ -90,16 +97,7 @@ class Navigation < RoutingFilter::Filter
   end
 
   def get_outgoing_path_for(record, params)
-    # Try to get a path from other models.
-    if record.respond_to? :navigation_arguments
-      # When our action is 'new' we shouldn't be passing in an id.
-      args = (params[:action] == 'new') ? record.parent_navigation_arguments : record.navigation_arguments
-      return params.merge(args)
-    end
-
-    if record.is_a?(Trim::NavItem)
-      record = Trim::NavItem.find_active_by( record )
-    else
+    unless record.is_a?(Trim::NavItem)
       # Returning nil forces the calling code to use the default route instead of ours
       return nil if !defined?(record.nav_items) || record.nav_items.blank?
 
@@ -107,6 +105,10 @@ class Navigation < RoutingFilter::Filter
       record = Trim::NavItem.find_canonical( record.nav_items )
     end
 
-     "/#{record.nav_path}"
+    if record.is_linked? || record.is_route?
+      "/#{record.nav_path}"
+    else
+      record.custom_url
+    end
   end
 end

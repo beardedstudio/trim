@@ -1,0 +1,93 @@
+!!!5
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+%html.no-js{ :lang => "en" }
+  <!--<![endif]-->
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{'http-equiv' => "X-UA-Compatible", :content => "IE=edge"}
+
+    - title = "Trim"
+    - incoming_title = raw(yield :title)
+
+    -# Default title to last breadcrumb unless it's set manually
+    - if incoming_title.blank? && !@breadcrumbs.blank? && @breadcrumbs.size > 1
+      - incoming_title = strip_links navigation_link(@breadcrumbs.last)
+      - unless @section.blank? || @section == @breadcrumbs.last
+        - incoming_title << ' | ' << @section.title
+
+    %title= incoming_title.blank? ? title : "#{incoming_title} | #{title}".html_safe
+
+    %meta{:name => "viewport", :content => "width=device-width"}
+
+    = stylesheet_link_tag "trim"
+
+    - if content_for?(:styles)
+      = yield :styles
+
+    /[if (lt IE 9) & (!IEMobile)]
+      = stylesheet_link_tag "no-mq"
+
+    -# only load admin bar CSS if user is logged in.
+    - if user_signed_in?
+      = stylesheet_link_tag "admin-bar.css"
+
+    = yield :head
+
+    = javascript_include_tag 'modernizr-custom.min.js'
+    :javascript
+      Modernizr.load([
+        {
+          test: window.matchMedia,
+          nope: '/assets/matchmedia.js',
+          complete: function () {
+            if (typeof window.picturefill != 'undefined'){
+              window.picturefill();
+            }
+          }
+        }
+      ]);
+
+    = render :partial => 'shared/typekit'
+
+    :javascript
+      if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+        var msViewportStyle = document.createElement("style");
+        msViewportStyle.appendChild (
+          document.createTextNode("@-ms-viewport{width:auto!important}")
+        );
+        document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+      }
+
+    = csrf_meta_tags
+    = favicon_link_tag
+
+  %body{ :class => body_classes }
+
+    = render :partial => 'shared/admin_bar' if user_signed_in?
+
+
+    = render :partial => "shared/site_header"
+    = yield
+    = render :partial => "shared/site_footer"
+
+    = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
+
+    :javascript
+      window.jQuery || document.write('<script src="/assets/jquery.min.js"><\/script>')
+
+    = javascript_include_tag 'trim'
+    = javascript_include_tag 'application'
+
+    :javascript
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1231097-5']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
