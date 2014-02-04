@@ -1,7 +1,7 @@
 PATH
   remote: ../trim
   specs:
-    trim (0.1.2)
+    trim (0.2.0)
       ancestry (~> 2.0.0)
       aws-sdk (~> 1.29.1)
       breakpoint (~> 2.0.7)
@@ -220,7 +220,7 @@ GEM
       rspec-mocks (~> 2.14.0)
     ruby-oembed (0.8.9)
     safe_yaml (0.9.7)
-    sass (3.2.13)
+    sass (3.2.14)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)

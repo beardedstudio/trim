@@ -55,11 +55,11 @@ describe 'Trim::NavItem' do
 
   describe '.find_active_by' do
 
-    it 'should call find_active_by_nav_item when passed a nav item' do
+    it 'should call find_canonical_by_nav_item when passed a nav item' do
       item = Trim::NavItem.make
 
       Trim::NavItem.should_not_receive :find_active_by_path
-      item.should_receive(:find_active_by_nav_item).once
+      item.should_receive(:find_canonical_by_nav_item).once
 
       Trim::NavItem.find_active_by item
     end
@@ -111,7 +111,7 @@ describe 'Trim::NavItem' do
 
   end
 
-  describe '#find_active_by_nav_item' do
+  describe '#find_canonical_by_nav_item' do
 
     context :linked do
 
@@ -128,11 +128,11 @@ describe 'Trim::NavItem' do
       end
 
       it 'should return the canonical NavItem' do
-        @item2.find_active_by_nav_item.should eq @item
+        @item2.find_canonical_by_nav_item.should eq @item
       end
 
       it 'should return the NavItem if canonical' do
-        @item.find_active_by_nav_item.should eq @item
+        @item.find_canonical_by_nav_item.should eq @item
       end
 
     end
@@ -152,11 +152,11 @@ describe 'Trim::NavItem' do
       end
 
       it 'should return the canonical NavItem' do
-        @item2.find_active_by_nav_item.should eq @item
+        @item2.find_canonical_by_nav_item.should eq @item
       end
 
       it 'should return the NavItem if canonical' do
-        @item.find_active_by_nav_item.should eq @item
+        @item.find_canonical_by_nav_item.should eq @item
       end
 
     end

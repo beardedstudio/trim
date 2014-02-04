@@ -31,6 +31,8 @@ module Trim
     validate :custom_url_must_be_anchor, :if => Proc.new{ |s| s.nav_item_type == NAV_ITEM_TYPES[:fragment] }
     validate :custom_url_must_be_external, :if => Proc.new{ |s| s.nav_item_type == NAV_ITEM_TYPES[:external] }
 
+    default_scope order 'sort ASC'
+
     # friendly id slugging method
     def linked_or_custom
       return custom_slug unless custom_slug.blank?
@@ -59,7 +61,6 @@ module Trim
     # if it's not already present
     def set_nav
       if nav.blank? && Trim::Nav.count > 0
-
         self.nav = if !root_of.nil?
           root_of
         elsif parent.nil?
@@ -69,6 +70,22 @@ module Trim
         end
       end
       true
+    end
+
+    def is_linked?
+      nav_item_type == NAV_ITEM_TYPES[:linked]
+    end
+
+    def is_route?
+      nav_item_type == NAV_ITEM_TYPES[:route]
+    end
+
+    def is_external?
+      nav_item_type == NAV_ITEM_TYPES[:external]
+    end
+
+    def is_fragment?
+      nav_item_type == NAV_ITEM_TYPES[:fragment]
     end
 
     def custom_url_is_anchor?
@@ -93,24 +110,23 @@ module Trim
 
     def self.find_active_by(path_or_nav_item)
       if path_or_nav_item.is_a?(Trim::NavItem)
-        path_or_nav_item.find_active_by_nav_item
+        path_or_nav_item.find_canonical_by_nav_item
       else
         find_active_by_path path_or_nav_item
       end
     end
 
     def self.find_active_by_path(request_path)
-
-      path_matches = Trim::NavItem.where :nav_path => request_path
+      path_matches = Trim::NavItem.where(:nav_path => request_path) + Trim::NavItem.where(:route => request_path)
 
       if path_matches.blank?
-        path_matches = Trim::NavItem.where :nav_path => request_path.sub(/^\//, '')
+        path_matches = Trim::NavItem.where(:nav_path => request_path.sub(/^\//, '')) + Trim::NavItem.where(:route => request_path.sub(/^\//, ''))
       end
 
-      path_matches.blank? ? nil : path_matches.first.find_active_by_nav_item
+      path_matches.blank? ? nil : Trim::NavItem.find_canonical(path_matches)
     end
 
-    def find_active_by_nav_item
+    def find_canonical_by_nav_item
       # check to see if there is a more 'prominent' item for the requested object
       # return the 'canonical' item out of the set
       Trim::NavItem.find_canonical self.find_nav_items_with_same_destination
@@ -174,6 +190,17 @@ module Trim
       NAV_ITEM_TYPES.to_a
     end
 
+    def destination_text
+      case nav_item_type
+      when NAV_ITEM_TYPES[:linked]
+        linked.title
+      when NAV_ITEM_TYPES[:route]
+        Trim.navigable_routes.invert[route]
+      else
+        custom_url
+      end
+    end
+
     #
     #  RailsAdmin Configuration
     #
@@ -198,9 +225,18 @@ module Trim
 
       list do
         field :title
-        field :linked
-        field :route
-        field :custom_url
+        field :destination_text do
+          virtual?
+          label 'Destination'
+          pretty_value do
+            navitem = bindings[:object]
+            link = "#{navitem.nav_path}"
+            if [NAV_ITEM_TYPES[:linked], NAV_ITEM_TYPES[:route]].include? navitem.nav_item_type
+              link = "/#{link}"
+            end
+            %{<a href="#{link}">#{navitem.title}</a>}.html_safe
+          end
+        end
       end
 
       show do
@@ -223,6 +259,7 @@ module Trim
             :parent_enum
           end
         end
+        field :nav_item_type, :enum
         field :linked
         field :route
         field :custom_url
