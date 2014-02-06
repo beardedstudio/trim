@@ -47,6 +47,8 @@ module Trim
   # Routing Filter
   require 'trim/routing_filter/navigation.rb'
 
+  require 'trim/test_helper'
+
   # Configuration
 
   # Image styles for paperclip resizing
