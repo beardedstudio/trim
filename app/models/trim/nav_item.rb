@@ -227,13 +227,14 @@ module Trim
         field :title
         field :destination_text do
           virtual?
+          label 'Destination'
           pretty_value do
             navitem = bindings[:object]
             link = "#{navitem.nav_path}"
             if [NAV_ITEM_TYPES[:linked], NAV_ITEM_TYPES[:route]].include? navitem.nav_item_type
               link = "/#{link}"
             end
-            %{<a href="#{link}">#{value}</a>}.html_safe
+            %{<a href="#{link}">#{navitem.title}</a>}.html_safe
           end
         end
       end

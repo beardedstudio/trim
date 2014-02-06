@@ -1,4 +1,4 @@
-class TrimController < ApplicationController
+class TrimController < ActionController::Base
   layout 'application'
 
   helper Trim::ApplicationHelper
@@ -47,10 +47,6 @@ class TrimController < ApplicationController
 
   def add_to_editables
     @editables << resource
-  end
-
-  def after_sign_in_path_for(resource)
-    redirect_back_path || super
   end
 
   def current_ability
