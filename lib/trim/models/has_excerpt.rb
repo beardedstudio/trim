@@ -39,7 +39,7 @@ module Trim
           helper.truncate full, :length => self.class.excerpt_options[:length], :separator => ' ', :omission => '&#8230;'
         end
 
-        self.excerpt = excerpt.strip.html_safe
+        self.excerpt = excerpt.strip.html_safe unless excerpt.blank?
       end
     end
 
