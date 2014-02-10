@@ -2,7 +2,7 @@ module Trim
   class Setting < ActiveRecord::Base
 
     def self.setting_fields
-      [ :twitter_name,
+      [ :twitter_url,
         :facebook_url,
         :street_address,
         :city,
