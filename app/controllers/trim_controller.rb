@@ -8,7 +8,6 @@ class TrimController < ActionController::Base
   before_filter :redirect_to_canonical, :prepend => true
   before_filter :initialize_editables
   before_filter :initialize_variables
-  before_filter :reload_rails_admin, :if => :rails_admin_path?
 
   rescue_from CanCan::AccessDenied do |exception|
     type = flash[:notice].blank? ? :alert : :notice
@@ -22,23 +21,6 @@ class TrimController < ActionController::Base
     end
 
     redirect_to path
-  end
-
-  def reload_rails_admin
-    models = RailsAdmin::Config.registry.keys
-    models.each do |m|
-      RailsAdmin::Config.reset_model(m)
-    end
-    RailsAdmin::Config::Actions.reset
-
-    load("#{Rails.root}/config/initializers/rails_admin.rb")
-    models.each do |m|
-      m.rails_admin if m.respond_to?(:rails_admin)
-    end
-  end
-
-  def rails_admin_path?
-    controller_path =~ /rails_admin/ && Rails.env == "development"
   end
 
   def initialize_editables
