@@ -12,6 +12,6 @@
 //
 //= require_self
 //= require jquery.fitvids
-//= require videos
+//= require trim/videos
 //= require jquery.easing.1.3
 //

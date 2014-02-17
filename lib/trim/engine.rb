@@ -9,14 +9,15 @@ module Trim
       end
     end
 
-    # Enabling assets precompiling under rails 3.1
+    # Enabling assets precompiling under rails 3.1+
     if Rails.version >= '3.1'
-      initializer :assets do |config|
-        Rails.application.config.assets.precompile += %w( trim.js
-                                                          trim.css
-                                                          errors.css
-                                                          no-mq.css
-                                                          admin-bar.scss)
+      initializer 'Trim Assets', :group => :all do |app|
+        app.config.assets.precompile += %w[ modernizr-custom.min.js
+                                            trim/trim.js
+                                            trim/trim.css
+                                            trim/errors.css
+                                            trim/no-mq.css
+                                            trim/admin-bar.css ]
       end
     end
 
