@@ -5,7 +5,7 @@
 $breakpoint-no-queries: true;
 $breakpoint-no-query-fallbacks: true;
 
-@import 'screen';
+@import 'trim';
 
 // set a fixed width for browsers that don't support media queries.
 .no-mq {

@@ -22,17 +22,18 @@
 
     %meta{:name => "viewport", :content => "width=device-width"}
 
-    = stylesheet_link_tag "trim"
+    = stylesheet_link_tag "trim/trim"
+    = stylesheet_link_tag "application"
 
     - if content_for?(:styles)
       = yield :styles
 
     /[if (lt IE 9) & (!IEMobile)]
-      = stylesheet_link_tag "no-mq"
+      = stylesheet_link_tag "trim/no-mq"
 
     -# only load admin bar CSS if user is logged in.
     - if user_signed_in?
-      = stylesheet_link_tag "admin-bar.css"
+      = stylesheet_link_tag "trim/admin-bar.css"
 
     = yield :head
 
@@ -78,7 +79,7 @@
     :javascript
       window.jQuery || document.write('<script src="/assets/jquery.min.js"><\/script>')
 
-    = javascript_include_tag 'trim'
+    = javascript_include_tag 'trim/trim'
     = javascript_include_tag 'application'
 
     :javascript
