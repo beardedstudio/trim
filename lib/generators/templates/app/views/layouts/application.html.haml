@@ -51,7 +51,7 @@
         }
       ]);
 
-    = render :partial => 'shared/typekit'
+    = render :partial => 'trim/shared/typekit'
 
     :javascript
       if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
@@ -66,13 +66,12 @@
     = favicon_link_tag
 
   %body{ :class => body_classes }
+    = render :partial => 'trim/shared/admin_bar' if user_signed_in?
 
-    = render :partial => 'shared/admin_bar' if user_signed_in?
 
-
-    = render :partial => "shared/site_header"
+    = render :partial => "trim/shared/site_header"
     = yield
-    = render :partial => "shared/site_footer"
+    = render :partial => "trim/shared/site_footer"
 
     = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
 

@@ -85,6 +85,15 @@ module Trim
   def self.setup
     yield self
   end
+
+  def self.table_name_prefix 
+    'trim_'
+  end
+
+  def self.use_relative_model_naming?
+    true
+  end
+
 end
 
 require 'generators/trim/trim_generator'

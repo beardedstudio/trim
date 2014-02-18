@@ -1,7 +1,6 @@
 module Trim
 
   class Engine < Rails::Engine
-    isolate_namespace Trim
 
     config.to_prepare do
       Dir.glob(Rails.root + "app/decorators/**/*_decorator*.rb").each do |c|
