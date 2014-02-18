@@ -1,6 +1,5 @@
 module Trim
   class TrimController < ApplicationController
-    puts "Loaded #{self.name}"
     layout 'application'
 
     protect_from_forgery
