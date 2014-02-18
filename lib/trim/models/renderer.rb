@@ -18,7 +18,7 @@ module Trim
       @options[:show_home] = options.key?(:show_home) ? options[:show_home] : true
       @options[:show_current] = options.key?(:show_current) ? options[:show_current] : true
 
-      @view.render :partial => 'renderers/breadcrumbs', :locals => { :options => @options, :breadcrumbs => breadcrumbs }
+      @view.render :partial => 'trim/renderers/breadcrumbs', :locals => { :options => @options, :breadcrumbs => breadcrumbs }
     end
 
     def tree(options = {})
