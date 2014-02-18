@@ -64,20 +64,6 @@ a {
   }
 }
 
-#logo {
-  margin: 0 auto;
-  width: image-width("logo-small.png");
-  height: image-height("logo-small.png");
-}
-
-#logo a {
-  background: url(logo-small.png) 0 0 no-repeat;
-  display: block;
-  text-indent: -9999px;
-  width: image-width("logo-small.png");
-  height: image-height("logo-small.png");
-}
-
 @media only screen and (min-width: 37.5em) {
   h2 {
     font-size: 1.625em;

@@ -14,7 +14,6 @@ module Trim
         app.config.assets.precompile += %w[ modernizr-custom.min.js
                                             trim/trim.js
                                             trim/trim.css
-                                            trim/errors.css
                                             trim/no-mq.css
                                             trim/admin-bar.css ]
       end
