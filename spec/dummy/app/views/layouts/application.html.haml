@@ -22,17 +22,18 @@
 
     %meta{:name => "viewport", :content => "width=device-width"}
 
-    = stylesheet_link_tag "trim"
+    = stylesheet_link_tag "trim/trim"
+    = stylesheet_link_tag "application"
 
     - if content_for?(:styles)
       = yield :styles
 
     /[if (lt IE 9) & (!IEMobile)]
-      = stylesheet_link_tag "no-mq"
+      = stylesheet_link_tag "trim/no-mq"
 
     -# only load admin bar CSS if user is logged in.
     - if user_signed_in?
-      = stylesheet_link_tag "admin-bar.css"
+      = stylesheet_link_tag "trim/admin-bar.css"
 
     = yield :head
 
@@ -50,7 +51,7 @@
         }
       ]);
 
-    = render :partial => 'shared/typekit'
+    = render :partial => 'trim/shared/typekit'
 
     :javascript
       if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
@@ -65,20 +66,19 @@
     = favicon_link_tag
 
   %body{ :class => body_classes }
+    = render :partial => 'trim/shared/admin_bar' if user_signed_in?
 
-    = render :partial => 'shared/admin_bar' if user_signed_in?
 
-
-    = render :partial => "shared/site_header"
+    = render :partial => "trim/shared/site_header"
     = yield
-    = render :partial => "shared/site_footer"
+    = render :partial => "trim/shared/site_footer"
 
     = javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
 
     :javascript
       window.jQuery || document.write('<script src="/assets/jquery.min.js"><\/script>')
 
-    = javascript_include_tag 'trim'
+    = javascript_include_tag 'trim/trim'
     = javascript_include_tag 'application'
 
     :javascript
