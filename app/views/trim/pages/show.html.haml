@@ -10,7 +10,7 @@
   .container
     %section#primary
       %section.main-content
-        = render :partial => 'shared/lead_item', :object => @page
+        = render :partial => 'trim/shared/lead_item', :object => @page
 
         - # Main Body
         - template = Liquid::Template.parse @page.body
@@ -18,4 +18,4 @@
         
       - # Related Items
       - unless @page.related_items.blank?
-        = render :partial => 'shared/related_items', :locals => { :related_items => @page.related_items }
+        = render :partial => 'trim/shared/related_items', :locals => { :related_items => @page.related_items }
