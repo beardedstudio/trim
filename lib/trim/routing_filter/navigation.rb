@@ -43,7 +43,7 @@ class Navigation < RoutingFilter::Filter
       elsif navigation_path.is_a?(String)
         # This is a funny hack to make sure we don't throw routing errors
         # when we know what path we want to use.
-        params.replace({ :controller => '/home', :action => 'index' })
+        params.replace({ :controller => 'trim/home', :action => 'index' })
       end
     end
 

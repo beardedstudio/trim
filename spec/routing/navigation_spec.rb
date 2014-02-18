@@ -9,7 +9,7 @@ describe Navigation do
     end
 
     it "routes pages from resourceful url" do
-      get("/pages/about").should route_to("pages#show", :id => 'about')
+      get("/pages/about").should route_to("trim/pages#show", :id => 'about')
     end
 
     it 'routes pages from their path if they have an attached nav item' do
@@ -18,7 +18,7 @@ describe Navigation do
       @page.nav_items << Trim::NavItem.make!(:title => "about", :parent_id => home_nav_item.id)
   
       url = polymorphic_path(@page)
-      get(url).should route_to("pages#show", :id => 'about')
+      get(url).should route_to("trim/pages#show", :id => 'about')
       url.should == '/about'
     end
 

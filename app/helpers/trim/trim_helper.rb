@@ -1,5 +1,8 @@
 module Trim
-  module ApplicationHelper
+  module TrimHelper
+
+    #include Rails.application.routes.url_helpers
+
     def notice_and_alert_messages
       if flash.any?
         content_tag(:section, :class => 'messages') do
