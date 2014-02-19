@@ -16,7 +16,7 @@ module Trim
         main_app.root_path
       else
         flash[:alert] = "Please log in or sign up for an account first."
-        main_app.new_user_session_path
+        main_app.url_for :controller => 'devise/sessions', :action => :new
       end
 
       redirect_to path
@@ -45,7 +45,7 @@ module Trim
         end
 
         set_active_nav_item
-        
+
         @setting ||= Trim::Setting.factory
 
         @editables ||= []
