@@ -20,7 +20,7 @@ describe Trim::Renderer do
   describe '#breadcrumbs' do
 
     it 'should render the breadcrumbs partial' do
-      view_args = { :partial => 'renderers/breadcrumbs',
+      view_args = { :partial => 'trim/renderers/breadcrumbs',
                     :locals => { :options => default_view_args,
                                  :breadcrumbs => @item.path }}
 
