@@ -15,6 +15,11 @@ module Trim
     has_many :nav_items, :class_name => 'Trim::NavItem', :inverse_of => :nav
 
     after_save Proc.new{ |s| s.nav_item.save }
+    
+    after_create Proc.new{ |s| 
+      s.nav_item.nav_id = s.id
+      s.nav_item.save
+    }
 
     def self.configure
       
@@ -37,10 +42,6 @@ module Trim
                                    :slug => n[:slug],
                                    :nav_item => root_item,
                                    :priority => n[:priority]
-
-            root_item.nav_id = nav.id
-            root_item.save
-
           else
             exists.update_attributes :priority => n[:priority], :title => n[:title]
           end
