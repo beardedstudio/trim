@@ -22,6 +22,5 @@
 // Custom additions to rails_admin below
 //=  require 'rails_admin/ra.nested_many_sortable'
 //=  require 'rails_admin/ra.nested_forms_insert'
-//=  require 'rails_admin/ra.model_nested_sortable'
 //=  require 'rails_admin/ra.textarea_charcount'
 //=  require 'jquery.ui.tabs'
