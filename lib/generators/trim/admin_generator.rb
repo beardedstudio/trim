@@ -85,5 +85,13 @@ User.create!( :email => 'admin@example.com',
 
       say "Added rails_admin user config", MESSAGE_COLOR
     end
+
+    def configure_devise_initializer
+      code = <<-code
+
+  config.parent_controller = "Trim::TrimController"
+      code
+      insert_into_file 'config/initializers/devise.rb', code, :after => 'Devise.setup do |config|'
+    end
   end
 end
