@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'liquid', '~> 2.6.0'
   s.add_dependency 'paperclip', '~> 3.5.2'
   s.add_dependency 'rails_admin', '~> 0.4.9'
+  s.add_dependency 'rails_admin_nestable', '~> 0.1.7'
   s.add_dependency 'routing-filter', '~> 0.3.1'
   s.add_dependency 'sass-rails', '~> 3.2.6'
   s.add_dependency 'compass-rails', '~> 1.1.2'

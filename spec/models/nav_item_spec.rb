@@ -24,7 +24,7 @@ describe 'Trim::NavItem' do
     end
 
     it 'should return empty string if no parent node' do
-      item = Trim::NavItem.make!
+      item = @nav.nav_item
       item.generate_nav_path.should eq ''
     end
   end

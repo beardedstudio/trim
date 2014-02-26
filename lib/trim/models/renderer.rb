@@ -3,7 +3,7 @@ module Trim
 
     attr_accessor :view, :active_nav_item, :options, :depth
 
-    def initialize(view, nav_item)
+    def initialize(view, nav_item = nil)
       self.class_eval do
         include Rails.application.routes.url_helpers
       end

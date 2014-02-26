@@ -4,6 +4,7 @@ require 'inherited_resources'
 require 'devise'
 require 'cancan'
 require 'rails_admin'
+require 'rails_admin_nestable'
 require 'active_support/dependencies'
 require 'friendly_id'
 require 'paperclip'
@@ -22,11 +23,8 @@ module Trim
 
   # Rails Admin custom actions
   require 'trim/rails_admin/rails_admin_multi_enum.rb'
-  require 'trim/rails_admin/rails_admin_nested_sort.rb'
-  require 'trim/rails_admin/rails_admin_reorder.rb'
   require 'trim/rails_admin/rails_admin_settings.rb'
   require 'trim/rails_admin/rails_admin_show_in_app.rb'
-  require 'trim/rails_admin/rails_admin_single_hierarchy.rb'
 
   # Mixins
   require 'trim/models/has_excerpt.rb'

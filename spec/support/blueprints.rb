@@ -10,12 +10,17 @@ Trim::Nav.blueprint do
   title { "Nav #{sn}" }
   slug { "nav-#{sn}" }
   priority { 0 }
-  nav_item { Trim::NavItem.make :linked => Trim::Page.make }
+  nav_item { Trim::NavItem.make! :menu_root }
 end
 
 Trim::NavItem.blueprint do
   title { "Nav Item #{sn}" }
 end
+
+Trim::NavItem.blueprint :menu_root do
+  nav_path {''}
+  bypass_callbacks { true }
+end  
 
 Trim::Page.blueprint do
   title { "Page #{sn}" }
