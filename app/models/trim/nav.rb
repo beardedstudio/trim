@@ -15,6 +15,11 @@ module Trim
     has_many :nav_items, :class_name => 'Trim::NavItem', :inverse_of => :nav
 
     after_save Proc.new{ |s| s.nav_item.save }
+    
+    after_create Proc.new{ |s| 
+      s.nav_item.nav_id = s.id
+      s.nav_item.save
+    }
 
     def self.configure
       
@@ -28,14 +33,15 @@ module Trim
 
           if !exists
 
-            root_item = Trim::NavItem.create  :title => "Home",
-                                              :nav_item_type => Trim::NavItem::NAV_ITEM_TYPES[:linked],
-                                              :nav_path => ''
+            root_item = Trim::NavItem.new  :title => "Home",
+                                           :nav_item_type => Trim::NavItem::NAV_ITEM_TYPES[:linked],
+                                           :nav_path => '',
+                                           :bypass_callbacks => true
 
-            Trim::Nav.create :title => n[:title],
-                             :slug => n[:slug],
-                             :nav_item => root_item,
-                             :priority => n[:priority]
+            nav = Trim::Nav.create :title => n[:title],
+                                   :slug => n[:slug],
+                                   :nav_item => root_item,
+                                   :priority => n[:priority]
           else
             exists.update_attributes :priority => n[:priority], :title => n[:title]
           end
