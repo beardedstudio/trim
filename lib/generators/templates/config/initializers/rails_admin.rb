@@ -23,11 +23,6 @@ RailsAdmin.config do |config|
     export
     history_index
     bulk_delete
-    nested_sort do
-      visible do
-        bindings[:abstract_model].model.to_s == 'Trim::NavItem'
-      end
-    end
 
     # member actions
     show
@@ -36,5 +31,6 @@ RailsAdmin.config do |config|
     history_show
     show_in_app
 
+    nestable
   end
 end

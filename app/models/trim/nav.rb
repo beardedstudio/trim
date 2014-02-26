@@ -28,14 +28,19 @@ module Trim
 
           if !exists
 
-            root_item = Trim::NavItem.create  :title => "Home",
-                                              :nav_item_type => Trim::NavItem::NAV_ITEM_TYPES[:linked],
-                                              :nav_path => ''
+            root_item = Trim::NavItem.new  :title => "Home",
+                                           :nav_item_type => Trim::NavItem::NAV_ITEM_TYPES[:linked],
+                                           :nav_path => '',
+                                           :bypass_callbacks => true
 
-            Trim::Nav.create :title => n[:title],
-                             :slug => n[:slug],
-                             :nav_item => root_item,
-                             :priority => n[:priority]
+            nav = Trim::Nav.create :title => n[:title],
+                                   :slug => n[:slug],
+                                   :nav_item => root_item,
+                                   :priority => n[:priority]
+
+            root_item.nav_id = nav.id
+            root_item.save
+
           else
             exists.update_attributes :priority => n[:priority], :title => n[:title]
           end

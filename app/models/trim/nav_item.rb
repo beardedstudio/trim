@@ -19,17 +19,22 @@ module Trim
     belongs_to :nav, :class_name => 'Trim::Nav', :inverse_of => :nav_items
     has_one :root_of, :class_name => 'Trim::Nav', :inverse_of => :nav_item
 
+    attr_accessor   :bypass_callbacks
+    attr_accessible :bypass_callbacks
+
     attr_accessible :title, :slug, :custom_slug, :nav_path, :nav_item_type,
                     :linked_id, :linked_type, :nav, :nav_id, :parent_id,
                     :route, :custom_url, :open_in_new_window, :ancestry, :ancestry_depth
 
-    before_save :generate_nav_path
-    before_save :set_nav
+    before_validation :generate_nav_path, :unless => :bypass_callbacks
+    before_validation :set_nav, :unless => :bypass_callbacks
 
     validates :title, :presence => true
 
     validate :custom_url_must_be_anchor, :if => Proc.new{ |s| s.nav_item_type == NAV_ITEM_TYPES[:fragment] }
     validate :custom_url_must_be_external, :if => Proc.new{ |s| s.nav_item_type == NAV_ITEM_TYPES[:external] }
+
+    validate :root_nodes_must_be_nav_roots, :if => Proc.new{ |s| !s.bypass_callbacks && (s.is_root? || !s.root_of.nil?) }
 
     default_scope order 'sort ASC'
 
@@ -60,16 +65,14 @@ module Trim
     # based on parentage or default
     # if it's not already present
     def set_nav
-      if nav.blank? && Trim::Nav.count > 0
-        self.nav = if !root_of.nil?
-          root_of
-        elsif parent.nil?
-          Trim::Nav.get_default
-        else
-          root.nav
-        end
+      if !root_of.nil?
+        self.nav = root_of
+      elsif parent.nil?
+        self.nav = Trim::Nav.get_default
+        self.parent = Trim::Nav.get_default.nav_item
+      else
+        self.nav = root.nav
       end
-      true
     end
 
     def is_linked?
@@ -105,6 +108,14 @@ module Trim
     def custom_url_must_be_external
       if !custom_url.blank? && !custom_url_is_external?
         errors.add :custom_url, "must be a fully-formed external link"
+      end
+    end
+
+    def root_nodes_must_be_nav_roots
+      if root_of.nil? && is_root?
+        errors[:base] << "Only Navigation root-nodes can be at the root level."
+      elsif !root_of.nil? && !is_root?
+        errors[:base] << "Navigation root-nodes may not be nested under other navigation items."
       end
     end
 
@@ -159,6 +170,10 @@ module Trim
       collection.first
     end
 
+    def rails_admin_title
+      (nav && id == nav.nav_item.id) ? "#{title} (#{nav.title})" : title
+    end
+
     # This is picked up magically by RailsAdmin.
     def route_enum
       Trim.navigable_routes.to_a
@@ -209,6 +224,21 @@ module Trim
       navigation_label 'Navigation and Menus'
       label "Navigation Item"
       weight -8
+      nestable_tree({
+        position_field: :sort,
+        max_depth: 3,
+        enable_callback: true
+      })
+
+      object_label_method do
+        :rails_admin_title
+      end
+
+      configure :title do
+        pretty_value do
+          bindings[:object].rails_admin_title
+        end
+      end
 
       configure :slug do
         read_only true
