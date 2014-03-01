@@ -33,7 +33,7 @@ describe Trim::Renderer do
 
   describe '#tree' do
     it 'should pass the root node of the given tree to list_for' do
-      @renderer.should_receive(:list_for).with(@item.root)
+      @renderer.should_receive(:list_for).with(@item.root).and_call_original
       @renderer.tree(:root_node => @item)
     end
   end

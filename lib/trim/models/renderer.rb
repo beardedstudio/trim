@@ -23,9 +23,21 @@ module Trim
 
     def tree(options = {})
       @options[:root_node] = options.key?(:root_node) ? options[:root_node] : @active_nav_item.root
+      @options[:show_root] = options.key?(:show_root) ? options[:show_root] : false
+      @options[:root_element] = options.key(:root_element) ? options[:root_element] : :h2
       @options[:depth] = options.key?(:depth) ? options[:depth] : 999
 
-      list_for(@options[:root_node])
+      output = ''
+
+      if @options[:show_root]
+        output += @view.content_tag @options[:root_element] do
+          anchor_for(@options[:root_node])
+        end
+      end
+      
+      output += list_for(@options[:root_node])
+
+      output.html_safe
     end
 
     def anchor_for(item)
