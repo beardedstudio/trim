@@ -1,4 +1,7 @@
 .bundle/
+.ruby-version
+.ruby-gemset
+.rvmrc
 log/*.log
 pkg/
 spec/dummy/db/*.sqlite3
