@@ -1,6 +1,5 @@
 module Trim
   class TrimController < ApplicationController
-    layout 'application'
 
     protect_from_forgery
 
