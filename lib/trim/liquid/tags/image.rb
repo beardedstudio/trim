@@ -14,7 +14,7 @@ class Image < Liquid::Tag
 
       if image
         controller = ActionController::Base.new
-        return controller.render_to_string :partial => 'images/inserted', :object => image
+        return controller.render_to_string :partial => 'trim/images/inserted', :object => image
       end
     end
   end
