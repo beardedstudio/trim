@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'haml-rails', '~> 0.4'
   s.add_dependency 'inherited_resources', '~> 1.4.1'
   s.add_dependency 'jquery_ui_rails_helpers', '~> 0.0.4'
-  s.add_dependency 'liquid', '~> 2.6.0'
   s.add_dependency 'paperclip', '~> 3.5.2'
   s.add_dependency 'rails_admin', '~> 0.4.9'
   s.add_dependency 'rails_admin_nestable', '~> 0.1.7'
