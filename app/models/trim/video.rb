@@ -19,7 +19,7 @@ module Trim
     validate :url_must_be_valid
 
     def title
-      self.caption.truncate 15
+      self.caption.truncate(15) if self.caption
     end
 
     def oembed

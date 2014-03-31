@@ -20,7 +20,7 @@ end
 Trim::NavItem.blueprint :menu_root do
   nav_path {''}
   bypass_callbacks { true }
-end  
+end
 
 Trim::Page.blueprint do
   title { "Page #{sn}" }
@@ -51,6 +51,10 @@ end
 
 Trim::RelatedItem.blueprint do
   related_to { Trim::Page.make! }
+end
+
+Trim::Video.blueprint do
+  caption { 'This is a Video' }
 end
 
 User.blueprint do
