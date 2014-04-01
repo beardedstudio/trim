@@ -1,14 +1,16 @@
 module Trim
   class Renderer
 
-    attr_accessor :view, :active_nav_item, :options, :depth
+    attr_accessor :view, :root_nav_item, :active_nav_item, :options, :depth
 
-    def initialize(view, nav_item = nil)
+    def initialize(view, main_nav_item, active_nav_item = nil)
       self.class_eval do
         include Rails.application.routes.url_helpers
       end
+
       @view = view
-      @active_nav_item = nav_item
+      @root_nav_item = main_nav_item
+      @active_nav_item = active_nav_item
       @options = {}
       @depth = 0
     end
@@ -22,7 +24,7 @@ module Trim
     end
 
     def tree(options = {})
-      @options[:root_node] = options.key?(:root_node) ? options[:root_node] : @active_nav_item.root
+      @options[:root_node] = options.key?(:root_node) ? options[:root_node] : @root_nav_item.root
       @options[:show_root] = options.key?(:show_root) ? options[:show_root] : false
       @options[:root_element] = options.key(:root_element) ? options[:root_element] : :h2
       @options[:depth] = options.key?(:depth) ? options[:depth] : 999
@@ -34,7 +36,7 @@ module Trim
           anchor_for(@options[:root_node])
         end
       end
-      
+
       output += list_for(@options[:root_node])
 
       output.html_safe
