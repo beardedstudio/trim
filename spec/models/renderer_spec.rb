@@ -14,7 +14,7 @@ describe Trim::Renderer do
     @item = Trim::Nav.make!.nav_item
     Trim::NavItem.make(:parent_id => @item.id, :linked => Trim::Page.make)
 
-    @renderer = Trim::Renderer.new @view, @item
+    @renderer = Trim::Renderer.new @view, @item, @item
   end
 
   describe '#breadcrumbs' do
@@ -142,7 +142,7 @@ describe Trim::Renderer do
     end
 
     it 'should return active-trail if the item is a parent of the active item' do
-      @renderer = Trim::Renderer.new(@view, @item.children.first)
+      @renderer = Trim::Renderer.new(@view, @item, @item.children.first)
       @renderer.classes_for_item(@item).include?('active-trail').should be_true
     end
 
