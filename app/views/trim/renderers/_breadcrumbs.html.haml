@@ -7,7 +7,8 @@
 
         - unless (i == 0 && options[:show_home] == false) || (crumb == @active_nav_item && options[:show_current] == false)
           %li{ :class => classes }
-            - if crumb == @active_nav_item
-              %span.active= crumb.title
+            - if crumb == @active_nav_item || crumb[:active]
+              %span.active= crumb[:title]
             - elsif crumb != @active_nav_item
-              = link_to crumb.title, polymorphic_path(crumb)
+              - url = crumb.key?(:url) ? crumb[:url] : polymorphic_path(crumb)
+              = link_to crumb[:title], url
