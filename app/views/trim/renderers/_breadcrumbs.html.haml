@@ -10,5 +10,5 @@
             - if crumb == @active_nav_item || crumb[:active]
               %span.active= crumb[:title]
             - elsif crumb != @active_nav_item
-              - url = crumb.key?(:url) ? crumb[:url] : polymorphic_path(crumb)
+              - url = crumb.is_a?(Hash) ? crumb[:url] : polymorphic_path(crumb)
               = link_to crumb[:title], url
