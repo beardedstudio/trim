@@ -7,8 +7,8 @@ module Trim
     delegate :title, :to => :related_to, :allow_nil => true
     delegate :excerpt, :to => :related_to, :allow_nil => true
 
-    attr_accessible :related_to_id, :related_from_id, :related_to_type, 
-                    :related_from_type, :sort
+    attr_accessible :related_to_id, :related_from_id, :related_to_type,
+                    :related_from_type, :sort, :as => Trim.attr_accessible_role
 
     validates :related_to, :presence => true
 

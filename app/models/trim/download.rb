@@ -1,6 +1,6 @@
 module Trim
   class Download < ActiveRecord::Base
-    attr_accessible :title, :sort, :download, :downloadable
+    attr_accessible :title, :sort, :download, :downloadable, :as => Trim.attr_accessible_role
 
     belongs_to :downloadable, :polymorphic => true
 
@@ -22,7 +22,7 @@ module Trim
     #
     rails_admin do
       visible false
-      nested do 
+      nested do
         field :download
         field :title
         field :sort

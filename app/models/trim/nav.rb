@@ -15,14 +15,14 @@ module Trim
     has_many :nav_items, :class_name => 'Trim::NavItem', :inverse_of => :nav
 
     after_save Proc.new{ |s| s.nav_item.save }
-    
-    after_create Proc.new{ |s| 
+
+    after_create Proc.new{ |s|
       s.nav_item.nav_id = s.id
       s.nav_item.save
     }
 
     def self.configure
-      
+
       navs = Trim::Nav::DEFAULT_NAVS + Trim.navs
 
       navs.each do |n|
@@ -56,7 +56,7 @@ module Trim
       self.order('priority asc').first
     end
 
-    attr_accessible :title, :slug, :priority, :nav_item, :nav_item_id
+    attr_accessible :title, :slug, :priority, :nav_item, :nav_item_id, :as => Trim.attr_accessible_role
 
     def title_or_slug
       self.slug.blank? ? self.title : self.slug.to_s

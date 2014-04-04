@@ -19,7 +19,7 @@ module Trim
     extend HasExcerpt
     has_excerpt :field => :body, :length => 150
 
-    attr_accessible :title, :body, :intro, :excerpt, :teaser, :slug, :custom_slug, :is_private
+    attr_accessible :title, :body, :intro, :excerpt, :teaser, :slug, :custom_slug, :is_private, :as => Trim.attr_accessible_role
 
     validates :title, :presence => true
     validates :teaser, :length => { :maximum => 150, :message => "Your teaser is too long (the maximum is 150 characters)." }, :allow_blank => true
