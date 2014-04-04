@@ -43,7 +43,8 @@ module Trim
                                    :nav_item => root_item,
                                    :priority => n[:priority]
           else
-            exists.update_attributes :priority => n[:priority], :title => n[:title]
+            exists.update_attributes({ :priority => n[:priority], :title => n[:title]},
+                                      :as => Trim.attr_accessible_role)
           end
 
         end
