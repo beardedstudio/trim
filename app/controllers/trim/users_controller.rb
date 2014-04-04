@@ -3,15 +3,15 @@ module Trim
 
     before_filter :strip_password_params_if_not_set, :only => :update
     before_filter :add_to_editables
-    
+
     def update
 
       if @user.id == current_user.id
-        if @user.update_attributes(params[:user])
+        if @user.update_attributes(params[:user], :as => Trim.attr_accessible_role)
 
           sign_in(:user, @user, :bypass => true)
 
-          if params[:user][:password].blank? 
+          if params[:user][:password].blank?
             flash[:notice] = 'Your user information has been updated successfully.'
           else
             flash[:notice] = 'Your user information and password have been updated successfully.'

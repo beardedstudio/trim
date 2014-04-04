@@ -25,7 +25,7 @@ module RailsAdmin
 
             unless request.get?
 
-              if @setting.update_attributes params[:setting]
+              if @setting.update_attributes(params[:setting], :as => Trim.attr_accessible_role)
                 flash[:success] = "Settings have been saved."
               else
                 flash[:error] = "Settings have not been saved."
