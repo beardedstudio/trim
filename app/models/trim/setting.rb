@@ -32,7 +32,7 @@ module Trim
 
     store :settings, :accessors => Setting.setting_fields
 
-    attr_accessible *setting_fields
+    attr_accessible *setting_fields, :as => Trim.attr_accessible_role
 
     def self.factory
       Setting.first || Setting.create
