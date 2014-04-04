@@ -11,6 +11,8 @@ module Trim
     extend FriendlyId
     friendly_id :title_or_slug, :use => :slugged
 
+    attr_accessible :title, :slug, :priority, :nav_item, :nav_item_id, :as => Trim.attr_accessible_role
+
     belongs_to :nav_item, :class_name => 'Trim::NavItem', :inverse_of => :root_of
     has_many :nav_items, :class_name => 'Trim::NavItem', :inverse_of => :nav
 
@@ -36,15 +38,16 @@ module Trim
             root_item = Trim::NavItem.new  :title => "Home",
                                            :nav_item_type => Trim::NavItem::NAV_ITEM_TYPES[:linked],
                                            :nav_path => '',
-                                           :bypass_callbacks => true
+                                           :bypass_callbacks => true, :as => Trim.attr_accessible_role
 
             nav = Trim::Nav.create :title => n[:title],
                                    :slug => n[:slug],
                                    :nav_item => root_item,
-                                   :priority => n[:priority]
+                                   :priority => n[:priority], :as => Trim.attr_accessible_role
           else
-            exists.update_attributes({ :priority => n[:priority], :title => n[:title]},
-                                      :as => Trim.attr_accessible_role)
+            exists.priority = n[:priority]
+            exists.title = n[:title]
+            exists.save
           end
 
         end
@@ -56,8 +59,6 @@ module Trim
       # return the nav with the highest priority
       self.order('priority asc').first
     end
-
-    attr_accessible :title, :slug, :priority, :nav_item, :nav_item_id, :as => Trim.attr_accessible_role
 
     def title_or_slug
       self.slug.blank? ? self.title : self.slug.to_s
