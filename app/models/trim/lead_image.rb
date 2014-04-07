@@ -15,7 +15,7 @@ module Trim
       :styles => Trim.image_styles,
       :convert_options => Trim.image_convert_options
 
-    attr_accessible :alt_text, :caption, :image, :imageable, :as => Trim.attr_accessible_role
+    attr_accessible :alt_text, :caption, :image, :imageable, :as => :admin
 
     validates_attachment_presence :image
 

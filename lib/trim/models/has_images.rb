@@ -5,7 +5,7 @@ module Trim
       base.class_eval do
         has_many :images, :as => :imageable, :class_name => 'Trim::Image', :dependent => :destroy, :order => 'trim_images.sort ASC'
         accepts_nested_attributes_for :images, :allow_destroy => true
-        attr_accessible :images_attributes, :as => Trim.attr_accessible_role
+        attr_accessible :images_attributes, :as => :admin
       end
     end
 

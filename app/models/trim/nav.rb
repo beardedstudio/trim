@@ -11,7 +11,7 @@ module Trim
     extend FriendlyId
     friendly_id :title_or_slug, :use => :slugged
 
-    attr_accessible :title, :slug, :priority, :nav_item, :nav_item_id, :as => Trim.attr_accessible_role
+    attr_accessible :title, :slug, :priority, :nav_item, :nav_item_id, :as => :admin
 
     belongs_to :nav_item, :class_name => 'Trim::NavItem', :inverse_of => :root_of
     has_many :nav_items, :class_name => 'Trim::NavItem', :inverse_of => :nav
@@ -35,19 +35,18 @@ module Trim
 
           if !exists
 
-            root_item = Trim::NavItem.new  :title => "Home",
+            root_item = Trim::NavItem.new({:title => "Home",
                                            :nav_item_type => Trim::NavItem::NAV_ITEM_TYPES[:linked],
-                                           :nav_path => '',
-                                           :bypass_callbacks => true, :as => Trim.attr_accessible_role
+                                           :nav_path => ''}, :as => :admin)
 
-            nav = Trim::Nav.create :title => n[:title],
-                                   :slug => n[:slug],
-                                   :nav_item => root_item,
-                                   :priority => n[:priority], :as => Trim.attr_accessible_role
+            root_item.bypass_callbacks = true
+
+            nav = Trim::Nav.create({ :title => n[:title],
+                                    :slug => n[:slug],
+                                    :nav_item => root_item,
+                                    :priority => n[:priority]}, :as => :admin)
           else
-            exists.priority = n[:priority]
-            exists.title = n[:title]
-            exists.save
+            exists.update_attributes({:priority => n[:priority], :title => n[:title]}, :as => :admin)
           end
 
         end
@@ -68,6 +67,5 @@ module Trim
     def should_generate_new_friendly_id?
       false
     end
-
   end
 end

@@ -80,9 +80,6 @@ module Trim
   mattr_accessor :additional_settings
   @@additional_settings = [ ]
 
-  mattr_accessor :attr_accessible_role
-  @@attr_accessible_role = :default
-
   def self.setup
     yield self
   end
