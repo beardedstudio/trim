@@ -87,17 +87,6 @@ Trim.setup do |config|
 
   ####
   #
-  # attr_accessible_role
-  #
-  ####
-
-  ## By default, use the :default role for attr_accessible for model attributes in
-  ## Trim's models. Overridding this value will use instead of :default (not in addition to).
-
-  ## config.attr_accessible_role = :default
-
-  ####
-  #
   #  Additional Settings
   #
   ####

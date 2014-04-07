@@ -8,7 +8,7 @@ module Trim
         after_save Proc.new{ self.nav_items.each &:save }
 
         accepts_nested_attributes_for :nav_items, :allow_destroy => true
-        attr_accessible :nav_items_attributes, :as => Trim.attr_accessible_role
+        attr_accessible :nav_items_attributes, :as => :admin
       end
     end
 

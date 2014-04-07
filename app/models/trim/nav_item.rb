@@ -25,7 +25,7 @@ module Trim
     attr_accessible :title, :slug, :custom_slug, :nav_path, :nav_item_type,
                     :linked_id, :linked_type, :nav, :nav_id, :parent_id,
                     :route, :custom_url, :open_in_new_window, :ancestry, :ancestry_depth,
-                      :as => Trim.attr_accessible_role
+                      :as => :admin
 
     before_validation :generate_nav_path, :unless => :bypass_callbacks
     before_validation :set_nav, :unless => :bypass_callbacks

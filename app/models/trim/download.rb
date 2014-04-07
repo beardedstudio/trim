@@ -1,6 +1,6 @@
 module Trim
   class Download < ActiveRecord::Base
-    attr_accessible :title, :sort, :download, :downloadable, :as => Trim.attr_accessible_role
+    attr_accessible :title, :sort, :download, :downloadable, :as => :admin
 
     belongs_to :downloadable, :polymorphic => true
 

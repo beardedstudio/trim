@@ -7,7 +7,7 @@ module Trim
     def update
 
       if @user.id == current_user.id
-        if @user.update_attributes(params[:user], :as => Trim.attr_accessible_role)
+        if @user.update_attributes(params[:user], :as => :admin)
 
           sign_in(:user, @user, :bypass => true)
 

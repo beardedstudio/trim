@@ -9,7 +9,7 @@ module Trim
     PROVIDERS = { YOUTUBE => 1,
                   VIMEO => 2 }
 
-    attr_accessible :video_url, :caption, :sort, :embeddable, :provider, :as => Trim.attr_accessible_role
+    attr_accessible :video_url, :caption, :sort, :embeddable, :provider, :as => :admin
 
     belongs_to :embeddable, :polymorphic => true
 
