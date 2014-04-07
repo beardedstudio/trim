@@ -105,7 +105,7 @@ class Navigation < RoutingFilter::Filter
       record = Trim::NavItem.find_canonical( record.nav_items )
     end
 
-    if params[:use_route] && %(edit new destroy update).include?(params[:action])
+    if params[:use_route] && %(edit new create destroy update).include?(params[:action])
       url_for params.merge(:navigation_filter => false, :only_path => true)
     elsif record.is_linked? || record.is_route?
       "/#{record.nav_path}"
