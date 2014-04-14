@@ -10,9 +10,10 @@ module Trim
 
           flash.each do |key, msg|
             next if msg.blank?
+            Rails.logger.info key.inspect
             type = 'success' if key == :notice
             type = 'notice' if key == :message
-            type = 'error' if key == :alert
+            type = 'error' if [:alert, :error].include?(key)
 
             out += content_tag(:div, :class => type) do
               msg.kind_of?(Array) ? msg.join('<br/>').html_safe : msg
