@@ -82,6 +82,7 @@ module Trim
     end
 
     def redirect_to_canonical
+      return unless env.key?(:ORIGINAL_PATH_INFO)
       path = env['ORIGINAL_PATH_INFO'].sub(/^\//, '')
       nav_item = Trim::NavItem.find_active_by( path )
       if nav_item
