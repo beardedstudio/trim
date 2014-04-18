@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'breakpoint', '~> 2.0.7'
   s.add_dependency 'cancan', '~> 1.6.10'
   s.add_dependency 'ckeditor', '~> 4.0.6'
-  s.add_dependency 'devise', '~> 3.2.2'
+  s.add_dependency 'devise', '~> 3.2.4'
   s.add_dependency 'formtastic', '~> 2.2.1'
   s.add_dependency 'friendly_id', '~> 4.0.10.1'
   s.add_dependency 'haml-rails', '~> 0.4'
