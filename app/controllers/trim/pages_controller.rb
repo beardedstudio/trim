@@ -2,9 +2,9 @@ module Trim
   class PagesController < InheritedController
     defaults :resource_class => Trim::Page
 
-    load_and_authorize_resource :page
+    load_and_authorize_resource
 
-    before_filter :handle_page
+    before_filter :handle_page, :only => [:show]
 
     def handle_page
       return if conditional_redirect_to_navigation_path @page
