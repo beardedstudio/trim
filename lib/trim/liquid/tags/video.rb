@@ -13,7 +13,7 @@ class Video < Liquid::Tag
 
       if video
         controller = ActionController::Base.new
-        controller.render_to_string :partial => 'videos/inserted', :object => video
+        controller.render_to_string :partial => 'trim/videos/inserted', :object => video
       end
     end
   end
