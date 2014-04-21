@@ -54,6 +54,10 @@ module Trim
         read_only true
       end
 
+      configure :videos do
+        orderable :sort
+      end
+
       list do
         fields :title, :created_at
       end

@@ -1,4 +1,3 @@
-
 RailsAdmin.config do |config|
   config.main_app_name = ['<%= Rails.application.engine_name.titleize.chomp(' Application') %>', 'Admin']
   config.current_user_method { current_user } # auto-generated

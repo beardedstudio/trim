@@ -17,15 +17,15 @@ require 'breakpoint'
 require 'liquid'
 
 module Trim
-  require 'trim/railtie' if defined?(Rails)
-
-  require 'trim/version'
-
   # Rails Admin custom actions
   require 'trim/rails_admin/rails_admin_multi_enum.rb'
   require 'trim/rails_admin/rails_admin_settings.rb'
   require 'trim/rails_admin/rails_admin_show_in_app.rb'
+  require 'trim/rails_admin/config/fields/association.rb'
 
+  require 'trim/railtie' if defined?(Rails)
+
+  require 'trim/version'
   # Mixins
   require 'trim/models/has_excerpt.rb'
   require 'trim/models/has_nav_items.rb'

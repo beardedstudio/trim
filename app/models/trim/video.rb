@@ -69,11 +69,12 @@ module Trim
 
     rails_admin do
       label 'Video'
+
       visible false
+      
       nested do
         include_fields :video_url, :caption
-        field :provider, :enum
-        field :sort
+        field :provider, :enum, :sort
       end
     end
   end
