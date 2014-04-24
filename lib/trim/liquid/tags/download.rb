@@ -11,7 +11,7 @@ class Download < Liquid::Tag
       download = item.downloads[@index]
       if download
         controller = ActionController::Base.new()
-        return controller.render_to_string(:partial => 'downloads/inserted', :object => download)
+        return controller.render_to_string(:partial => 'trim/downloads/inserted', :object => download)
       end
     end
   end

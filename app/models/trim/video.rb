@@ -13,6 +13,8 @@ module Trim
 
     belongs_to :embeddable, :polymorphic => true
 
+    before_validation :set_video_provider_for_url
+
     validates :sort, :numericality => { :only_integer => true }, :presence => true
     validates :video_url, :presence => true
     validates :provider, :presence => true, :inclusion => { :in => PROVIDERS.values }
@@ -20,6 +22,12 @@ module Trim
 
     def title
       self.caption.truncate(15) if self.caption
+    end
+
+    def set_video_provider_for_url
+      if self.video_url
+        self.provider = (self.video_url =~ /vimeo/) ? PROVIDERS[VIMEO] : PROVIDERS[YOUTUBE]
+      end
     end
 
     def oembed
