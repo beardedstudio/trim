@@ -46,6 +46,18 @@ Trim.setup do |config|
 
   ####
   #
+  #  Noreply Email
+  #
+  ####
+
+  ## The default mail to use for system generated emails if no 'from' address is provided.
+  ## Note: this does not override the Devise default email, so the address in config/initializers/devise.rb
+  ## should be configured as well.
+
+  # config.noreply_email = "Bearded <info@bearded.com>"
+
+  ####
+  #
   #  Navigation Menus
   #
   ####
