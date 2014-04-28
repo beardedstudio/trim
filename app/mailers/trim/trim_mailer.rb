@@ -1,7 +1,8 @@
 module Trim
   class TrimMailer < ActionMailer::Base
     append_view_path("#{Rails.root}/app/views/mailers")
-    default from: "Bearded <info@bearded.com>"
+    f = (Trim.noreply_email unless Trim.noreply_email.blank?) || (ActionMailer::Base.default_url_options[:host] unless ActionMailer::Base.default_url_options.key?(:host))
+    default from: f
 
     # helper :preformat
 

@@ -80,6 +80,9 @@ module Trim
   mattr_accessor :additional_settings
   @@additional_settings = [ ]
 
+  mattr_accessor :noreply_email
+  @@noreply_email = [ ]
+
   def self.setup
     yield self
   end
