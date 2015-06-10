@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files`.split("\n")
   s.require_paths = ['lib']
 
-  s.add_dependency 'rails', '~> 3.2.16'
+  s.add_dependency 'rails', '~> 3.2.21'
   s.add_dependency 'ancestry', '~> 2.0.0'
   s.add_dependency 'aws-sdk', '~> 1.29.1'
   s.add_dependency 'breakpoint', '~> 2.0.7'

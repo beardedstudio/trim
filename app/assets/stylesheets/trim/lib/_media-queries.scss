@@ -7,10 +7,10 @@
 $breakpoint-to-ems: true;
 
 // "suggested" variable names for pre-defined breakpoints
-$breakpoint-small-width: 35em, 'no-query' true;
-$breakpoint-medium-width: 42em, 'no-query' true;
-$breakpoint-large-width: 70em, 'no-query' true;
-$breakpoint-xl-width: 90em, 'no-query' true;
+$breakpoint-small-width: 35em;
+$breakpoint-medium-width: 42em;
+$breakpoint-large-width: 70em;
+$breakpoint-xl-width: 90em;
 
 // media query for hi-resolution displays
 $breakpoint-hi-res: 2 device-pixel-ratio;
