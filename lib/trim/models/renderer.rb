@@ -23,7 +23,7 @@ module Trim
       @view.render :partial => 'trim/renderers/breadcrumbs', :locals => { :options => @options, :breadcrumbs => breadcrumbs }
     end
 
-    def tree(options = {})
+    def tree(options = {}, &block)
       @options[:root_node] = options.key?(:root_node) ? options[:root_node] : @root_nav_item.root
       @options[:show_root] = options.key?(:show_root) ? options[:show_root] : false
       @options[:root_element] = options.key(:root_element) ? options[:root_element] : :h2
@@ -37,7 +37,8 @@ module Trim
         end
       end
 
-      output += list_for(@options[:root_node])
+      append = @view.capture(&block) if block_given?
+      output += list_for(@options[:root_node], append)
 
       output.html_safe
     end
@@ -64,12 +65,13 @@ module Trim
       end
     end
 
-    def list_for(item)
+    def list_for(item, append = nil)
       if @depth < @options[:depth]
         @view.content_tag :ol, :class => classes_for_list(item) do
-          item.children.map do |child|
-            list_item_for child
-          end.join.html_safe
+          item.children.each do |child|
+            @view.concat(list_item_for(child).html_safe)
+          end
+          @view.concat(append) if append
         end
       end
     end
