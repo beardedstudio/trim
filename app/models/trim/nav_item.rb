@@ -227,7 +227,7 @@ module Trim
       weight -8
       nestable_tree({
         position_field: :sort,
-        max_depth: 3,
+        max_depth: 4,
         enable_callback: true
       })
 
